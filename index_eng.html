@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <script src="src/d3.min.js"></script>
+    <script src="src/d3-sankey.js"></script>
+    <script src="src/jQuery.min.js"></script>
+    <script src="src/bootstrap.min.js"></script>
+    <script src="src/sankey.js"></script>
+    <script src="src/readJSON.js"></script>
+    <script src="src/calculateLinks.js"></script>
+    <script src="src/setup.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <title>Education & Labour Market Pathways</title>
+</head>
+
+<body onresize="adaptSize()">
+<br/>
+<header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <ul>
+                                    <li><a href="http://www.tree.unibe.ch/index_eng.html">TREE Website</a> </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8">
+                                <ul>
+                                    <li><a href="index_ger.html">DE</a></li>
+                                    <li><a href="index_fra.html">FR</a></li>
+                                    <li><a href="index_eng.html" class="active">EN</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="http://www.unibe.ch/index_ger.html" title="Startseite Portal Universität Bern" class="imglink">
+                                    <img src="unilogo.jpg" alt="unilogo">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default2">
+                <div class="panel-body">
+                    <h1 id="headline">Education & Labour Market Pathways of the 1st TREE cohort, 2000-2014</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3" id="left">
+            <div class="panel panel-default" id="legendWrap">
+                <div class="panel-body">
+                    <div class="my-legend"> <!--class = "dropdown"-->
+                        <div class='legend-title'>Legend</div> <!-- class="headline2"-->
+                        <div class="legend-scale"> <!--id="legend" -->
+                            <ul class="legend-labels">
+                                <li><span></span>9th grade of compulsory school</li>
+                                <li><span></span>Not in education or training</li>
+                                <li><span></span>Intermediate solutions</li>
+                                <li><span></span>Vocational education and training upper secondary</li>
+                                <li><span></span>General education upper secondary</li>
+                                <li><span></span>Economically active with upper sec. diploma</li>
+                                <li><span></span>Economically active without upper sec. diploma</li>
+                                <li><span></span>Neither economically active nor in education or training</li>
+                                <li><span></span>Tertiary B = other postsecondary education and training</li>
+                                <li><span></span>Tertiary A = Universities and Universities of Applied Sciences</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9" id="right">
+            <div class="panel panel-default" id="right-panel">
+                <div class="panel-body" id="right-body">
+                    <div class="svg-container" id="svgWrap">
+                        <svg id="diagram" class="svg-content"></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default" id="filterWrap">
+                <div class="panel-body">
+                    <div id="Radios" >
+                        <!--RadioButtons for the filtering of the snakey, if you want to expand it you have to also change
+                        the codes in calculateLinks, the saneky will be updated if another selection is chosen!-->
+                        <form id = "filterForm" onchange="updateSankey()">
+                            <div id="radioButtons" >
+                                <div class="col-md-2">
+                                    <p class="headline2">Total:</p>
+                                    <input type="radio" name="selection" value="all" id="rbx" class="rb" checked>
+                                    <label for="rbx">Total</label>
+                                    <br/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="headline2">gender:</p>
+                                    <input type="radio" name="selection" value="female" id="rb1" class="rb">
+                                    <label for="rb1">female</label>
+                                    <br/>
+                                    <input type="radio" name="selection" value="male" id="rb2" class="rb">
+                                    <label for="rb2">male</label>
+                                    <br/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="headline2">Language region:</p>
+                                    <input type="radio" name="selection" value="german" id="rb3" class="rb">
+                                    <label for="rb3">German</label>
+                                    <br/>
+                                    <input type="radio" name="selection" value="latin" id="rb4" class="rb">
+                                    <label for="rb4">French/Italian</label>
+                                    <br/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="headline2">Lower sec. level of academic requirements:</p>
+                                    <input type="radio" name="selection" value="extended" id="rb5" class="rb">
+                                    <label for="rb5">extended</label>
+                                    <br/>
+                                    <input type="radio" name="selection" value="basic" id="rb6" class="rb">
+                                    <label for="rb6">basic</label>
+                                    <br/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="headline2">Parental socio-economic status:</p>
+                                    <input type="radio" name="selection" value="low" id="rb7" class="rb">
+                                    <label for="rb7">low</label>
+                                    <br/>
+                                    <input type="radio" name="selection" value="middle" id="rb8" class="rb">
+                                    <label for="rb8">medium</label>
+                                    <br/>
+                                    <input type="radio" name="selection" value="high" id="rb9" class="rb">
+                                    <label for="rb9">high</label>
+                                    <br/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="headline2">Parental attainment of education:</p>
+                                    <input type="radio" name="selection" value="lower" id="rb10" class="rb">
+                                    <label for="rb10">lower secondary or below</label>
+                                    <br/>
+                                    <input type="radio" name="selection" value="upper" id="rb11" class="rb">
+                                    <label for="rb11">upper secondary</label>
+                                    <br/>
+                                    <input type="radio" name="selection" value="tertiary" id="rb12" class="rb">
+                                    <label for="rb12">tertiary</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <p class="text">
+                    The diagram is interactive and can be filtered by gender, language region, lower secondary track attended, socio-economic status and parental attainment of education. In order to modify or cancel a filter, click on another filter category or on the "total" button.                 </p>
+                <p class="text">
+                    The diagram visualizes educational and labour market pathways of the 1st TREE cohort (TREE1), which left compulsory school after 9th grade in 2000. The initial TREE1 sample comprises 6.343 individuals and is representative both at national level and at the level of language regions. The ten displayed columns represent the follow-up surveys carried out to date. All percentages are based on the number of individuals in the entire sample (100% = total sample). For reasons of readability and estimation errors, we display only values which apply to at least four percent of the entire sample or 30 unweighted cases. The displayed values are sample-based estimations which are subject to certain errors of estimation. Sample attrition over time is corrected by weighted calculations.                 </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid" id="footer">
+    <div class="row">
+        <div class="col-sm-4 box"> <!--box-->
+            <h3>Rohdaten:</h3>
+            <ul class="list">
+                <li><a href="source/data.json" target="_blank">json</a> </li>
+                <li><a href="source/data.csv" target="_blank">csv</a> </li>
+                <li><a href="source/data.xlsx" target="_blank">xlsx</a> </li>
+                <li><a href="source/t1-t9baumforstudentslabels.xlsx" target="_blank">Labels</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-4 box"><!--box-->
+            <h3>Copyright © 2018</h3>
+            <dl>
+                <dt>Elias Wipfli</dt>
+                <dd>elias.wipfli@students.unibe.ch</dd>
+                <dt>Pascal Gerig</dt>
+                <dd>pascal.gerig@students.unibe.ch</dd>
+            </dl>
+        </div>
+
+        <div class="col-sm-4 box"> <!--box  id="right-->
+            <h3>TREE </h3>
+            <h4>(Transitions from Education to Employment)</h4>
+            <ul>
+                <li>University of Bern</li>
+                <li>Institute of sociology</li>
+                <li><a href="http://www.tree.unibe.ch/" target="_blank">www.tree.unibe.ch</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 licence">
+            <h3></h3>
+        </div>
+    </div>
+</footer>
+<script>
+    lang = "eng";
+    buildPage();
+</script>
+</body>
+
+</html>

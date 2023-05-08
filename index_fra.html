@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <script src="src/d3.min.js"></script>
+    <script src="src/d3-sankey.js"></script>
+    <script src="src/jQuery.min.js"></script>
+    <script src="src/bootstrap.min.js"></script>
+    <script src="src/sankey.js"></script>
+    <script src="src/readJSON.js"></script>
+    <script src="src/calculateLinks.js"></script>
+    <script src="src/setup.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <title>Parcours de formation et d'emploi</title>
+</head>
+
+<body onresize="adaptSize()">
+<br/>
+<header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <ul>
+                                    <li><a href="http://www.tree.unibe.ch/index_fra.html">TREE Website</a> </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8">
+                                <ul>
+                                    <li><a href="index_ger.html">DE</a></li>
+                                    <li><a href="index_fra.html" class="active" >FR</a></li>
+                                    <li><a href="index_eng.html">EN</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="http://www.unibe.ch/index_ger.html" title="Startseite Portal Universität Bern" class="imglink">
+                                    <img src="unilogo.jpg" alt="unilogo">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default2">
+                <div class="panel-body">
+                    <h1 id="headline">Parcours de formation et d'emploi de la 1ère cohorte TREE, 2000-2014</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3" id="left">
+            <div class="panel panel-default" id="legendWrap">
+                <div class="panel-body">
+                    <div class="my-legend"> <!--class = "dropdown"-->
+                        <div class='legend-title'>Légende</div> <!-- class="headline2"-->
+                        <div class="legend-scale"> <!--id="legend" -->
+                            <ul class="legend-labels">
+                                <li><span></span>Scolarité obligatoire</li>
+                                <li><span></span>Hors formation</li>
+                                <li><span></span>Solutions intermédiaires</li>
+                                <li><span></span>Formation professionnelle sec.II</li>
+                                <li><span></span>Formation générale secondaire II</li>
+                                <li><span></span>Actif après obtention d‘un diplôme du sec. II</li>
+                                <li><span></span>Actif sans diplôme sec. II</li>
+                                <li><span></span>Ni en formation ni actif</li>
+                                <li><span></span>Tertiaire B = Ecoles supérieures, préparations aux examens professionnels supérieurs (diplôme ou brevet fédéral)</li>
+                                <li><span></span>Tertiaire A = universités, hautes écoles (spécialisées)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9" id="right">
+            <div class="panel panel-default" id="right-panel">
+                <div class="panel-body" id="right-body">
+                    <div class="svg-container" id="svgWrap">
+                        <svg id="diagram" class="svg-content"></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!--div class="row">
+                <div class="col-md-12" -->
+                    <div class="panel panel-default" id="filterWrap">
+                        <div class="panel-body">
+                            <div id="Radios" >
+                                <!--RadioButtons for the filtering of the snakey, if you want to expand it you have to also change
+                                the codes in calculateLinks, the saneky will be updated if another selection is chosen!-->
+                                <form id = "filterForm" onchange="updateSankey()">
+                                    <div id="radioButtons" >
+                                        <div class="col-md-2">
+                                            <p class="headline2">Total:</p>
+                                            <input type="radio" name="selection" value="all" id="rbx" class="rb" checked>
+                                            <label for="rbx">Total</label>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="headline2">genre:</p>
+                                            <input type="radio" name="selection" value="female" id="rb1" class="rb">
+                                            <label for="rb1">femmes</label>
+                                            <br/>
+                                            <input type="radio" name="selection" value="male" id="rb2" class="rb">
+                                            <label for="rb2">hommes</label>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="headline2">Région linguistique:</p>
+                                            <input type="radio" name="selection" value="german" id="rb3" class="rb">
+                                            <label for="rb3">allemand</label>
+                                            <br/>
+                                            <input type="radio" name="selection" value="latin" id="rb4" class="rb">
+                                            <label for="rb4">français/italien</label>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="headline2">Niveau d'exigence au secondaire I:</p>
+                                            <input type="radio" name="selection" value="extended" id="rb5" class="rb">
+                                            <label for="rb5">exigences étendues</label>
+                                            <br/>
+                                            <input type="radio" name="selection" value="basic" id="rb6" class="rb">
+                                            <label for="rb6">exigences de base</label>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="headline2">Statut socio-économique des parents:</p>
+                                            <input type="radio" name="selection" value="low" id="rb7" class="rb">
+                                            <label for="rb7">bas</label>
+                                            <br/>
+                                            <input type="radio" name="selection" value="middle" id="rb8" class="rb">
+                                            <label for="rb8">moyen</label>
+                                            <br/>
+                                            <input type="radio" name="selection" value="high" id="rb9" class="rb">
+                                            <label for="rb9">élevé</label>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="headline2">Niveau de formation des parents:</p>
+                                            <input type="radio" name="selection" value="lower" id="rb10" class="rb">
+                                            <label for="rb10">secondaire I ou inférieur</label>
+                                            <br/>
+                                            <input type="radio" name="selection" value="upper" id="rb11" class="rb">
+                                            <label for="rb11">secondaire II</label>
+                                            <br/>
+                                            <input type="radio" name="selection" value="tertiary" id="rb12" class="rb">
+                                            <label for="rb12">tertiaire</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <!--/div>
+            </div-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <p class="text">
+                    Le diagramme est interactif et peut être filtré selon les caractéristiques du genre, de la région linguistique, du type de cycle d'orientation fréquenté, du statut socio-économique et du niveau de formation parental. Pour modifier ou annuler un filtre, veuillez cliquer sur un autre filtre ou sur le bouton "total".                 </p>
+                <p class="text">
+                    Le diagramme visualise les parcours de formation et d'emploi de la 1ère cohorte TREE (TREE1) qui a quitté la scolarité obligatoire en 2000 au bout de neuf années scolaires. L'échantillon de base de TREE1 comprend 6'343 individus. Il est représentatif au niveau national et au niveau des régions linguistiques. Les dix colonnes entre 2000 et 2014 correspondent aux enquêtes de suivi effectuées à ce jour. Tous les pourcentages se basent sur l'ensemble de l'échantillon (100% = total de l'échantillon). Pour des raisons de lisibilité et de fiabilité, nous affichons uniquement des valeurs qui concernent au moins quatre pourcent de l'échantillon global ou 30 cas non-pondérés. Les valeurs indiquées se basent sur des estimations qui sont soumises à certaines erreurs d'estimation. Les pertes d'échantillon à travers le temps sont corrigées par le biais de pondérations.                 </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid" id="footer">
+    <div class="row">
+        <div class="col-sm-4 box"> <!--box-->
+            <h3>Rohdaten:</h3>
+            <ul class="list">
+                <li><a href="source/data.json" target="_blank">json</a> </li>
+                <li><a href="source/data.csv" target="_blank">csv</a> </li>
+                <li><a href="source/data.xlsx" target="_blank">xlsx</a> </li>
+                <li><a href="source/t1-t9baumforstudentslabels.xlsx" target="_blank">Labels</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-4 box"><!--box-->
+            <h3>Copyright © 2018</h3>
+            <dl>
+                <dt>Elias Wipfli</dt>
+                <dd>elias.wipfli@students.unibe.ch</dd>
+                <dt>Pascal Gerig</dt>
+                <dd>pascal.gerig@students.unibe.ch</dd>
+            </dl>
+        </div>
+
+        <div class="col-sm-4 box"> <!--box  id="right-->
+            <h3>TREE </h3>
+            <h4>(Transitions de l'Ecole à l'Emploi)</h4>
+            <ul>
+                <li>Université de Berne</li>
+                <li>Institut de sociologie</li>
+                <li><a href="http://www.tree.unibe.ch/" target="_blank">www.tree.unibe.ch</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 licence">
+            <h3></h3>
+        </div>
+    </div>
+</footer>
+<script>
+    lang = "fra";
+    buildPage();
+</script>
+</body>
+
+</html>
