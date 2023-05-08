@@ -114,6 +114,60 @@ label::before {
   transition: .25s all ease;
 }
 
+/***************************/
+#Checkbox {
+	text-align:left;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+label {
+  color: #666;
+  position: relative;
+  display: inline-block;
+  padding-left: 30px;
+  padding-right: 10px;
+  line-height: 36px;
+  cursor: pointer;
+}
+
+label::before {
+  content: " ";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #666;
+  border-radius: 4px;
+  z-index: -1;
+}
+
+/* Checked */
+input[type="checkbox"]:checked + label::before {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #666;
+}
+
+input[type="checkbox"]:checked + label {
+    padding-left: 10px;
+    color: #fff;
+}
+
+/* Transition */
+label::before {
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+
 /*********************************************/
 #footer {
       background-color: #262626;
