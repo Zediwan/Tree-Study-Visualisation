@@ -424,6 +424,15 @@ function removeGradient(d, id){
 
 }
 
+/**
+ * Updates the selection state of checkboxes based on the user's input.
+ * If the 'all' checkbox is selected, all other checkboxes will be deselected.
+ * If another checkbox is selected, the 'all' checkbox will be deselected.
+ * 
+ * @param checkbox The checkbox that was just clicked
+ * @author Jeremy Moser
+ * @since 08.05.2023
+ */
 function updateSelections(checkbox) {
     const allCheckbox = document.getElementById('cbx');
     const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cbx)');
