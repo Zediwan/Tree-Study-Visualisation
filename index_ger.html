@@ -102,62 +102,62 @@
 							<!--RadioButtons for the filtering of the snakey, if you want to expand it you have to also change
 							the codes in calculateLinks, the saneky will be updated if another selection is chosen!-->
 								<form id = "filterForm" onchange="updateSankey()">
-									<div id="radioButtons" >
+									<div id="checkboxes" >
 										<div class="col-lg-2">
 											<p class="headline2">Alle:</p>
-											<input type="radio" name="selection" value="all" id="rbx" class="rb" checked>
-											<label for="rbx">Alle</label>
+											<input type="checkbox" name="selection" value="all" id="cbx" class="cb" checked onclick="updateSelections(this)">
+											<label for="cbx">Alle</label>
 											<br/>
 										</div>
 										<div class="col-lg-2">
 											<p class="headline2">Geschlecht:</p>
-											<input type="radio" name="selection" value="female" id="rb1" class="rb">
-											<label for="rb1">Frauen</label>
+											<input type="checkbox" name="selection" value="female" id="cb1" class="cb" onclick="updateSelections(this)">
+											<label for="cb1">Frauen</label>
 											<br/>
-											<input type="radio" name="selection" value="male" id="rb2" class="rb">
-											<label for="rb2">Männer</label>
+											<input type="checkbox" name="selection" value="male" id="cb2" class="cb" onclick="updateSelections(this)">
+											<label for="cb2">Männer</label>
 											<br/>
 										</div>
 										<div class="col-lg-2">
 											<p class="headline2">Sprachregion:</p>
-											<input type="radio" name="selection" value="german" id="rb3" class="rb">
-											<label for="rb3">deutsch</label>
+											<input type="checkbox" name="selection" value="german" id="cb3" class="cb" onclick="updateSelections(this)">
+											<label for="cb3">deutsch</label>
 											<br/>
-											<input type="radio" name="selection" value="latin" id="rb4" class="rb">
-											<label for="rb4">französisch- und italienisch</label>
+											<input type="checkbox" name="selection" value="latin" id="cb4" class="cb" onclick="updateSelections(this)">
+											<label for="cb4">französisch- und italienisch</label>
 											<br/>
 										</div>
 										<div class="col-lg-2">
 											<p class="headline2">Anforderungsniveau Sekundarstufe I:</p>
-											<input type="radio" name="selection" value="extended" id="rb5" class="rb">
-											<label for="rb5">erweiterte Anforderungen</label>
+											<input type="checkbox" name="selection" value="extended" id="cb5" class="cb" onclick="updateSelections(this)">
+											<label for="cb5">erweiterte Anforderungen</label>
 											<br/>
-											<input type="radio" name="selection" value="basic" id="rb6" class="rb">
-											<label for="rb6">Grundanforderungen</label>
+											<input type="checkbox" name="selection" value="basic" id="cb6" class="cb" onclick="updateSelections(this)">
+											<label for="cb6">Grundanforderungen</label>
 											<br/>
 										</div>
 										<div class="col-lg-2">
 											<p class="headline2">Sozio-ökonomischer Status der Eltern:</p>
-											<input type="radio" name="selection" value="low" id="rb7" class="rb">
-											<label for="rb7">tief</label>
+											<input type="checkbox" name="selection" value="low" id="cb7" class="cb" onclick="updateSelections(this)">
+											<label for="cb7">tief</label>
 											<br/>
-											<input type="radio" name="selection" value="middle" id="rb8" class="rb">
-											<label for="rb8">mittel</label>
+											<input type="checkbox" name="selection" value="middle" id="cb8" class="cb" onclick="updateSelections(this)">
+											<label for="cb8">mittel</label>
 											<br/>
-											<input type="radio" name="selection" value="high" id="rb9" class="rb">
-											<label for="rb9">hoch</label>
+											<input type="checkbox" name="selection" value="high" id="cb9" class="cb" onclick="updateSelections(this)">
+											<label for="cb9">hoch</label>
 											<br/>
 										</div>
 										<div class="col-lg-2">
 											<p class="headline2">Bildungsniveau der Eltern:</p>
-											<input type="radio" name="selection" value="lower" id="rb10" class="rb">
-											<label for="rb10">Sekundarstufe I oder niedriger</label>
+											<input type="checkbox" name="selection" value="lower" id="cb10" class="cb" onclick="updateSelections(this)">
+											<label for="cb10">Sekundarstufe I oder niedriger</label>
 											<br/>
-											<input type="radio" name="selection" value="upper" id="rb11" class="rb">
-											<label for="rb11">Sekundarstufe II</label>
+											<input type="checkbox" name="selection" value="upper" id="cb11" class="cb" onclick="updateSelections(this)">
+											<label for="cb11">Sekundarstufe II</label>
 											<br/>
-											<input type="radio" name="selection" value="tertiary" id="rb12" class="rb">
-											<label for="rb12">Tertiärstufe</label>
+											<input type="checkbox" name="selection" value="tertiary" id="cb12" class="cb" onclick="updateSelections(this)">
+											<label for="cb12">Tertiärstufe</label>
 										</div>
 									</div>
 								</form>

@@ -50,6 +50,7 @@ function filter() {
     var i;
     var j;
     var length = jsonData.length;
+    var selections = [];
     var selection;
 
     /*
@@ -59,6 +60,7 @@ function filter() {
     {
         for(j = 0; j < 13; j++) {
             if (form.selection[j].checked) {
+                selections.push(j);
                 selection = j;
             }
         }
@@ -67,6 +69,7 @@ function filter() {
          * 12 is used for ALL, but if you want to expand it you have to start by 12 and change the code below and above so
          * that ALL is the last index again, so that it is consistent
          * */
+        console.log(selections)
         if(selection == 0 /*index for "all"*/ ||
             selection == convertToInteger(jsonData[i], "gender") ||
             selection == convertToInteger(jsonData[i], "language") ||

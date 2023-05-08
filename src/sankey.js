@@ -423,3 +423,20 @@ function removeGradient(d, id){
         .attr("stroke-opacity","0.15");
 
 }
+
+function updateSelections(checkbox) {
+    const allCheckbox = document.getElementById('cbx');
+    const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cbx)');
+  
+    // Uncheck 'all' checkbox if another checkbox is selected
+    if (checkbox !== allCheckbox) {
+      allCheckbox.checked = false;
+    }
+  
+    // If 'all' checkbox is checked, turn off all other checkboxes
+    if (allCheckbox.checked) {
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+    }
+}  
