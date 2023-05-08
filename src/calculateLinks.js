@@ -17,7 +17,7 @@ function convertToInteger(jsonData, type) {
      * we have to subtract 1 --> 0 = female , 1 = male*/
     if(type == "gender")
     {
-        return jsonData.sex;
+        return jsonData.sex - 1;
     }
     /* 1 = german and 2 = latin, like above to make an ascending integer oder add 1 --> 2 = german, 3 = latin*/
     if(type == "language")
@@ -48,36 +48,69 @@ function filter() {
     jsonDataFiltered = [];
     var form = document.getElementById("filterForm");
     var i;
-    var j;
     var length = jsonData.length;
-    var selections = [];
-    var selection;
+    //console.log(form.selection0.checked)
 
     /*
-     * Filter the original Data for every person, based on an selected filter
+     * Filter the original Data for every person, based on selected filters
      *  */
     for (i = 0; i<length; i++)
-    {
-        for(j = 0; j < 13; j++) {
-            if (form.selection[j].checked) {
-                selections.push(j);
-                selection = j;
-            }
-        }
-
-        /* If a person falls into the filtered category then push its data in the FilteredArray
-         * 12 is used for ALL, but if you want to expand it you have to start by 12 and change the code below and above so
-         * that ALL is the last index again, so that it is consistent
-         * */
-        console.log(selections)
-        if(selection == 0 /*index for "all"*/ ||
-            selection == convertToInteger(jsonData[i], "gender") ||
-            selection == convertToInteger(jsonData[i], "language") ||
-            selection == convertToInteger(jsonData[i], "schooltype") ||
-            selection == convertToInteger(jsonData[i], "status") ||
-            selection == convertToInteger(jsonData[i], "parents"))
-        {
+    {   
+        // If all is selected just add all elements.
+        if(form.selection0.checked){
             jsonDataFiltered.push(jsonData[i]);
+        }
+        else{
+            // First category
+            var selection1 = [];
+            for (var k = 0; k < form.selection1.length; k++) {
+                if (form.selection1[k].checked) {
+                    selection1.push(k);
+                }
+            }
+            
+            
+            // Second category
+            var selection2 = [];
+            for (var k = 0; k < form.selection2.length; k++) {
+                if (form.selection2[k].checked) {
+                    selection2.push(k);
+                }
+            }
+
+            // Third category
+            var selection3 = [];
+            for (var k = 0; k < form.selection3.length; k++) {
+                if (form.selection3[k].checked) {
+                    selection3.push(k);
+                }
+            }
+
+            // Fourth category
+            var selection4 = [];
+            for (var k = 0; k < form.selection4.length; k++) {
+                if (form.selection4[k].checked) {
+                    selection4.push(k);
+                }
+            }
+
+            // Fifth category
+            var selection5 = [];
+            for (var k = 0; k < form.selection5.length; k++) {
+                if (form.selection5[k].checked) {
+                    selection5.push(k);
+                }
+            }
+
+            // Check whether the person's data matches any of the selected categories if none selected add all of said category
+            if ((selection1.length == 0 || selection1.includes(convertToInteger(jsonData[i], "gender"))) &&
+                (selection2.length == 0 || selection2.includes(convertToInteger(jsonData[i], "language"))) &&
+                (selection3.length == 0 || selection3.includes(convertToInteger(jsonData[i], "schooltype"))) &&
+                (selection4.length == 0 || selection4.includes(convertToInteger(jsonData[i], "status"))) &&
+                (selection5.length == 0 || selection5.includes(convertToInteger(jsonData[i], "parents"))))
+            {
+                jsonDataFiltered.push(jsonData[i]);
+            }
         }
     }
 }
