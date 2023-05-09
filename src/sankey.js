@@ -1,8 +1,3 @@
-/*
-Various functions to render and start an update of the Sankey by Elias Wipfli and Pascal Gerig
-Copyright (C) 2018  Elias Wipfli & Pascal Gerig
-*/
-
 /**
  * Initialize Sankey
  */
@@ -15,13 +10,12 @@ function initSankey() {
 
     formatNumber = d3.format(",.0f"),
         format = function (d) { return formatNumber(d) + " %"; },
-        //color = d3.scaleOrdinal(d3.schemeCategory10);
+        color = d3.scaleOrdinal(d3.schemeCategory10);
 
     sankey = d3.sankey()
         .nodeWidth(15)
         .nodePadding(10)
-        .size([width - 1, height - 6])
-        //.extent([[1, 1], [width - 1, height - 6]])
+        .extent([[1, 1], [width - 1, height - 6]])
         .iterations(0);
 
     t = d3.transition()
@@ -38,13 +32,11 @@ function initSankey() {
         .attr("class", "sankey")
         .attr("transform", "translate(" + marginleft + "," + margintop + ")");
 
-    svg.append("defs");
-
     linkGroup = diagram.append("g")
         .attr("class", "links")
-        .attr("fill", "none")//;
-        .attr("stroke", "#000")
-        .attr("stroke-opacity", 0.2);
+        .attr("fill", "none");
+        //.attr("stroke", "#000")
+        //.attr("stroke-opacity", 0.2);
 
     //set attributes for all nodes
     nodeGroup = diagram.append("g")
@@ -116,32 +108,45 @@ function helper(error, labels) {
         throw error;
     labels.links = customLinks;
     sankey(labels);
-
     var links = linkGroup.selectAll('path')
         .data(labels.links);
+
     //Set attributes for each link separately
-    var linksenter = links.enter().append("g")
-        .attr("id",function (d) {return "path" + d.name;})
+    links.enter().append("g")
+        .attr("id",function (d,i) {return "path"+i;})
+        .attr("from",function (d) { return d.source.name; })
+        .attr("to",function (d) { return d.target.name; })
         .append("path")
-        //.style("stroke", "#000")
-        //.style("stroke-opacity", 0.15)
+        .attr("stroke", "#000")
+        .attr("stroke-opacity", 0.15)
         .attr("display", function (d) {
             /* don't display a link if the link is smaller than 4%, else it will be just displayed*/
-            if((d.value < 4.0) || (d.personCount < 30)){return "none";}
+            if(d.value < 4.0){return "none";}
             else{return "inline";}
         })
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke-width", function (d) {return Math.max(1, d.width); })
+        .attr("onmouseover",function (d,i) { return "appendGradient(" + i + ")" })
+        .attr("onmouseout",function (d,i) { return "removeGradient(" + i + ")" })
         .append("title")
         .text(function (d) {
             //tooltip info for the links
             return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
 
+    linkGroup.selectAll("g").transition(t)
+        .attr("id",function (d,i) {return "path"+i;})
+        .attr("from",function (d) { return d.source.name; })
+        .attr("to",function (d) { return d.target.name; });
+
     links.transition(t)
+        //.attr("from",function (d) { return d.source.name; })
+        //.attr("to",function (d) { return d.target.name; })
+        //.attr("onmouseover",function (d,i) { return "appendGradient(" + i + ")" })
+        //.attr("onmouseout",function (d,i) { return "removeGradient(" + i + ")" })
         .attr("display", function (d) {
             //again if the link is smaller than 4% don't display it, we have to do this method again because of the
             // transition, if another filter is selected
-            if((d.value < 4.0) || (d.personCount < 30)){return "none";}
+            if(d.value < 4.0){return "none";}
             else{return "inline";}
         })
         .attr("d", d3.sankeyLinkHorizontal())
@@ -163,7 +168,7 @@ function helper(error, labels) {
 
     //set attributes for each node separately
     nodesEnter.append("rect")
-        .attr("x", function (d) {console.log(d.name + ", " + d.value);return d.x0; })
+        .attr("x", function (d) { return d.x0; })
         .attr("y", function (d) { return d.y0; })
         .attr("height", function (d) { return d.y1 - d.y0; })
         .attr("width", function (d) {
@@ -372,14 +377,14 @@ function setColor(d) {
     }
 }
 
-function appendGradient(d, id){
+function appendGradient(id){
     var pathGroup = svg.select('#path' + id);
     var path = pathGroup.select("path");
 
-    //var from = document.getElementById("path" + id).__data__.source;
-    //var to = document.getElementById("path" + id).__data__.target;
-    //console.log(from)
-    //console.log(to)
+    var from = document.getElementById("path" + id).__data__.source;
+    var to = document.getElementById("path" + id).__data__.target;
+    console.log(from)
+    console.log(to)
 
 
     var pathGradient = pathGroup.append("defs")
@@ -395,24 +400,37 @@ function appendGradient(d, id){
     pathGradient.append("stop")
         .attr("class","from")
         .attr("offset","0%")
-        .attr("style", function (d) {
-            var color = setColor(d.source);
+        .attr("style", function () {
+            var color = setColor(from);
             return "stop-color:" + color + ";stop-opacity:1";
         });
 
     pathGradient.append("stop")
         .attr("class","to")
         .attr("offset","100%")
-        .attr("style",function (d) {
-            var color = setColor(d.target);
+        .attr("style",function () {
+            var color = setColor(to);
             return "stop-color:" + color + ";stop-opacity:1";
         });
 
     path.attr("stroke","url(#grad"+id+")")
         .attr("stroke-opacity","0.95");
+
+/*
+    pathGradient.transition(t).select(".from")
+        .attr("style", function (d) {
+            var color = setColor(d.source);
+            return "stop-color:" + color + ";stop-opacity:1";
+        });
+    pathGradient.transition(t).select(".to")
+        .attr("style",function (d) {
+            var color = setColor(d.target);
+            return "stop-color:" + color + ";stop-opacity:1";
+        });
+*/
 }
 
-function removeGradient(d, id){
+function removeGradient(id){
      pathGroup = svg.select('#path' + id);
     var path = pathGroup.select("path");
 
@@ -421,6 +439,10 @@ function removeGradient(d, id){
 
     path.attr("stroke","#000")
         .attr("stroke-opacity","0.15");
+
+}
+
+function setGradientColor(bla) {
 
 }
 
@@ -436,16 +458,34 @@ function removeGradient(d, id){
 function updateSelections(checkbox) {
     const allCheckbox = document.getElementById('cbx');
     const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cbx)');
-  
+
+    let areAllChecked = true;      // Are all checkboxes (exept the all checkbox) checked?
+    let areAllUnchecked = true;    // Are all checkboxes (exept the all checkbox) unchecked?
+
+    // Check if all are either checked or unchecked
+    checkboxes.forEach((checkbox) => {
+        if(checkbox.checked){
+            areAllUnchecked = false;
+        }
+        else{
+            areAllChecked = false;
+        }
+    });
+    
     // Uncheck 'all' checkbox if another checkbox is selected
-    if (checkbox !== allCheckbox) {
-      allCheckbox.checked = false;
+    if(checkbox !== allCheckbox) {
+        allCheckbox.checked = false;
     }
-  
-    // If 'all' checkbox is checked, turn off all other checkboxes
-    if (allCheckbox.checked) {
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = false;
-      });
+    // If all checkboxes are checked just check the all checkbox and uncheck the others
+    if(areAllChecked){
+        allCheckbox.checked = true;
+        // Uncheck all the boxes
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+    }
+    // If all checkboxes are unchecked just check the all checkbox
+    else if(areAllUnchecked){
+        allCheckbox.checked = true;
     }
 }  

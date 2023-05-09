@@ -120,14 +120,9 @@
         function computeNodeValues(graph) {
             graph.nodes.forEach(function(node) {
                 node.value = Math.max(
-                /*************************************************************************************************************************************************************/
-                    //d3Array.sum(node.sourceLinks, value),
+                    d3Array.sum(node.sourceLinks, value),
                     d3Array.sum(node.targetLinks, value)
                 );
-                if(node.name === "Obligatorische Schule" || node.name === "Scolarité obligatoire" || node.name === "9th grade of compulsory school"){
-                    node.value = 100;
-                }
-                /*************************************************************************************************************************************************************/
             });
         }
 

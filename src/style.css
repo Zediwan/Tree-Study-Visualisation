@@ -1,8 +1,3 @@
-/*
-Stylesheet to extend bootstrap-style by Elias Wipfli and Pascal Gerig
-Copyright (C) 2018  Elias Wipfli & Pascal Gerig
-*/
-
 #headline {
 	display: block;
     font-size: 2em;
@@ -16,12 +11,12 @@ Copyright (C) 2018  Elias Wipfli & Pascal Gerig
 
 .text {
     color: #666;
-	font-size: 1em;
+	font-size: 15px;
     margin-top: 1%;
     margin-bottom: 1%;
     margin-right: 10%;
     margin-left: 10%;
-	text-align: left;
+	text-align: center;
 }
 
 h2 {
@@ -40,14 +35,66 @@ h4 {
 	font-weight: bold;
 }
 
+/*
+#rb1{
+	position: relative;
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	padding-right: 10px;
+	line-height: 36px;
+	cursor: pointer;
+}
+#rb2{
+	position: relative;
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	padding-right: 10px;
+	line-height: 36px;
+	cursor: pointer;
+}
+#rb3{
+	position: relative;
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	padding-right: 10px;
+	line-height: 36px;
+	cursor: pointer;
+}
+#rb4{
+	position: relative;
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	padding-right: 10px;
+	line-height: 36px;
+	cursor: pointer;
+}
+#rb5{
+	position: relative;
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	padding-right: 10px;
+	line-height: 36px;
+	cursor: pointer;
+}
+*/
 .rb{
     position: relative;
     display: inline-block;
-    /*margin-right: 10px;
-    margin-bottom: 10px;*/
+    margin-right: 10px;
+    margin-bottom: 10px;
     padding-left: 50px;
     padding-right: 10px;
-    /*line-height: 36px;*/
+    line-height: 36px;
     cursor: pointer;
 }
 
@@ -70,11 +117,11 @@ input[type="radio"] {
   z-index: -1;
 }
 label {
-  color: #666;
+    color: #666;
   position: relative;
   display: inline-block;
-  /*margin-right: 10px;
-  margin-bottom: 10px;*/
+  margin-right: 10px;
+  margin-bottom: 10px;
   padding-left: 30px;
   padding-right: 10px;
   line-height: 36px;
@@ -170,93 +217,90 @@ label::before {
 
 /*********************************************/
 #footer {
-      background-color: #262626;
-      color: white;
-    }
+    background-color: #303030;
+    color: white;
+  }
 /*********************************************/
+
 .panel-default{
-	background: none;
+  background: none;
 }
 
 .panel-default2{
-	background: #666;
-	color: #fff
+  background: #666;
+  color: #fff
 }
 
 /*********************************************/
 
 .svg-container{
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    /*padding-bottom: 50%;*/
-    vertical-align: middle;
-    overflow: hidden;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  /*padding-bottom: 50%;*/
+  vertical-align: middle;
+  overflow: hidden;
 }
 
 .svg-content{
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /*********************************************/
 
 .box {
-    /*float: left;
-    width: 33%;
-    /*margin-right: 2%;*/
-    padding: 1%;
-    padding-top: 2%;
-    padding-bottom: 0%;
-    box-sizing: border-box;
-    text-align: center;
+  /*float: left;
+  width: 33%;
+  /*margin-right: 2%;*/
+  padding: 1%;
+  padding-top: 2%;
+  padding-bottom: 0%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 /*********************************************/
 
 .licence{
-    float: left;
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    text-align: center;
+  float: left;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 /*********************************************/
 
 .list{
-    list-style-type: none;
-    text-align: center;
-    padding-left: 0;
+  list-style-type: none;
+  text-align: center;
+  padding-left: 0;
 }
 
 /*********************************************/
 
 footer a:link {
-    text-decoration: none;
-    color: #0074c4;
+  text-decoration: none;
+  color: #0074c4;
 }
 
 footer a:visited{
-    text-decoration: none;
-    color: #0074c4;
+  text-decoration: none;
+  color: #0074c4;
 }
 
 footer a:hover{
-    text-decoration: none;
-    color: #ffffff;
+  text-decoration: none;
+  color: #ffffff;
 }
 
 footer a:active{
-    text-decoration: none;
-    color: rgba(200, 200, 200,1);
-    border: 3px solid #0074c4;
-}
-
-footer ul{
-    list-style-type: none;
+  text-decoration: none;
+  color: rgba(200, 200, 200,1);
+  border: 3px solid #0074c4;
 }
 
 /*********************************************/
@@ -266,147 +310,135 @@ footer ul{
 .row.content {height: 900px;}
 
 /*********************************************/
-#left{
-    max-height: 538px;
-}
-
-#left .panel-default{
-    max-height: 518px;
-}
 
 .my-legend .legend-title {
-    content: " ";
-    position: relative;
-    top: 6px;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 28px;
-    border: 2px solid #666;
-    border-radius: 10px;
-    background: #666;
-    z-index: -1;
-    text-align: center;
-    color: #fff;
-    font-size: 1em;
-    font-weight: bold;
-    margin-bottom: 5px;
+  content: " ";
+  position: relative;
+  top: 6px;
+  left: 0;
+  display: block;
+  width: 240px;
+  height: 28px;
+  border: 2px solid #666;
+  border-radius: 10px;
+  background: #666;
+  z-index: -1;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 .my-legend .legend-scale ul {
-    margin: 0;
-    margin-bottom: 5px;
-    padding: 0;
-    float: left;
-    list-style: none;
-
-    /*Use this Property to stetch height of legend and diagram*/
-    padding-bottom: 200px;
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  float: left;
+  list-style: none;
 }
 .my-legend .legend-scale ul li {
-    color: #666;
-    font-size: 100%;
-    list-style: none;
-    margin-left: 0;
-    line-height: 18px;
-    margin-top: 5px;
+  color: #666;
+  font-size: 100%;
+  list-style: none;
+  margin-left: 0;
+  line-height: 18px;
+  margin-top: 5px;
 }
 .my-legend ul.legend-labels li span {
-    display: block;
-    float: left;
-    height: 20px;
-    width: 20px;
-    margin-right: 5px;
-    margin-left: 0;
-    border: 1px solid #999;
-    border-radius: 10px;
-    filter: none;
+  display: block;
+  float: left;
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+  margin-left: 0;
+  border: 1px solid #999;
+  border-radius: 10px;
 }
 
 .my-legend .legend-scale{
-    margin: 0px 25px;
+  margin: 0px 25px;
 }
 
 .headline2 {
-    content: " ";
-    position: relative;
-    top: 6px;
-    left: 0;
-    display: block;
-    width: 100%;
-    /*min-height: 28px;*/
-    border: 2px solid #666;
-    border-radius: 10px;
-    background: #666;
-    z-index: -1;
-    text-align: center;
-    color: #fff;
-    font-size: 1em;
-    font-weight: bold;
-    margin-bottom: 10px;
+  content: " ";
+  position: relative;
+  top: 6px;
+  left: 0;
+  display: block;
+  width: 240px;
+  height: 28px;
+  border: 2px solid #666;
+  border-radius: 10px;
+  background: #666;
+  z-index: -1;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 /*********************************************/
-/*
 #filterWrap{
-    max-height: 300px;
-    overflow-y: scroll;
+  max-height: 475px;
+  overflow-y: scroll;
 }
 /*********************************************/
 header{
-    overflow: hidden;
+  overflow: hidden;
 }
 
 header ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 header ul li{
-    display: inline;
-    float: left;
-    padding-right: 3px;
+  display: inline;
+  float: left;
+  padding-right: 3px;
 }
 
 header ul li a{
-    display: block;
-    padding: 8px;
+  display: block;
+  padding: 8px;
 }
 
 header ul li a:link{
-    text-decoration: none;
-    color: #666;
+  text-decoration: none;
+  color: #666;
 }
 
 header ul li a:visited{
-    text-decoration: none;
-    color: #666;
+  text-decoration: none;
+  color: #666;
 }
 
 header ul li a:hover{
-    text-decoration: none;
-    color: #000;
-    background-color: #eee;
+  text-decoration: none;
+  color: #000;
+  background-color: #eee;
 }
 
 header ul li a:active{
-    text-decoration: none;
-    background-color: #eee;
+  text-decoration: none;
+  background-color: #eee;
 }
 
 header img{
-    height: 128px;
-    width: 166px;
+  height: 128px;
+  width: 166px;
 }
 
 header .active{
-    text-decoration: none;
-    background-color: #eee;
-    color: #000;
+  text-decoration: none;
+  background-color: #eee;
+  color: #000;
 }
 
 header .imglink{
-    float: right;
+  float: right;
 }
 
 /*********************************************/

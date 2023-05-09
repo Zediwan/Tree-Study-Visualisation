@@ -12,7 +12,7 @@ function convertToInteger(jsonData, type) {
      * is connected to the radio buttons !
      *
      * */
-
+    
     /* 1 = female and 2 = male is the information from the Tree-Data, so that if asked for the gender it begins with 0
      * we have to subtract 1 --> 0 = female , 1 = male*/
     if(type == "gender")
@@ -98,6 +98,19 @@ function filter() {
                 if (form.selection5[k].checked) {
                     selection5.push(k);
                 }
+            }
+
+            console.log(selection1);
+            console.log(selection2);
+            console.log(selection3);
+            console.log(selection4);
+            console.log(selection5);
+
+            // If no option is checked, the all checkbox should get checked
+            if(selection1.length == 0 && selection2.length == 0 && 
+                selection3.length == 0 && selection4.length == 0 && 
+                selection5.length == 0) {
+                form.selection0.checked = true;
             }
 
             // Check whether the person's data matches any of the selected categories if none selected add all of said category

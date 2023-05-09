@@ -1,0 +1,11 @@
+{
+"title": "Ausbildungs- und Erwerbsverläufe",
+"description": "Die App visualisiert die Ausbildungs- und Erwerbsverläufe einer repräsentativen Stichprobe von Jugendlichen nach dem Ende der obligatorischen Schulzeit. Die Daten wurden zwischen 2000 und 2014 in der ganzen Schweiz erhoben. Die App zeigt, welcher Anteil der Stichprobe sich zu welchem Zeitpunkt in welchem Ausbildungs- oder Erwerbsstatus befindet, wie sich die Übergänge von Jahr zu Jahr gestalten, und wie sich die Verteilung prozentual von Jahr zu Jahr verändert.",
+"authors": [
+    {"name": "Elias Wipfli", "email": "elias.wipfli@students.unibe.ch"},
+    {"name": "Pascal Gerig", "email": "pascal.gerig@students.unibe.ch"}
+],
+"date": "2018-05-31",
+"category": "society",
+"software_license": "GNU General Public License v3"
+}

@@ -1,7 +1,4 @@
-/*
-Sets up the Website, renders everything around the Sankey by Elias Wipfli and Pascal Gerig
-Copyright (C) 2018  Elias Wipfli & Pascal Gerig
-*/
+
 /**
  * initialise most of the needed variables
  * */
@@ -33,18 +30,6 @@ var t7weigth = 0;
 var t8weigth = 0;
 var t9weigth = 0;
 
-var t1population = 0;
-var t2population = 0;
-var t3population = 0;
-var t4population = 0;
-var t5population = 0;
-var t6population = 0;
-var t7population = 0;
-var t8population = 0;
-var t9population = 0;
-
-var linkSizePersonCounter;
-
 var marginleft = 20;
 var margintop = 30;
 
@@ -61,8 +46,8 @@ var intermediate = "#F68";
 var not_in_education = "#F18";
 var tertiary_a = "#909";
 var tertiary_b = "#DBD";
-var no_edu_no_emp = "#A00";
-var work_no_dipl = "#DDD";
+var no_edu_no_emp = "#DDD";
+var work_no_dipl = "#AAA";
 var work_dipl = "#888";
 var notsure = "#FF0";
 
@@ -110,9 +95,9 @@ function clearSankey() {
  * */
 function appSize() {
     var left = document.getElementById('left');
-    //var legendPanelHeight = document.getElementById('legendWrap').clientHeight;
-    //var filterPanelHeight = document.getElementById('filterWrap').clientHeight;
-    //left.style.height = legendPanelHeight + filterPanelHeight + 40 + "px";
+    var legendPanelHeight = document.getElementById('legendWrap').clientHeight;
+    var filterPanelHeight = document.getElementById('filterWrap').clientHeight;
+    left.style.height = legendPanelHeight + filterPanelHeight + 40 + "px";
     var leftHeight = left.clientHeight;
     var right = document.getElementById('right');
     var right_panel = document.getElementById('right-panel');
@@ -163,45 +148,6 @@ function initLinkSize() {
             linkSize[i][j] = 0;
         }
     }
-	
-	linkSizePersonCounter = new Array(63);
-    var i;
-    var j;
-    for (i = 0; i < 63; i++) {
-        linkSizePersonCounter[i] = new Array(63);
-    }
-
-    //set every element of Array to 0
-    for (i = 0; i < 63; i++) {
-        for (j = 0; j < 63; j++) {
-            linkSizePersonCounter[i][j] = 0;
-        }
-    }
-}
-
-/**
- *
- * @param string1
- * @param string2
- * @retrun 1 if strings are equal
- *         undefined else
- */
-function compare(string1, string2) {
-    if(string1.length == string2.length)
-    {
-        for(var i = 0; i<string1.length; i++)
-        {
-            if(string1.charAt(i) != string2.charAt(i))
-            {
-                return undefined;
-            }
-        }
-        return 1;
-    }
-    else
-    {
-        return undefined;
-    }
 }
 
 function setLegendColor() {
@@ -214,46 +160,46 @@ function setLegendColor() {
         //switch german labels
         if(lang == "ger")
         {
-            switch(list[0].children[x].textContent)
+            switch(list[0].children[x].innerText)
             {
                 case "Obligatorische Schule":
-                    list[0].children[x].firstChild.style.backgroundColor = school;
+                    list[0].children[x].firstChild.style.background = school;
                     break;
                 case "Nicht in Ausbildung":
-                    list[0].children[x].firstChild.style.backgroundColor = not_in_education;
+                    list[0].children[x].firstChild.style.background = not_in_education;
                     break;
                 case "Zwischenlösung":
-                    list[0].children[x].firstChild.style.backgroundColor = intermediate;
+                    list[0].children[x].firstChild.style.background = intermediate;
                     break;
                 case "Sekundarstufe II Berufsbildung":
-                    list[0].children[x].firstChild.style.backgroundColor = coational_education;
+                    list[0].children[x].firstChild.style.background = coational_education;
                     break;
                 case "Sekundarstufe II Allgemeinbildung":
-                    list[0].children[x].firstChild.style.backgroundColor = general_education;
+                    list[0].children[x].firstChild.style.background = general_education;
                     break;
                 case "Erwerbstätig mit Sek. II-Abschluss":
-                    list[0].children[x].firstChild.style.backgroundColor = work_dipl;
+                    list[0].children[x].firstChild.style.background = work_dipl;
                     break;
                 case "Erwerbstätig ohne Abschluss":
-                    list[0].children[x].firstChild.style.backgroundColor = work_no_dipl;
+                    list[0].children[x].firstChild.style.background = work_no_dipl;
                     break;
                 case "Weder in Ausbildung noch erwerbstätig":
-                    list[0].children[x].firstChild.style.backgroundColor = no_edu_no_emp;
+                    list[0].children[x].firstChild.style.background = no_edu_no_emp;
                     break;
                 case "Tertiär A = Universität oder Fachhochschule":
-                    list[0].children[x].firstChild.style.backgroundColor = tertiary_a;
+                    list[0].children[x].firstChild.style.background = tertiary_a;
                     break;
                 case "Tertiär B = Höhere Fachschulen, Fach- und Berufsprüfungen":
-                    list[0].children[x].firstChild.style.backgroundColor = tertiary_b;
+                    list[0].children[x].firstChild.style.background = tertiary_b;
                     break;
                 default:
-                    list[0].children[x].firstChild.style.backgroundColor = "white";
+                    list[0].children[x].firstChild.style.background = "white";
             }
         }
         //switch french labels
         else if(lang == "fra")
         {
-            switch(list[0].children[x].textContent)
+            switch(list[0].children[x].innerText)
             {
                 case "Scolarité obligatoire":
                     list[0].children[x].firstChild.style.background = school;
@@ -292,7 +238,7 @@ function setLegendColor() {
         //switch english labels
         else
         {
-            switch(list[0].children[x].textContent)
+            switch(list[0].children[x].innerText)
             {
                 case "9th grade of compulsory school":
                     list[0].children[x].firstChild.style.background = school;
@@ -303,10 +249,10 @@ function setLegendColor() {
                 case "Intermediate solutions":
                     list[0].children[x].firstChild.style.background = intermediate;
                     break;
-                case "Vocational education and training upper secondary":
+                case "Vocational education and training":
                     list[0].children[x].firstChild.style.background = coational_education;
                     break;
-                case "General education upper secondary":
+                case "General education":
                     list[0].children[x].firstChild.style.background = general_education;
                     break;
                 case "Economically active with upper sec. diploma":
