@@ -491,10 +491,12 @@ function updateSelections(checkbox) {
         // If all checkboxes are unchecked just check the all checkbox
         if(areAllUnchecked){
             allCheckbox.checked = true;
+            allCheckbox.disabled = true;
         }
         // Uncheck 'all' checkbox if another checkbox is selected
         else {
             allCheckbox.checked = false;
+            allCheckbox.disabled = false;
         }
     }
 }  
