@@ -49,7 +49,6 @@ function filter() {
     var form = document.getElementById("filterForm");
     var i;
     var length = jsonData.length;   // Amount of Data elements.
-    //console.log(form.selection0.checked)
 
     /*
      * Filter the original Data for every person, based on selected filters

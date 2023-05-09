@@ -1,0 +1,76 @@
+{"nodes":[
+	 {"name":"Obligatorische Schule"},
+	
+	 {"name":"Nicht in Ausbildung"},
+	 {"name":"Zwischenlösung"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Sekundarstufe II Allgemeinbildung"},
+	 
+	 {"name":"Nicht in Ausbildung"},
+	 {"name":"Zwischenlösung"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Sekundarstufe II Allgemeinbildung"},
+	 {"name":"Tertiär B"},
+	 
+	 {"name":"Erwerbstätig mit Sek. II-Abschluss"},
+	 {"name":"Erwerbstätig ohne Sek. II-Abschluss"},
+	 {"name":"Weder in Ausbildung noch erwerbstätig"},
+	 {"name":"Zwischenlösung"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Sekundarstufe II Allgemeinbildung"},
+	 {"name":"Tertiär B"},
+	 {"name":"Tertiär A"},
+	 
+	 {"name":"Erwerbstätig mit Sek. II-Abschluss"},
+	 {"name":"Erwerbstätig ohne Sek. II-Abschluss"},
+	 {"name":"Weder in Ausbildung noch erwerbstätig"},
+	 {"name":"Zwischenlösung"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Sekundarstufe II Allgemeinbildung"},
+	 {"name":"Tertiär B"},
+	 {"name":"Tertiär A"},
+	 
+	 {"name":"Erwerbstätig mit Sek. II-Abschluss"},
+	 {"name":"Erwerbstätig ohne Sek. II-Abschluss"},
+	 {"name":"Weder in Ausbildung noch erwerbstätig"},
+	 {"name":"Zwischenlösung"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Sekundarstufe II Allgemeinbildung"},
+	 {"name":"Tertiär B"},
+	 {"name":"Tertiär A"},
+	 
+	 {"name":"Erwerbstätig mit Sek. II-Abschluss"},
+	 {"name":"Erwerbstätig ohne Sek. II-Abschluss"},
+	 {"name":"Weder in Ausbildung noch erwerbstätig"},
+	 {"name":"Zwischenlösung"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Sekundarstufe II Allgemeinbildung"},
+	 {"name":"Tertiär B"},
+	 {"name":"Tertiär A"},
+	 
+	 {"name":"Erwerbstätig mit Sek. II-Abschluss"},
+	 {"name":"Erwerbstätig ohne Sek. II-Abschluss"},
+	 {"name":"Weder in Ausbildung noch erwerbstätig"},
+	 {"name":"Zwischenlösung"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Sekundarstufe II Allgemeinbildung"},
+	 {"name":"Tertiär B"},
+	 {"name":"Tertiär A"},
+	 
+	 {"name":"Erwerbstätig mit Sek. II-Abschluss"},
+	 {"name":"Erwerbstätig ohne Sek. II-Abschluss"},
+	 {"name":"Weder in Ausbildung noch erwerbstätig"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Tertiär B"},
+	 {"name":"Tertiär A"},
+	 
+	 {"name":"Erwerbstätig mit Sek. II-Abschluss"},
+	 {"name":"Erwerbstätig ohne Sek. II-Abschluss"},
+	 {"name":"Weder in Ausbildung noch erwerbstätig"},
+	 {"name":"Sekundarstufe II Berufsbildung"},
+	 {"name":"Tertiär B"},
+	 {"name":"Tertiär A"},
+
+	 {"name": "Invisible Node"}
+	 ]
+}
