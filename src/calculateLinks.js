@@ -8,102 +8,33 @@ function convertToInteger(jsonData, type) {
      *
      * */
     
-        /**
-     * gender in dataset: 1 = female, 2 = male
-     * for it to be 0 we have to substract 1 -->
-     * 0 = female, male 1 = male
-     */
-
+    /* 1 = female and 2 = male is the information from the Tree-Data, so that if asked for the gender it begins with 0
+     * we have to subtract 1 --> 0 = female , 1 = male*/
     if(type == "gender")
     {
-        return data_nolable.t0sex
-     - 1;
+        return jsonData.sex - 1;
     }
-   
-     /**
-      * language region in dataset: 1 = german, 2 = french, 3 = italian
-      * for it to be 0 we have to substract 1 -->
-      * 0 = german, 1 = french, 3 = italian
-      */
+    /* 1 = german and 2 = latin, like above to make an ascending integer oder add 1 --> 2 = german, 3 = latin*/
     if(type == "language")
     {
-        return data_nolable.aes_langreg 
-        -1;
+        return jsonData.reg_ling -1;
     }
-    /**
-     * in dataset: 
-     * 1 = NET (no education or training), 
-     * 2 = Internship (Praktikum)
-     * 3 = 10th school year
-     * 4 = other intermediate solution
-     * 5 = 2 years VET (Lehre)
-     * 6 = 3-4 years VET (Lehre)
-     * 7 = vocational baccalaureate (Berufsmaturität)
-     * 8 = general bachelor baccalaureate (Maturiät)
-     * 9 = other education
-     * for it to be 0 we substract 1 -->
-     * 0 = NET (no education or training), 
-     * 1 = Internship (Praktikum)
-     * 2 = 10th school year
-     * 3 = other intermediate solution
-     * 4 = 2 years VET (Lehre)
-     * 5 = 3-4 years VET (Lehre)
-     * 6 = vocational baccalaureate (Berufsmaturität)
-     * 7 = general bachelor baccalaureate (Maturiät)
-     * 8 = other education
-     * 
-     * Should maybe separated into these categories categories:
-     * 0 = NET
-     * 1 = intermediate solution (1-3)
-     * 2 = VET (4 and 5)
-     * 3 = baccalaureate
-     * 4 = other education
-      */
-
+    /* 1 = extended academic requirements, 2 = basic ac. req., adding 3 --> 4 = extended , 5 = basic*/
     if(type == "schooltype")
     {
-        return data_nolable.t3educ_class_1_r 
-        -1;
-        /**result of the newest wave */
+        return jsonData.typ3 -1;
     }
-    /** in dataset: 
-     * 1 = low, 2 = medium, 3 = high
-     * for it to be 0 we substract 1 -->
-     * 0 = low, 1 = medium, 2 = high
-     */
+    /* Status: 1 = low, 2 = middle, 3 = high --> 6 = low, 7 = middle, 8 = high*/
     if(type == "status")
     {
-        return data_nolable.t0hisei08_3q 
-        -1;
+        return jsonData.hiseineu3cat -1;
     }
-    /**
-     * Education of parents in dataset:
-     * 0 = compulsary schooling only
-     * 1 = upper secondary education
-     * 2 = tertiary education
-     * 
-     * no adujstments needed
-     */
+    /* Education of the parents: 1 = lower secondary, 2 = upper secondary, 3 = tertiary --> 9 = low, 10 = up, 11 = tert.*/
     if(type == "parents")
     {
-        return data_nolable.t0fmedu_comp ;
-    }
-
-    /**
-     * New category: Immigration. Needs to be integrated!
-     * in dataset:
-     * 1 = native (at least 1 parent born in Switzerland)
-     * 2 = 2nd generation (respondent born in Switzerland, no parent born in Switzerland)
-     * 2 = first generation (respondent and parents born abroad)
-     * for it to be 0 we substract 1 -->
-     * 0 = native, 1 = 2nd generation, 2 = first generation 
-     */
-    if(type == "immigration")
-    {
-        return data_nolable.t0immig ;
+        return jsonData.fmedu -1;
     }
 }
-
 
 /**
  * filter jsonData and fill selected elements into jsonDataFiltered

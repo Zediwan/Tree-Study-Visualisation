@@ -466,6 +466,7 @@ function updateSelections(checkbox) {
         checkboxes.forEach((checkbox) => {
             checkbox.checked = false;
         });
+        allCheckbox.disabled = true;
     }
     else{
         // Check if all are either checked or unchecked
