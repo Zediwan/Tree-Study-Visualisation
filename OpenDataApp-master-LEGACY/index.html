@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png">
+    <script type="text/javascript" src="src/d3.min.js"></script>
+    <script type="text/javascript" src="src/d3-sankey.js"></script>
+    <script type="text/javascript" src="src/jQuery.min.js"></script>
+    <script type="text/javascript" src="src/bootstrap.min.js"></script>
+    <script type="text/javascript" src="src/sankey.js"></script>
+    <script type="text/javascript" src="src/readJSON.js"></script>
+    <script type="text/javascript" src="src/calculateLinks.js"></script>
+    <script type="text/javascript" src="src/setup.js"></script>
+    <script type="text/javascript" src="//edit.cms.unibe.ch/++resource++zms_/iframeresizer/iframeResizer.contentWindow.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <title>Ausbildungs- und Erwerbsverläufe</title>
+</head>
+<body>
+    <script>
+        if(navigator.language == "de" || navigator.language == "de-CH" || navigator.language == "de-AT" || navigator.language == "de-LI")
+        {
+            window.setTimeout('window.open("index_ger.html","_self")',0);
+        }
+        else if(navigator.language == "fr" || navigator.language == "fr-BE" || navigator.language == "fr-CA" || navigator.language == "fr-CH" || navigator.language == "fr-LU")
+        {
+            window.setTimeout('window.open("index_fra.html","_self")',0);
+        }
+        else
+        {
+            window.setTimeout('window.open("index_eng.html","_self")',0);
+        }
+    </script>
+</body>
+</html>

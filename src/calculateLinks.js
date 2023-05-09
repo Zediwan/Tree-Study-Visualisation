@@ -48,7 +48,7 @@ function filter() {
     jsonDataFiltered = [];
     var form = document.getElementById("filterForm");
     var i;
-    var length = jsonData.length;
+    var length = jsonData.length;   // Amount of Data elements.
     //console.log(form.selection0.checked)
 
     /*
@@ -68,7 +68,6 @@ function filter() {
                     selection1.push(k);
                 }
             }
-            
             
             // Second category
             var selection2 = [];

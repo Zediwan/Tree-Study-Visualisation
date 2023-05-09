@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png">
+    <script type="text/javascript" src="src/d3.min.js"></script>
+    <script type="text/javascript" src="src/d3-sankey.js"></script>
+    <script type="text/javascript" src="src/jQuery.min.js"></script>
+    <script type="text/javascript" src="src/bootstrap.min.js"></script>
+    <script type="text/javascript" src="src/sankey.js"></script>
+    <script type="text/javascript" src="src/readJSON.js"></script>
+    <script type="text/javascript" src="src/calculateLinks.js"></script>
+    <script type="text/javascript" src="src/setup.js"></script>
+    <script type="text/javascript" src="//edit.cms.unibe.ch/++resource++zms_/iframeresizer/iframeResizer.contentWindow.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <title>Ausbildungs- und Erwerbsverläufe</title>
+</head>
+
+<body onresize="adaptSize()">
+</br>
+<header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <ul>
+                                    <li><a href="http://www.unibe.ch/index_fra.html">Portal Universität Bern</a> </li>
+                                    <li><a href="http://www.tree.unibe.ch/index_fra.html">Tree Universität Bern</a> </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8">
+                                <ul>
+                                    <li><a href="index_ger.html">DE</a></li>
+                                    <li><a href="index_fra.html" class="active" >FR</a></li>
+                                    <li><a href="index_eng.html">EN</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="http://www.unibe.ch/index_ger.html" title="Startseite Portal Universität Bern" class="imglink">
+                                    <img src="unilogo.jpg">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default2">
+                <div class="panel-body">
+                    <h1 id="headline">Ausbildungs- und Erwerbsverläufe des Forschungsprojekts TREE (Institut für Soziologie der Universität Bern)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" id="left">
+            <div class="row">
+                <div class="col-md-12" >
+                    <div class="panel panel-default" id="filterWrap">
+                        <div class="panel-body">
+                            <div id="Radios" >
+                                <!--RadioButtons for the filtering of the snakey, if you want to expand it you have to also change
+                                the codes in calculateLinks, the saneky will be updated if another selection is chosen!-->
+                                <form id = "filterForm" onchange="updateSankey()">
+                                    <div id="radioButtons" >
+                                        <p class="headline2">Sexe:</p>
+                                        <input type="radio" name="selection" value="female" id="rb1" class="rb"></input>
+                                        <label for="rb1">Femme</label>
+                                        </br>
+                                        <input type="radio" name="selection" value="male" id="rb2" class="rb"></input>
+                                        <label for="rb2">Homme</label>
+                                        </br>
+                                        <p class="headline2">Langue:</p>
+                                        <input type="radio" name="selection" value="german" id="rb3" class="rb"></input>
+                                        <label for="rb3">Allemand</label>
+                                        </br>
+                                        <input type="radio" name="selection" value="latin" id="rb4" class="rb"></input>
+                                        <label for="rb4">Français/Italien</label>
+                                        </br>
+                                        <p class="headline2">Types de programmes d'enseignement secondaire supérieur:</p>
+                                        <input type="radio" name="selection" value="extended" id="rb5" class="rb"></input>
+                                        <label for="rb5">Étendu</label>
+                                        </br>
+                                        <input type="radio" name="selection" value="basic" id="rb6" class="rb"></input>
+                                        <label for="rb6">Basique</label>
+                                        </br>
+                                        <p class="headline2">Situation socioéconomique:</p>
+                                        <input type="radio" name="selection" value="low" id="rb7" class="rb"></input>
+                                        <label for="rb7">Bas</label>
+                                        </br>
+                                        <input type="radio" name="selection" value="middle" id="rb8" class="rb"></input>
+                                        <label for="rb8">Moyen</label>
+                                        </br>
+                                        <input type="radio" name="selection" value="high" id="rb9" class="rb"></input>
+                                        <label for="rb9">Haut</label>
+                                        </br>
+                                        <p class="headline2">Niveau de scolarité des parents:</p>
+                                        <input type="radio" name="selection" value="lower" id="rb10" class="rb"></input>
+                                        <label for="rb10">Inférieur secondaire</label>
+                                        </br>
+                                        <input type="radio" name="selection" value="upper" id="rb11" class="rb"></input>
+                                        <label for="rb11">Supérieure secondaire</label>
+                                        </br>
+                                        <input type="radio" name="selection" value="tertiary" id="rb12" class="rb"></input>
+                                        <label for="rb12">Tertiaire</label>
+                                        </br>
+                                        </br>
+                                        <input type="radio" name="selection" value="all" id="rbx" class="rb" checked></input>
+                                        <label for="rbx">Tout</label>
+                                        </br>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default" id="legendWrap">
+                        <div class="panel-body">
+                            <div class="my-legend"> <!--class = "dropdown"-->
+                                <div class='legend-title'>Légende</div> <!-- class="headline2"-->
+                                <div class="legend-scale"> <!--id="legend" -->
+                                    <ul class="legend-labels">
+                                        <li><span></span><b>Scolarité obligatoire</b></li>
+                                        <li><span></span><b>Hors formation</b></li>
+                                        <li><span></span><b>Solutions intermédiaires</b></li>
+                                        <li><span></span><b>Formation professionnelle sec.II</b></li>
+                                        <li><span></span><b>Formation générale secondaire II</b></li>
+                                        <li><span></span><b>Actif après obtention d‘un diplôme du sec. II</b></li>
+                                        <li><span ></span><b>Actif sans diplôme sec. II</b></li>
+                                        <li><span></span><b>Ni en formation ni actif</b></li>
+                                        <li><span></span><b>Tertiaire A</b> = universités, hautes écoles (spécialisées)</li>
+                                        <li><span></span><b>Tertiaire B</b> = Ecoles supérieures, préparations aux examens professionnels supérieurs (diplôme ou brevet fédéral)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" id="right">
+            <div class="panel panel-default" id="right-panel">
+                <div class="panel-body" id="right-body">
+                    <div class="svg-container" id="svgWrap">
+                        <svg id="diagram" class="svg-content"></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+
+                <h2>
+                    Ausbildungs- und Erwerbsverläufe des Forschungsprojekts TREE
+                </h2>
+                <p class="text">
+                    Die App visualisiert die Ausbildungs- und Erwerbsverläufe einer repräsentativen Stichprobe von Jugendlichen
+                    nach dem Ende der obligatorischen Schulzeit. Die Daten wurden zwischen 2000 und 2014 in der ganzen Schweiz erhoben.
+                    Die App zeigt, welcher Anteil der Stichprobe sich zu welchem Zeitpunkt in welchem Ausbildungs- oder Erwerbsstatus
+                    befindet, wie sich die Übergänge von Jahr zu Jahr gestalten, und wie sich die Verteilung prozentual von Jahr zu Jahr verändert.
+                </p>
+
+                <h2>
+                    Anleitung
+                </h2>
+                <p class="text">
+                    Mit der App kann man die Verläufe entweder für die gesamte Stichprobe („<span style="color:#04b404;"><b>Alle</b></span>“-Button)
+                    darstellen oder aber für bestimmte Gruppen, z.B. nach Geschlecht oder Sprachregion filtern.
+                    Mehrfachfilterungen (z.B. Deutschschweizer Männer) sind aus Gründen der Stichprobengrösse nicht möglich.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid" id="footer">
+    <div class="row">
+        <div class="col-sm-4 box"> <!--box-->
+            <h3>Rohdaten:</h3>
+            <ul class="list">
+                <li><a href="source/t1-t9baumforstudents_random_ID.json" target="_blank">json</a> </li>
+                <li><a href="source/t1-t9baumforstudents_random_ID.csv" target="_blank">csv</a> </li>
+                <li><a href="source/t1-t9baumforstudents_random_ID.xlsx" target="_blank">xlsx</a> </li>
+                <li><a href="source/t1-t9baumforstudentslabels.xlsx" target="_blank">Labels</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-4 box"><!--box-->
+            <h3>Erstellt von:</h3>
+            <dl>
+                <dt>Elias Wipfli</dt>
+                <dd>elias.wipfli@students.unibe.ch</dd>
+                <dt>Pascal Gerig</dt>
+                <dd>pascal.gerig@students.unibe.ch</dd>
+            </dl>
+        </div>
+
+        <div class="col-sm-4 box"> <!--box  id="right-->
+            <h3>TREE </h3>
+            <h4>(Transitionen von der Erstausbildung ins Erwerbsleben)</h4>
+            <dl>
+                <dd>Universität Bern</dd>
+                <dd>Institut für Soziologie</dd>
+                <dd><a href="http://www.tree.unibe.ch/" target="_blank">www.tree.unibe.ch</a></dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 licence">
+            <h3>Veröffentlich unter der GNU General Public License v3</h3>
+        </div>
+    </div>
+</footer>
+<script>
+    lang = "fra";
+    buildPage();
+</script>
+</body>
+
+</html>
