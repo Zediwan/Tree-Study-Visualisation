@@ -456,36 +456,45 @@ function setGradientColor(bla) {
  * @since 08.05.2023
  */
 function updateSelections(checkbox) {
-    const allCheckbox = document.getElementById('cbx');
-    const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cbx)');
+    const allCheckbox = document.getElementById('cb13');
+    const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cb13)');
 
     let areAllChecked = true;      // Are all checkboxes (exept the all checkbox) checked?
     let areAllUnchecked = true;    // Are all checkboxes (exept the all checkbox) unchecked?
 
-    // Check if all are either checked or unchecked
-    checkboxes.forEach((checkbox) => {
-        if(checkbox.checked){
-            areAllUnchecked = false;
-        }
-        else{
-            areAllChecked = false;
-        }
-    });
-    
-    // Uncheck 'all' checkbox if another checkbox is selected
-    if(checkbox !== allCheckbox) {
-        allCheckbox.checked = false;
-    }
-    // If all checkboxes are checked just check the all checkbox and uncheck the others
-    if(areAllChecked){
-        allCheckbox.checked = true;
-        // Uncheck all the boxes
+    if(checkbox === allCheckbox){
         checkboxes.forEach((checkbox) => {
             checkbox.checked = false;
         });
     }
-    // If all checkboxes are unchecked just check the all checkbox
-    else if(areAllUnchecked){
-        allCheckbox.checked = true;
+    else{
+        // Check if all are either checked or unchecked
+        checkboxes.forEach((checkbox) => {
+            if(checkbox.checked){
+                areAllUnchecked = false;
+            }
+            else{
+                areAllChecked = false;
+            }
+        });
+        
+        // If all checkboxes are checked just check the all checkbox and uncheck the others
+        /**
+        if(areAllChecked){
+            allCheckbox.checked = true;
+            // Uncheck all the boxes
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = false;
+            });
+        }else 
+         */
+        // If all checkboxes are unchecked just check the all checkbox
+        if(areAllUnchecked){
+            allCheckbox.checked = true;
+        }
+        // Uncheck 'all' checkbox if another checkbox is selected
+        else {
+            allCheckbox.checked = false;
+        }
     }
 }  

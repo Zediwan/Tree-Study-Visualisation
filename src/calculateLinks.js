@@ -1,8 +1,3 @@
-/*
-Various functions to calculate Size of Sankey-Links by Elias Wipfli and Pascal Gerig
-Copyright (C) 2018  Elias Wipfli & Pascal Gerig
-*/
-
 /**
  * converts the gender or language value in the person objects to an integer used from @link filterForm
  * for the according property
@@ -50,87 +45,49 @@ function filter() {
     var i;
     var length = jsonData.length;   // Amount of Data elements.
 
+    // If all is selected just add all elements.
+    if(form.selAll.checked){
+        jsonDataFiltered = jsonData;
+        return;
+    }
     /*
      * Filter the original Data for every person, based on selected filters
      *  */
     for (i = 0; i<length; i++)
     {   
-        // If all is selected just add all elements.
-        if(form.selection0.checked){
+        var selGend = getCheckedBoxes(form.selGend);
+        var selLang = getCheckedBoxes(form.selLang);
+        var selEdu = getCheckedBoxes(form.selEdu);
+        var selEco = getCheckedBoxes(form.selEco);
+        var selEduPar = getCheckedBoxes(form.selEduPar);
+
+        // Check whether the person's data matches any of the selected categories if none selected add all of said category
+        if ((selGend.length == 0 || selGend.includes(convertToInteger(jsonData[i], "gender"))) &&
+            (selLang.length == 0 || selLang.includes(convertToInteger(jsonData[i], "language"))) &&
+            (selEdu.length == 0 || selEdu.includes(convertToInteger(jsonData[i], "schooltype"))) &&
+            (selEco.length == 0 || selEco.includes(convertToInteger(jsonData[i], "status"))) &&
+            (selEduPar.length == 0 || selEduPar.includes(convertToInteger(jsonData[i], "parents"))))
+        {
             jsonDataFiltered.push(jsonData[i]);
         }
-        else{
-            // First category
-            var selection1 = [];
-            for (var k = 0; k < form.selection1.length; k++) {
-                if (form.selection1[k].checked) {
-                    selection1.push(k);
-                }
-            }
-            
-            // Second category
-            var selection2 = [];
-            for (var k = 0; k < form.selection2.length; k++) {
-                if (form.selection2[k].checked) {
-                    selection2.push(k);
-                }
-            }
+    }
+}
 
-            // Third category
-            var selection3 = [];
-            for (var k = 0; k < form.selection3.length; k++) {
-                if (form.selection3[k].checked) {
-                    selection3.push(k);
-                }
-            }
-
-            // Fourth category
-            var selection4 = [];
-            for (var k = 0; k < form.selection4.length; k++) {
-                if (form.selection4[k].checked) {
-                    selection4.push(k);
-                }
-            }
-
-            // Fifth category
-            var selection5 = [];
-            for (var k = 0; k < form.selection5.length; k++) {
-                if (form.selection5[k].checked) {
-                    selection5.push(k);
-                }
-            }
-
-            console.log(selection1);
-            console.log(selection2);
-            console.log(selection3);
-            console.log(selection4);
-            console.log(selection5);
-
-            // If no option is checked, the all checkbox should get checked
-            if(selection1.length == 0 && selection2.length == 0 && 
-                selection3.length == 0 && selection4.length == 0 && 
-                selection5.length == 0) {
-                form.selection0.checked = true;
-            }
-
-            // Check whether the person's data matches any of the selected categories if none selected add all of said category
-            if ((selection1.length == 0 || selection1.includes(convertToInteger(jsonData[i], "gender"))) &&
-                (selection2.length == 0 || selection2.includes(convertToInteger(jsonData[i], "language"))) &&
-                (selection3.length == 0 || selection3.includes(convertToInteger(jsonData[i], "schooltype"))) &&
-                (selection4.length == 0 || selection4.includes(convertToInteger(jsonData[i], "status"))) &&
-                (selection5.length == 0 || selection5.includes(convertToInteger(jsonData[i], "parents"))))
-            {
-                jsonDataFiltered.push(jsonData[i]);
-            }
+function getCheckedBoxes(boxesArray){
+    var boxesChecked = []; // Array of checked boxes
+    // Go through all the boxes
+    for (var k = 0; k < boxesArray.length; k++) {
+        if (boxesArray[k].checked) {
+            boxesChecked.push(k);   // If the Box is checked add it to the return list
         }
     }
+    return boxesChecked;
 }
 
 /**
  Read each Person and convert information into links
  */
-function calculateLinks() {
-	
+ function calculateLinks() {
     var length = jsonDataFiltered.length;
     var index;
     var from = new Array(2);
@@ -146,22 +103,6 @@ function calculateLinks() {
     t7weigth = 0;
     t8weigth = 0;
     t9weigth = 0;
-	
-	t1population = 0;
-	t2population = 0;
-	t3population = 0;
-	t4population = 0;
-	t5population = 0;
-	t6population = 0;
-	t7population = 0;
-	t8population = 0;
-	t9population = 0;
-	
-	for (i = 0; i < 63; i++) {
-        for (j = 0; j < 63; j++) {
-            linkSizePersonCounter[i][j] = 0;
-        }
-    }
 
     //Read each person object and manipulate links accordingly
     for (index = 0; index < length; index++) {
@@ -204,7 +145,6 @@ function calculateLinks() {
          * */
         if (from[0] != null && to != null) {
             linkSize[from[0]][to] += (jsonDataFiltered[index].hr1_kal);
-			linkSizePersonCounter[from[0]][to] += 1;
         }
 
 
@@ -236,7 +176,6 @@ function calculateLinks() {
         }
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (jsonDataFiltered[index].hr2_kal);
-			linkSizePersonCounter[from[1]][to] += 1;
         }
 
 
@@ -280,7 +219,6 @@ function calculateLinks() {
         }
         if (from[0] != null && to != null) {
             linkSize[from[0]][to] += (jsonDataFiltered[index].hr3_kal);
-			linkSizePersonCounter[from[0]][to] += 1;
         }
 
         switch (jsonDataFiltered[index].t4baum) {
@@ -322,7 +260,6 @@ function calculateLinks() {
         }
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (jsonDataFiltered[index].hr4_kal);
-			linkSizePersonCounter[from[1]][to] += 1;
         }
 
         switch (jsonDataFiltered[index].t5baum) {
@@ -364,7 +301,6 @@ function calculateLinks() {
         }
         if (from[0] != null && to != null) {
             linkSize[from[0]][to] += (jsonDataFiltered[index].hr5_kal);
-			linkSizePersonCounter[from[0]][to] += 1;
         }
 
         switch (jsonDataFiltered[index].t6baum) {
@@ -407,7 +343,6 @@ function calculateLinks() {
         }
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (jsonDataFiltered[index].hr6_kal);
-			linkSizePersonCounter[from[1]][to] += 1;
         }
 
         switch (jsonDataFiltered[index].t7baum) {
@@ -450,7 +385,6 @@ function calculateLinks() {
         }
         if (from[0] != null && to != null) {
             linkSize[from[0]][to] += (jsonDataFiltered[index].hr7_kal);
-			linkSizePersonCounter[from[0]][to] += 1;
         }
 
         switch (jsonDataFiltered[index].t8baum) {
@@ -485,7 +419,6 @@ function calculateLinks() {
         }
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (jsonDataFiltered[index].hr8_kal);
-			linkSizePersonCounter[from[1]][to] += 1;
         }
 
         switch (jsonDataFiltered[index].t9baum) {
@@ -519,7 +452,6 @@ function calculateLinks() {
         }
         if (from[0] != null && to != null) {
             linkSize[from[0]][to] += (jsonDataFiltered[index].hr9_kal);
-			linkSizePersonCounter[from[0]][to] += 1;
         }
 
 
@@ -530,67 +462,57 @@ function calculateLinks() {
      *for every survey year we collect the total amount of "movement" to get the weight
      *if more nodes and other years are implemented, then this code needs to be expanded!
      * */
-	 
     for (i=1; i<5; i++){
         for (j=0; j < 56; j++){
             t1weigth += linkSize[j][i];
-			t1population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=5; i<10; i++){
         for (j=0; j < 56; j++){
             t2weigth += linkSize[j][i];
-			t2population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=10; i<18; i++){
         for (j=0; j < 56; j++){
             t3weigth += linkSize[j][i];
-			t3population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=18; i<26; i++){
         for (j=0; j < 56; j++){
             t4weigth += linkSize[j][i];
-			t4population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=26; i<34; i++){
         for (j=0; j < 56; j++){
             t5weigth += linkSize[j][i];
-			t5population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=34; i<42; i++){
         for (j=0; j < 56; j++){
             t6weigth += linkSize[j][i];
-			t6population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=42; i<50; i++){
         for (j=0; j < 56; j++){
             t7weigth += linkSize[j][i];
-			t7population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=50; i<56; i++){
         for (j=0; j < 56; j++){
             t8weigth += linkSize[j][i];
-			t8population += linkSizePersonCounter[j][i];
         }
     }
 
     for (i=56; i<62; i++){
         for (j=0; j < 56; j++){
             t9weigth += linkSize[j][i];
-			t9population += linkSizePersonCounter[j][i];
         }
     }
 
@@ -648,18 +570,15 @@ function calculateLinks() {
             linkSize[j][i] = linkSize[j][i]/t9weigth*100;
         }
     }
-	
 
     /**
      * Guillotine 4%
      * if a node is smaller than 4% then its links have to be smaller than 4% too, so we give the 63.
      * "invisible" node the links, and empty the normal links
      */
-	 
 
     // for the "value" of a node
     var summe;
-	var summePerson;
 
     /*
      *for every node index 0 to 61 we calculate its value and then if it is smaller than 4%, we remove it
@@ -669,33 +588,25 @@ function calculateLinks() {
      *
      * to remember is that the array linkSize is linkSize[FROM][TO]
      */
-
-    var current;
-    var previous;
-    var next;
-    for (current = 61; current > 0; current--){
+    for (i = 1; i < 62; i++){
         summe = 0;
-		summePerson = 0;
-        for (previous = 0; previous < current; previous++){
-            summe = summe + linkSize[previous][current];
-			summePerson = summePerson + linkSizePersonCounter[previous][current];
+        for (j = 0; j < i; j++){
+            summe = summe + linkSize[j][i];
         }
-	
+
         // 4% guillotine
-        if ((summe < 4) || (summePerson < 30)) {
-            for (previous = 0; previous < current; previous++) {
-                linkSize[previous][current] = 0;
+        if (summe < 4) {
+            for (j = 0; j < i; j++) {
+                linkSize[j][i] = 0;
             }
 
-            for (next = current + 1; next < 62; next++) {
-                linkSize[62][next] += linkSize[current][next];
-                linkSize[current][next] = 0;
+            for (j = 0; j < 62; j++) {
+                linkSize[62][j] = linkSize[i][j];
+                linkSize[i][j] = 0;
             }
 
         }
     }
-
-	
 
     /*
      * now after everything is filtered we can send the links in the right format to customLinks
@@ -706,17 +617,8 @@ function calculateLinks() {
     for (i = 0; i < 63; i++) {
         for (j = 0; j < 63; j++) {
             if (linkSize[i][j] > 0) {
-                customLinks.push({ "name": i + "to" + j, "source": i, "target": j, "value": linkSize[i][j], "personCount": linkSizePersonCounter[i][j] });
+                customLinks.push({ "source": i, "target": j, "value": linkSize[i][j] });
             }
         }
     }
-
-    customLinks.sort(function (a, b) {
-        var result = b.source - a.source;
-        if(result == 0)
-        {
-            result = b.target - a.target;
-        }
-        return result;
-    });
 }

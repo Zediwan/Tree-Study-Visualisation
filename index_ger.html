@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="icon" href="favicon.ico">
-		<script src="src/d3.min.js"></script>
-		<script src="src/d3-sankey.js"></script>
-		<script src="src/jQuery.min.js"></script>
-		<script src="src/bootstrap.min.js"></script>
-		<script src="src/sankey.js"></script>
-		<script src="src/readJSON.js"></script>
-		<script src="src/calculateLinks.js"></script>
-        <script src="src/setup.js"></script>
+		<link rel="icon" href="icon.png">
+		<script type="text/javascript" src="src/d3.min.js"></script>
+		<script type="text/javascript" src="src/d3-sankey.js"></script>
+		<script type="text/javascript" src="src/jQuery.min.js"></script>
+		<script type="text/javascript" src="src/bootstrap.min.js"></script>
+		<script type="text/javascript" src="src/sankey.js"></script>
+		<script type="text/javascript" src="src/readJSON.js"></script>
+		<script type="text/javascript" src="src/calculateLinks.js"></script>
+        <script type="text/javascript" src="src/setup.js"></script>
+        <script type="text/javascript" src="//edit.cms.unibe.ch/++resource++zms_/iframeresizer/iframeResizer.contentWindow.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="src/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="src/style.css">
 		<title>Ausbildungs- und Erwerbsverläufe</title>
 	</head>
 
 	<body onresize="adaptSize()">
-		<br/>
+		</br>
         <header>
             <div class="container-fluid">
                 <div class="row">
@@ -28,7 +30,8 @@
                                 <div class="row">
                                     <div class="col-sm-2">
                                         <ul>
-                                            <li><a href="http://www.tree.unibe.ch/index_ger.html">TREE Website</a> </li>
+                                            <li><a href="http://www.unibe.ch/index_ger.html">Portal Universität Bern</a> </li>
+                                            <li><a href="http://www.tree.unibe.ch/index_ger.html">Tree Universität Bern</a> </li>
                                         </ul>
 									</div>
 									<div class="col-sm-8">
@@ -40,7 +43,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <a href="http://www.unibe.ch/index_ger.html" title="Startseite Portal Universität Bern" class="imglink">
-                                            <img src="unilogo.jpg" alt="unilogo">
+                                            <img src="unilogo.jpg">
                                         </a>
                                     </div>
                                 </div>
@@ -55,36 +58,101 @@
 				<div class="col-sm-12">
 					<div class="panel panel-default2">
 						<div class="panel-body">
-							<h1 id="headline">Ausbildungs- und Erwerbsverläufe der 1. TREE-Kohorte, 2000-2014</h1>
+							<h1 id="headline">Ausbildungs- und Erwerbsverläufe des Forschungsprojekts TREE (Institut für Soziologie der Universität Bern)</h1>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-3" id="left">
-					<div class="panel panel-default" id="legendWrap">
-						<div class="panel-body">
-							<div class="my-legend">
-								<div class='legend-title'>Legende</div>
-								<div class="legend-scale">
-									<ul class="legend-labels">
-										<li><span></span>Obligatorische Schule</li>
-										<li><span></span>Nicht in Ausbildung</li>
-										<li><span></span>Zwischenlösung</li>
-										<li><span></span>Sekundarstufe II Berufsbildung</li>
-										<li><span></span>Sekundarstufe II Allgemeinbildung</li>
-										<li><span></span>Erwerbstätig mit Sek. II-Abschluss</li>
-										<li><span></span>Erwerbstätig ohne Abschluss</li>
-										<li><span></span>Weder in Ausbildung noch erwerbstätig</li>
-										<li><span></span>Tertiär B = Höhere Fachschulen, Fach- und Berufsprüfungen</li>
-										<li><span></span>Tertiär A = Universität oder Fachhochschule</li>
-									</ul>
+				<div class="col-md-3" id="left">
+					<div class="row">
+						<div class="col-md-12" >
+							<div class="panel panel-default" id="filterWrap">
+								<div class="panel-body">
+									<div id="Radios" >
+										<!--Checkboxes for the filtering of the snakey, if you want to expand it you have to also change
+										the codes in calculateLinks, the saneky will be updated if another selection is chosen!-->
+										<form id = "filterForm" onchange="updateSankey()">
+											<div id="checkboxes" >
+												<p class="headline2">Geschlecht:</p>
+												<input type="checkbox" name="selGend" value="female" id="cb1" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb1">Frauen</label>
+												</br>
+												<input type="checkbox" name="selGend" value="male" id="cb2" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb2">Männer</label>
+												</br>
+												<p class="headline2">Sprachregion:</p>
+												<input type="checkbox" name="selLang" value="german" id="cb3" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb3">Deutsch</label>
+												</br>
+												<input type="checkbox" name="selLang" value="latin" id="cb4" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb4">Französisch/Italienisch</label>
+												</br>
+												<p class="headline2">besuchter Schultyp Sek II:</p>
+												<input type="checkbox" name="selEdu" value="extended" id="cb5" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb5">extended</label>
+												</br>
+												<input type="checkbox" name="selEdu" value="basic" id="cb6" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb6">basic</label>
+												</br>
+												<p class="headline2">sozioökonomischer Status:</p>
+												<input type="checkbox" name="selEco" value="low" id="cb7" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb7">Tief</label>
+												</br>
+												<input type="checkbox" name="selEco" value="middle" id="cb8" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb8">Mittel</label>
+												</br>
+												<input type="checkbox" name="selEco" value="high" id="cb9" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb9">Hoch</label>
+												</br>
+												<p class="headline2">Bildungsniveau der Eltern:</p>
+												<input type="checkbox" name="selEduPar" value="lower" id="cb10" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb10">lower secondary</label>
+												</br>
+												<input type="checkbox" name="selEduPar" value="upper" id="cb11" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb11">upper secondary</label>
+												</br>
+												<input type="checkbox" name="selEduPar" value="tertiary" id="cb12" class="cb" onclick = updateSelections(this)></input>
+												<label for="cb12">Tertiär</label>
+												</br>
+												</br>
+												<input type="checkbox" name="selAll" value="all" id="cb13" class="cb" checked onclick = updateSelections(this)></input>
+												<label for="cb13">Alle</label>
+												</br>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default" id="legendWrap">
+								<div class="panel-body">
+									<div class="my-legend"> <!--class = "dropdown"-->
+										<div class='legend-title'>Legende</div> <!-- class="headline2"-->
+										<div class="legend-scale"> <!--id="legend" -->
+											<ul class="legend-labels">
+												<li><span></span><b>Obligatorische Schule</b></li>
+												<li><span></span><b>Nicht in Ausbildung</b></li>
+												<li><span></span><b>Zwischenlösung</b></li>
+												<li><span></span><b>Sekundarstufe II Berufsbildung</b></li>
+												<li><span></span><b>Sekundarstufe II Allgemeinbildung</b></li>
+												<li><span></span><b>Erwerbstätig mit Sek. II-Abschluss</b></li>
+												<li><span ></span><b>Erwerbstätig ohne Abschluss</b></li>
+												<li><span></span><b>Weder in Ausbildung noch erwerbstätig</b></li>
+												<li><span></span><b>Tertiär A</b> = Universität oder Fachhochschule</li>
+												<li><span></span><b>Tertiär B</b> = Höhere Fachschulen, Fach- und Berufsprüfungen</li>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9" id="right">
+				<div class="col-md-9" id="right">
 					<div class="panel panel-default" id="right-panel">
 						<div class="panel-body" id="right-body">
 							<div class="svg-container" id="svgWrap">
@@ -96,83 +164,26 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<div class="panel panel-default" id="filterWrap">
-						<div class="panel-body">
-							<div id="Radios" >
-							<!--RadioButtons for the filtering of the snakey, if you want to expand it you have to also change
-							the codes in calculateLinks, the saneky will be updated if another selection is chosen!-->
-								<form id = "filterForm" onchange="updateSankey()">
-									<div id="checkboxes" >
-										<div class="col-lg-2">
-											<p class="headline2">Alle:</p>
-											<input type="checkbox" name="selection0" value="all" id="cbx" class="cb" checked onclick="updateSelections(this)">
-											<label for="cbx">Alle</label>
-											<br/>
-										</div>
-										<div class="col-lg-2">
-											<p class="headline2">Geschlecht:</p>
-											<input type="checkbox" name="selection1" value="female" id="cb1" class="cb" onclick="updateSelections(this)">
-											<label for="cb1">Frauen</label>
-											<br/>
-											<input type="checkbox" name="selection1" value="male" id="cb2" class="cb" onclick="updateSelections(this)">
-											<label for="cb2">Männer</label>
-											<br/>
-										</div>
-										<div class="col-lg-2">
-											<p class="headline2">Sprachregion:</p>
-											<input type="checkbox" name="selection2" value="german" id="cb3" class="cb" onclick="updateSelections(this)">
-											<label for="cb3">deutsch</label>
-											<br/>
-											<input type="checkbox" name="selection2" value="latin" id="cb4" class="cb" onclick="updateSelections(this)">
-											<label for="cb4">französisch- und italienisch</label>
-											<br/>
-										</div>
-										<div class="col-lg-2">
-											<p class="headline2">Anforderungsniveau Sekundarstufe I:</p>
-											<input type="checkbox" name="selection3" value="extended" id="cb5" class="cb" onclick="updateSelections(this)">
-											<label for="cb5">erweiterte Anforderungen</label>
-											<br/>
-											<input type="checkbox" name="selection3" value="basic" id="cb6" class="cb" onclick="updateSelections(this)">
-											<label for="cb6">Grundanforderungen</label>
-											<br/>
-										</div>
-										<div class="col-lg-2">
-											<p class="headline2">Sozio-ökonomischer Status der Eltern:</p>
-											<input type="checkbox" name="selection4" value="low" id="cb7" class="cb" onclick="updateSelections(this)">
-											<label for="cb7">tief</label>
-											<br/>
-											<input type="checkbox" name="selection4" value="middle" id="cb8" class="cb" onclick="updateSelections(this)">
-											<label for="cb8">mittel</label>
-											<br/>
-											<input type="checkbox" name="selection4" value="high" id="cb9" class="cb" onclick="updateSelections(this)">
-											<label for="cb9">hoch</label>
-											<br/>
-										</div>
-										<div class="col-lg-2">
-											<p class="headline2">Bildungsniveau der Eltern:</p>
-											<input type="checkbox" name="selection5" value="lower" id="cb10" class="cb" onclick="updateSelections(this)">
-											<label for="cb10">Sekundarstufe I oder niedriger</label>
-											<br/>
-											<input type="checkbox" name="selection5" value="upper" id="cb11" class="cb" onclick="updateSelections(this)">
-											<label for="cb11">Sekundarstufe II</label>
-											<br/>
-											<input type="checkbox" name="selection5" value="tertiary" id="cb12" class="cb" onclick="updateSelections(this)">
-											<label for="cb12">Tertiärstufe</label>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
 					<div class="panel panel-default">
+
+						<h2>
+							Ausbildungs- und Erwerbsverläufe des Forschungsprojekts TREE
+						</h2>
 						<p class="text">
-							Das Diagramm ist interaktiv und kann nach den Merkmalen Geschlecht, Sprachregion, besuchter Sek I-Schultyp, sozio-ökonomischer Status und elterliches Bildungsniveau gefiltert werden. Um eine Filterung zu ändern oder rückgängig zu machen, kann ein anderer Filter oder der "Alle"-Button angeklickt werden.						</p>
+							Die App visualisiert die Ausbildungs- und Erwerbsverläufe einer repräsentativen Stichprobe von Jugendlichen
+							nach dem Ende der obligatorischen Schulzeit. Die Daten wurden zwischen 2000 und 2014 in der ganzen Schweiz erhoben.
+							Die App zeigt, welcher Anteil der Stichprobe sich zu welchem Zeitpunkt in welchem Ausbildungs- oder Erwerbsstatus
+							befindet, wie sich die Übergänge von Jahr zu Jahr gestalten, und wie sich die Verteilung prozentual von Jahr zu Jahr verändert.
+						</p>
+
+						<h2>
+							Anleitung
+						</h2>
 						<p class="text">
-							Das Diagramm visualisiert die Ausbildungs- und Erwerbsverläufe der ersten TREE-Kohorte (TREE1), welche im Jahr 2000 aus der Schulpflicht entlassen wurde. Die TREE1-Ausgangs-Stichprobe umfasst 6'343 Personen und ist gesamtschweizerisch und sprachregional repräsentativ. Die zehn Säulen zwischen 2000 und 2014 entsprechen den bisher durchgeführten (Nach-)Befragungen. Alle angegebenen Prozent-Werte (Säulen und Übergänge) beziehen sich auf die Gesamt-Stichprobe (100% = Total der Stichprobe). Aus Gründen der Lesbarkeit und Schätz(un)genauigkeit werden nur Werte dargestellt, die mindestens vier Prozent der Gesamt-Stichprobe oder 30 ungewichtete Fälle betreffen. Die dargestellten Werte sind stichprobenbasierte Schätzungen, die einer gewissen Irrtumswahrscheinlichkeit unterliegen. Stichproben-Ausfälle über die Zeit wurden durch Gewichtungen korrigiert.						</p>
+							Mit der App kann man die Verläufe entweder für die gesamte Stichprobe („<span style="color:#04b404;"><b>Alle</b></span>“-Button)
+							darstellen oder aber für bestimmte Gruppen, z.B. nach Geschlecht oder Sprachregion filtern.
+							Mehrfachfilterungen (z.B. Deutschschweizer Männer) sind aus Gründen der Stichprobengrösse nicht möglich.
+						</p>
 					</div>
 				</div>
 			</div>
@@ -183,15 +194,15 @@
 				<div class="col-sm-4 box"> <!--box-->
 					<h3>Rohdaten:</h3>
 					<ul class="list">
-						<li><a href="source/data.json" target="_blank">json</a> </li>
-						<li><a href="source/data.csv" target="_blank">csv</a> </li>
-						<li><a href="source/data.xlsx" target="_blank">xlsx</a> </li>
+						<li><a href="source/t1-t9baumforstudents_random_ID.json" target="_blank">json</a> </li>
+						<li><a href="source/t1-t9baumforstudents_random_ID.csv" target="_blank">csv</a> </li>
+						<li><a href="source/t1-t9baumforstudents_random_ID.xlsx" target="_blank">xlsx</a> </li>
 						<li><a href="source/t1-t9baumforstudentslabels.xlsx" target="_blank">Labels</a></li>
 					</ul>
 				</div>
 
 				<div class="col-sm-4 box"><!--box-->
-					<h3>Copyright © 2018</h3>
+					<h3>Erstellt von:</h3>
 					<dl>
 						<dt>Elias Wipfli</dt>
 						<dd>elias.wipfli@students.unibe.ch</dd>
@@ -203,16 +214,16 @@
 				<div class="col-sm-4 box"> <!--box  id="right-->
 					<h3>TREE </h3>
 					<h4>(Transitionen von der Erstausbildung ins Erwerbsleben)</h4>
-					<ul>
-						<li>Universität Bern</li>
-						<li>Institut für Soziologie</li>
-						<li><a href="http://www.tree.unibe.ch/" target="_blank">www.tree.unibe.ch</a></li>
-					</ul>
+					<dl>
+						<dd>Universität Bern</dd>
+						<dd>Institut für Soziologie</dd>
+						<dd><a href="http://www.tree.unibe.ch/" target="_blank">www.tree.unibe.ch</a></dd>
+					</dl>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-4 licence">
-					<h3></h3>
+					<h3>Veröffentlich unter der GNU General Public License v3</h3>
 				</div>
 			</div>
 		</footer>
