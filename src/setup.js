@@ -18,17 +18,12 @@ var titleGroup;
 var columnCoord = [];
 
 /* YEARS*/
-var years = ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2010", "2014"];
+var years = var years = ["2016", "2017", "2018"];
 
 var t1weigth = 0;
 var t2weigth = 0;
 var t3weigth = 0;
-var t4weigth = 0;
-var t5weigth = 0;
-var t6weigth = 0;
-var t7weigth = 0;
-var t8weigth = 0;
-var t9weigth = 0;
+
 
 var marginleft = 20;
 var margintop = 30;
@@ -39,17 +34,12 @@ var titlesDrawn = false;
 var nodesFilter;
 
 //define each color
-var school = "#666";
-var coational_education = "#6CA";
+var compulsary_education = "#666";
+var vocational_education = "#6CA";
 var general_education = "#088";
-var intermediate = "#F68";
+var intermediate_solutions = "#F68";
 var not_in_education = "#F18";
-var tertiary_a = "#909";
-var tertiary_b = "#DBD";
-var no_edu_no_emp = "#DDD";
-var work_no_dipl = "#AAA";
-var work_dipl = "#888";
-var notsure = "#FF0";
+
 
 //language of the page
 var lang;
