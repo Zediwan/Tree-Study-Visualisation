@@ -18,7 +18,7 @@ var titleGroup;
 var columnCoord = [];
 
 /* YEARS*/
-var years = var years = ["2016", "2017", "2018"];
+var years = ["2016", "2017", "2018"];
 
 var t1weigth = 0;
 var t2weigth = 0;
