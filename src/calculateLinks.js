@@ -16,7 +16,7 @@ function convertToInteger(jsonData, type) {
 
     if(type == "gender")
     {
-        return data_nolable.t0sex
+        return data_2nd-cohort.t0sex
      - 1;
     }
    
@@ -27,7 +27,7 @@ function convertToInteger(jsonData, type) {
       */
     if(type == "language")
     {
-        return data_nolable.aes_langreg 
+        return data_2nd-cohort.aes_langreg 
         -1;
     }
     /**
@@ -55,14 +55,14 @@ function convertToInteger(jsonData, type) {
      * Should maybe separated into these categories categories:
      * 0 = NET
      * 1 = intermediate solution (1-3)
-     * 2 = VET (4 and 5)
-     * 3 = baccalaureate
+     * 2 = vocational education(4 and 5)
+     * 3 = general baccalaureate
      * 4 = other education
       */
 
     if(type == "schooltype")
     {
-        return data_nolable.t3educ_class_1_r 
+        return data_2nd-cohort.t3educ_class_1_r 
         -1;
         /**result of the newest wave */
     }
@@ -73,7 +73,7 @@ function convertToInteger(jsonData, type) {
      */
     if(type == "status")
     {
-        return data_nolable.t0hisei08_3q 
+        return data_2nd-cohort.t0hisei08_3q 
         -1;
     }
     /**
@@ -86,7 +86,7 @@ function convertToInteger(jsonData, type) {
      */
     if(type == "parents")
     {
-        return data_nolable.t0fmedu_comp ;
+        return data_2nd-cohort.t0fmedu_comp ;
     }
 
     /**
@@ -100,7 +100,7 @@ function convertToInteger(jsonData, type) {
      */
     if(type == "immigration")
     {
-        return data_nolable.t0immig ;
+        return data_2nd-cohort.t0immig ;
     }
 }
 
