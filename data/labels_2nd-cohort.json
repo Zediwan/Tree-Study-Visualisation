@@ -1,17 +1,11 @@
 {"nodes":[
     {"name":"Obligatorische Schule"},
    
-    /** 
-    2017
-    */
     {"name":"Nicht in Ausbildung"},
     {"name":"Zwischenlösung"},
     {"name":"Berufsbildung"},
     {"name":"allgemeine Weiterbildung"},
 
-   /** 
-    2018
-    */
     {"name":"Nicht in Ausbildung"},
     {"name":"Zwischenlösung"},
     {"name":"Berufsbildung"},
