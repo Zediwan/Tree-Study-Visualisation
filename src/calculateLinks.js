@@ -187,7 +187,7 @@ function getCheckedBoxes(boxesArray){
          * we go from node 0 "obligatory school" to one of the 4 nodes of the first survey, so only
          * Nicht in Ausbildung with index 1, Zwischenlösung with index 2 etc.
          * */
-        switch (jsonDataFiltered[index].t1baum) {
+        switch (jsonDataFiltered[index].t1bqvalids) {
             case 1:
                 to = 1;
                 from[1] = 1;
@@ -213,12 +213,12 @@ function getCheckedBoxes(boxesArray){
          * should a source or target node be empty (because some people didn't answer that year then it will not be included)
          * */
         if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (jsonDataFiltered[index].hr1_kal);
+            linkSize[from[0]][to] += (jsonDataFiltered[index].t1wt);
         }
 
 
         // same as above but this time it begins with index 5 because thats the first node in the second survey
-        switch (jsonDataFiltered[index].t2baum) {
+        switch (jsonDataFiltered[index].t2bqvalids) {
             case 1:
                 to = 5;
                 from[0] = 5;
@@ -235,353 +235,59 @@ function getCheckedBoxes(boxesArray){
                 to = 8;
                 from[0] = 8;
                 break;
-            case 5:
-                to = 9;
-                from[0] = 9;
-                break;
             default:
                 to = null;
                 from[0] = null;
         }
         if (from[1] != null && to != null) {
-            linkSize[from[1]][to] += (jsonDataFiltered[index].hr2_kal);
+            linkSize[from[1]][to] += (jsonDataFiltered[index].t2wt);
         }
-
-
-
-        switch (jsonDataFiltered[index].t3baum) {
+        switch (jsonDataFiltered[index].t3bqvalids) {
             case 1:
+                to = 9;
+                from[1] = 9;
+                break;
+            case 2:
                 to = 10;
                 from[1] = 10;
                 break;
-            case 2:
+            case 3:
                 to = 11;
                 from[1] = 11;
                 break;
-            case 3:
+            case 4:
                 to = 12;
                 from[1] = 12;
                 break;
-            case 4:
-                to = 13;
-                from[1] = 13;
-                break;
-            case 5:
-                to = 14;
-                from[1] = 14;
-                break;
-            case 6:
-                to = 15;
-                from[1] = 15;
-                break;
-            case 7:
-                to = 16;
-                from[1] = 16;
-                break;
-            case 8:
-                to = 17;
-                from[1] = 17;
-                break;
             default:
                 to = null;
                 from[1] = null;
         }
         if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (jsonDataFiltered[index].hr3_kal);
+            linkSize[from[0]][to] += (jsonDataFiltered[index].t3wt);
         }
-
-        switch (jsonDataFiltered[index].t4baum) {
-            case 1:
-                to = 18;
-                from[0] = 18;
-                break;
-            case 2:
-                to = 19;
-                from[0] = 19;
-                break;
-            case 3:
-                to = 20;
-                from[0] = 20;
-                break;
-            case 4:
-                to = 21;
-                from[0] = 21;
-                break;
-            case 5:
-                to = 22;
-                from[0] = 22;
-                break;
-            case 6:
-                to = 23;
-                from[0] = 23;
-                break;
-            case 7:
-                to = 24;
-                from[0] = 24;
-                break;
-            case 8:
-                to = 25;
-                from[0] = 25;
-                break;
-            default:
-                to = null;
-                from[0] = null;
-        }
-        if (from[1] != null && to != null) {
-            linkSize[from[1]][to] += (jsonDataFiltered[index].hr4_kal);
-        }
-
-        switch (jsonDataFiltered[index].t5baum) {
-            case 1:
-                to = 26;
-                from[1] = 26;
-                break;
-            case 2:
-                to = 27;
-                from[1] = 27;
-                break;
-            case 3:
-                to = 28;
-                from[1] = 28;
-                break;
-            case 4:
-                to = 29;
-                from[1] = 29;
-                break;
-            case 5:
-                to = 30;
-                from[1] = 30;
-                break;
-            case 6:
-                to = 31;
-                from[1] = 31;
-                break;
-            case 7:
-                to = 32;
-                from[1] = 32;
-                break;
-            case 8:
-                to = 33;
-                from[1] = 33;
-                break;
-            default:
-                to = null;
-                from[1] = null;
-        }
-        if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (jsonDataFiltered[index].hr5_kal);
-        }
-
-        switch (jsonDataFiltered[index].t6baum) {
-            case 1:
-                to = 34;
-                from[0] = 34;
-                break;
-            case 2:
-                to = 35;
-                from[0] = 35;
-                break;
-            case 3:
-                to = 36;
-                from[0] = 36;
-                break;
-            case 4:
-                to = 37;
-                from[0] = 37;
-                break;
-            case 5:
-                to = 38;
-                from[0] = 38;
-                break;
-            case 6:
-                to = 39;
-                from[0] = 39;
-                break;
-            case 7:
-                to = 40;
-                from[0] = 40;
-                break;
-            case 8:
-                to = 41;
-                from[0] = 41;
-                break;
-            default:
-                to = null;
-                from[0] = null;
-
-        }
-        if (from[1] != null && to != null) {
-            linkSize[from[1]][to] += (jsonDataFiltered[index].hr6_kal);
-        }
-
-        switch (jsonDataFiltered[index].t7baum) {
-            case 1:
-                to = 42;
-                from[1] = 42;
-                break;
-            case 2:
-                to = 43;
-                from[1] = 43;
-                break;
-            case 3:
-                to = 44;
-                from[1] = 44;
-                break;
-            case 4:
-                to = 45;
-                from[1] = 45;
-                break;
-            case 5:
-                to = 46;
-                from[1] = 46;
-                break;
-            case 6:
-                to = 47;
-                from[1] = 47;
-                break;
-            case 7:
-                to = 48;
-                from[1] = 48;
-                break;
-            case 8:
-                to = 49;
-                from[1] = 49;
-                break;
-            default:
-                to = null;
-                from[1] = null;
-
-        }
-        if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (jsonDataFiltered[index].hr7_kal);
-        }
-
-        switch (jsonDataFiltered[index].t8baum) {
-            case 1:
-                to = 50;
-                from[0] = 50;
-                break;
-            case 2:
-                to = 51;
-                from[0] = 51;
-                break;
-            case 3:
-                to = 52;
-                from[0] = 52;
-                break;
-            case 5:
-                to = 53;
-                from[0] = 53;
-                break;
-            case 7:
-                to = 54;
-                from[0] = 54;
-                break;
-            case 8:
-                to = 55;
-                from[0] = 55;
-                break;
-            default:
-                to = null;
-                from[0] = null;
-
-        }
-        if (from[1] != null && to != null) {
-            linkSize[from[1]][to] += (jsonDataFiltered[index].hr8_kal);
-        }
-
-        switch (jsonDataFiltered[index].t9baum) {
-            case 1:
-                to = 56;
-                from[1] = 56;
-                break;
-            case 2:
-                to = 57;
-                from[1] = 57;
-                break;
-            case 3:
-                to = 58;
-                from[1] = 58;
-                break;
-            case 5:
-                to = 59;
-                from[1] = 59;
-                break;
-            case 7:
-                to = 60;
-                from[1] = 60;
-                break;
-            case 8:
-                to = 61;
-                from[1] = 61;
-                break;
-            default:
-                to = null;
-                from[1] = null;
-        }
-        if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (jsonDataFiltered[index].hr9_kal);
-        }
-
-
     }
 
-    /*
+     /*
      *calculate weight of links
      *for every survey year we collect the total amount of "movement" to get the weight
      *if more nodes and other years are implemented, then this code needs to be expanded!
      * */
-    for (i=1; i<5; i++){
+     for (i=1; i<5; i++){
         for (j=0; j < 56; j++){
             t1weigth += linkSize[j][i];
         }
     }
 
-    for (i=5; i<10; i++){
+    for (i=5; i<8; i++){
         for (j=0; j < 56; j++){
             t2weigth += linkSize[j][i];
         }
     }
 
-    for (i=10; i<18; i++){
+    for (i=8; i<12; i++){
         for (j=0; j < 56; j++){
             t3weigth += linkSize[j][i];
-        }
-    }
-
-    for (i=18; i<26; i++){
-        for (j=0; j < 56; j++){
-            t4weigth += linkSize[j][i];
-        }
-    }
-
-    for (i=26; i<34; i++){
-        for (j=0; j < 56; j++){
-            t5weigth += linkSize[j][i];
-        }
-    }
-
-    for (i=34; i<42; i++){
-        for (j=0; j < 56; j++){
-            t6weigth += linkSize[j][i];
-        }
-    }
-
-    for (i=42; i<50; i++){
-        for (j=0; j < 56; j++){
-            t7weigth += linkSize[j][i];
-        }
-    }
-
-    for (i=50; i<56; i++){
-        for (j=0; j < 56; j++){
-            t8weigth += linkSize[j][i];
-        }
-    }
-
-    for (i=56; i<62; i++){
-        for (j=0; j < 56; j++){
-            t9weigth += linkSize[j][i];
         }
     }
 
@@ -592,51 +298,15 @@ function getCheckedBoxes(boxesArray){
         }
     }
 
-    for (i=5; i<10; i++){
+    for (i=5; i<8; i++){
         for (j=0; j < 56; j++){
             linkSize[j][i] = linkSize[j][i]/t2weigth*100;
         }
     }
 
-    for (i=10; i<18; i++){
+    for (i=8; i<12; i++){
         for (j=0; j < 56; j++){
             linkSize[j][i] = linkSize[j][i]/t3weigth*100;
-        }
-    }
-
-    for (i=18; i<26; i++){
-        for (j=0; j < 56; j++){
-            linkSize[j][i] = linkSize[j][i]/t4weigth*100;
-        }
-    }
-
-    for (i=26; i<34; i++){
-        for (j=0; j < 56; j++){
-            linkSize[j][i] = linkSize[j][i]/t5weigth*100;
-        }
-    }
-
-    for (i=34; i<42; i++){
-        for (j=0; j < 56; j++){
-            linkSize[j][i] = linkSize[j][i]/t6weigth*100;
-        }
-    }
-
-    for (i=42; i<50; i++){
-        for (j=0; j < 56; j++){
-            linkSize[j][i] = linkSize[j][i]/t7weigth*100;
-        }
-    }
-
-    for (i=50; i<56; i++){
-        for (j=0; j < 56; j++){
-            linkSize[j][i] = linkSize[j][i]/t8weigth*100;
-        }
-    }
-
-    for (i=56; i<62; i++){
-        for (j=0; j < 56; j++){
-            linkSize[j][i] = linkSize[j][i]/t9weigth*100;
         }
     }
 

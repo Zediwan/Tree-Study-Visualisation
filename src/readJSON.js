@@ -6,7 +6,7 @@
  function readData(callback) {
     //Read json and store data in array
     $(function () {
-        $.getJSON('data/data_nolable.json', function (data) {
+        $.getJSON('data/data_2nd-cohort.json', function (data) {
             $.each(data.person, function () {
                 jsonData.push(this);
             });

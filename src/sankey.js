@@ -55,16 +55,16 @@ function updateSankey() {
     switch (lang)
     {
         case "ger":
-            d3.json("data/labels-ger.json", helper);
-            break;
-        case "fra":
-            d3.json("data/labels-fr.json", helper);
+            d3.json("data/labels_2nd-cohort-de.json", helper);
             break;
         case "eng":
-            d3.json("data/labels-en.json", helper);
+            d3.json("data/labels_2nd-cohort-de.json", helper);
             break;
         default:
-            d3.json("data/labels.json", helper);
+            d3.json("data/labels_2nd-cohort-de.json", helper);
+            /**
+             * Im original haben sie dafür einen eigenes Set (labels.json). Ist das nötig?
+             */
     }
 }
 
@@ -233,26 +233,12 @@ function drawTitles() {
         .attr("x", function (d) {
             switch (d)
             {
-                case "2000":
+                case "2016":
                     return columnCoord[0];
-                case "2001":
+                case "2017":
                     return columnCoord[1];
-                case "2002":
+                case "2018":
                     return columnCoord[2];
-                case "2003":
-                    return columnCoord[3];
-                case "2004":
-                    return columnCoord[4];
-                case "2005":
-                    return columnCoord[5];
-                case "2006":
-                    return columnCoord[6];
-                case "2007":
-                    return columnCoord[7];
-                case "2010":
-                    return columnCoord[8];
-                case "2014":
-                    return columnCoord[9];
                 default:
                     return 0;
             }
@@ -291,55 +277,15 @@ function setColor(d) {
         switch(d.name)
         {
             case "Obligatorische Schule":
-                return school;
+                return ;
             case "Nicht in Ausbildung":
-                return not_in_education;
+                return nicht_in_ausbildung;
             case "Zwischenlösung":
-                return intermediate;
-            case "Sekundarstufe II Berufsbildung":
-                return coational_education;
-            case "Sekundarstufe II Allgemeinbildung":
-                return general_education;
-            case "Tertiär B":
-                return tertiary_b;
-            case "Erwerbstätig mit Sek. II-Abschluss":
-                return work_dipl;
-            case "Erwerbstätig ohne Sek. II-Abschluss":
-                return work_no_dipl;
-            case "Weder in Ausbildung noch erwerbstätig":
-                return no_edu_no_emp;
-            case "Tertiär A":
-                return tertiary_a;
-            default:
-                return notsure;
-        }
-    }
-
-    //set colors for french labels
-    else if(lang == "fra")
-    {
-        switch(d.name)
-        {
-            case "Scolarité obligatoire":
-                return school;
-            case "Hors formation":
-                return not_in_education;
-            case "Solutions intermédiaires":
-                return intermediate;
-            case "Formation professionnelle sec.II":
-                return coational_education;
-            case "Formation générale secondaire II":
-                return general_education;
-            case "Tertiaire B":
-                return tertiary_b;
-            case "Actif après obtention d‘un diplôme du sec. II":
-                return work_dipl;
-            case "Actif sans diplôme sec. II":
-                return work_no_dipl;
-            case "Ni en formation ni actif":
-                return no_edu_no_emp;
-            case "Tertiaire A":
-                return tertiary_a;
+                return zwischenloesung;
+            case "Berufsausbildung":
+                return berufsausbildung;
+            case "allgemeinbildende Schule":
+                return allgemeinbildende_Schule;
             default:
                 return notsure;
         }
@@ -351,26 +297,16 @@ function setColor(d) {
 
         switch(d.name)
         {
-            case "9th grade of compulsory school":
-                return school;
+            case "compulsory school":
+                return obligatorische_schule;
             case "Not in education or training":
-                return not_in_education;
+                return nicht_in_ausbildung;
             case "Intermediate solutions":
-                return intermediate;
+                return zwischenloesung;
             case "Vocational education and training":
-                return coational_education;
+                return berufsausbildung;
             case "General education":
-                return general_education;
-            case "Tertiary B":
-                return tertiary_b;
-            case "Economically active with upper sec. diploma":
-                return work_dipl;
-            case "Economically active without upper sec. diploma":
-                return work_no_dipl;
-            case "Neither economically active nor in education or training":
-                return no_edu_no_emp;
-            case "Tertiary A":
-                return tertiary_a;
+                return allgemeinbildende_Schule;
             default:
                 return notsure;
         }
