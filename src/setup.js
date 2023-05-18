@@ -34,11 +34,11 @@ var titlesDrawn = false;
 var nodesFilter;
 
 //define each color
-var compulsary_education = "#666";
-var vocational_education = "#6CA";
-var general_education = "#088";
-var intermediate_solutions = "#F68";
-var not_in_education = "#F18";
+var obligatorische_schule = "#666";
+var berufsausbildung = "#6CA";
+var allgemeinbildende_Schule = "#088";
+var zwischenloesung = "#F68";
+var nicht_in_ausbildung = "#F18";
 
 
 //language of the page
@@ -153,73 +153,19 @@ function setLegendColor() {
             switch(list[0].children[x].innerText)
             {
                 case "Obligatorische Schule":
-                    list[0].children[x].firstChild.style.background = school;
+                    list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
                 case "Nicht in Ausbildung":
-                    list[0].children[x].firstChild.style.background = not_in_education;
+                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
                 case "Zwischenlösung":
-                    list[0].children[x].firstChild.style.background = intermediate;
+                    list[0].children[x].firstChild.style.background = zwischenloesung;
                     break;
-                case "Sekundarstufe II Berufsbildung":
-                    list[0].children[x].firstChild.style.background = coational_education;
+                case "Berufsausbildung":
+                    list[0].children[x].firstChild.style.background = berufsausbildung;
                     break;
-                case "Sekundarstufe II Allgemeinbildung":
-                    list[0].children[x].firstChild.style.background = general_education;
-                    break;
-                case "Erwerbstätig mit Sek. II-Abschluss":
-                    list[0].children[x].firstChild.style.background = work_dipl;
-                    break;
-                case "Erwerbstätig ohne Abschluss":
-                    list[0].children[x].firstChild.style.background = work_no_dipl;
-                    break;
-                case "Weder in Ausbildung noch erwerbstätig":
-                    list[0].children[x].firstChild.style.background = no_edu_no_emp;
-                    break;
-                case "Tertiär A = Universität oder Fachhochschule":
-                    list[0].children[x].firstChild.style.background = tertiary_a;
-                    break;
-                case "Tertiär B = Höhere Fachschulen, Fach- und Berufsprüfungen":
-                    list[0].children[x].firstChild.style.background = tertiary_b;
-                    break;
-                default:
-                    list[0].children[x].firstChild.style.background = "white";
-            }
-        }
-        //switch french labels
-        else if(lang == "fra")
-        {
-            switch(list[0].children[x].innerText)
-            {
-                case "Scolarité obligatoire":
-                    list[0].children[x].firstChild.style.background = school;
-                    break;
-                case "Hors formation":
-                    list[0].children[x].firstChild.style.background = not_in_education;
-                    break;
-                case "Solutions intermédiaires":
-                    list[0].children[x].firstChild.style.background = intermediate;
-                    break;
-                case "Formation professionnelle sec.II":
-                    list[0].children[x].firstChild.style.background = coational_education;
-                    break;
-                case "Formation générale secondaire II":
-                    list[0].children[x].firstChild.style.background = general_education;
-                    break;
-                case "Actif après obtention d‘un diplôme du sec. II":
-                    list[0].children[x].firstChild.style.background = work_dipl;
-                    break;
-                case "Actif sans diplôme sec. II":
-                    list[0].children[x].firstChild.style.background = work_no_dipl;
-                    break;
-                case "Ni en formation ni actif":
-                    list[0].children[x].firstChild.style.background = no_edu_no_emp;
-                    break;
-                case "Tertiaire A = universités, hautes écoles (spécialisées)":
-                    list[0].children[x].firstChild.style.background = tertiary_a;
-                    break;
-                case "Tertiaire B = Ecoles supérieures, préparations aux examens professionnels supérieurs (diplôme ou brevet fédéral)":
-                    list[0].children[x].firstChild.style.background = tertiary_b;
+                case "allgemeinbildende Schule":
+                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
                     break;
                 default:
                     list[0].children[x].firstChild.style.background = "white";
@@ -231,34 +177,19 @@ function setLegendColor() {
             switch(list[0].children[x].innerText)
             {
                 case "9th grade of compulsory school":
-                    list[0].children[x].firstChild.style.background = school;
+                    list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
                 case "Not in education or training":
-                    list[0].children[x].firstChild.style.background = not_in_education;
+                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
                 case "Intermediate solutions":
-                    list[0].children[x].firstChild.style.background = intermediate;
+                    list[0].children[x].firstChild.style.background = zwischenloesung;
                     break;
                 case "Vocational education and training":
-                    list[0].children[x].firstChild.style.background = coational_education;
+                    list[0].children[x].firstChild.style.background = berufsausbildung;
                     break;
                 case "General education":
-                    list[0].children[x].firstChild.style.background = general_education;
-                    break;
-                case "Economically active with upper sec. diploma":
-                    list[0].children[x].firstChild.style.background = work_dipl;
-                    break;
-                case "Economically active without upper sec. diploma":
-                    list[0].children[x].firstChild.style.background = work_no_dipl;
-                    break;
-                case "Neither economically active nor in education or training":
-                    list[0].children[x].firstChild.style.background = no_edu_no_emp;
-                    break;
-                case "Tertiary A = Universities and Universities of Applied Sciences":
-                    list[0].children[x].firstChild.style.background = tertiary_a;
-                    break;
-                case "Tertiary B = other postsecondary education and training":
-                    list[0].children[x].firstChild.style.background = tertiary_b;
+                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
                     break;
                 default:
                     list[0].children[x].firstChild.style.background = "white";
