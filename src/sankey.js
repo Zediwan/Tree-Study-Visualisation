@@ -282,12 +282,13 @@ function setColor(d) {
                 return nicht_in_ausbildung;
             case "Zwischenlösung":
                 return zwischenloesung;
-            case "Berufsausbildung":
+            case "Berufsbildung":
                 return berufsausbildung;
-            case "allgemeinbildende Schule":
+            case "allgemeine Weiterbildung":
                 return allgemeinbildende_Schule;
             default:
-                return notsure;
+                console.log(d.name)
+                return ;
         }
     }
 
