@@ -278,23 +278,21 @@ function setColor(d) {
                 return ;
             case "Nicht in Ausbildung":
                 return nicht_in_ausbildung;
-             case "Praktikum":
+            case "Praktikum":
                 return praktikum;
             case "10. Schuljahr":
                  return zehntes_schuljahr;
             case "Zwischenlösung":
                 return zwischenloesung;
-            case "Nicht in Ausbildung":
-                return nicht_in_ausbildung;
             case "Berufsausbildung: 2 jährig":
                 return berufsausbildung_2jahre;
             case "Berufsausbildung: 3-4 jährig":
                  return berufsausbildung_34jahre;
-            case "BBerufsmaturität":
+            case "Berufsmaturität":
                 return berufsmaturitaet;
             case "allgemeine Weiterbildung":
                 return allgemeinbildende_Schule;
-                case "Bandere Lösungen":
+            case "andere Lösungen":
                     return andere_loesung;
             default:
                 return notsure;
