@@ -32,35 +32,12 @@ function convertToInteger(jsonData, type) {
     }
     /**
      * in dataset: 
-     * 1 = NET (no education or training), 
-     * 2 = Internship (Praktikum)
-     * 3 = 10th school year
-     * 4 = other intermediate solution
-     * 5 = 2 years VET (Lehre)
-     * 6 = 3-4 years VET (Lehre)
-     * 7 = vocational baccalaureate (Berufsmaturität)
-     * 8 = general bachelor baccalaureate (Maturiät)
-     * 9 = other education
-     * for it to be 0 we substract 1 -->
-     * 0 = NET (no education or training), 
-     * 1 = Internship (Praktikum)
-     * 2 = 10th school year
-     * 3 = other intermediate solution
-     * 4 = 2 years VET (Lehre)
-     * 5 = 3-4 years VET (Lehre)
-     * 6 = vocational baccalaureate (Berufsmaturität)
-     * 7 = general bachelor baccalaureate (Maturiät)
-     * 8 = other education
-     * 
-     * Should maybe separated into these categories categories:
-     * 0 = NET
-     * 1 = intermediate solution (1-3)
-     * 2 = vocational education(4 and 5)
-     * 3 = general baccalaureate
-     * 4 = other education
+     * 1 = High requirements
+     * 2 = Advanced requirements & Alternative/non-assignable study program
+     * 3 = Basic/low requirements
       */
 
-    if(type == "schooltype")
+    if(type == "school-requirements")
     {
         return jsonData.t3educ_class_1_r 
         -1;
@@ -143,7 +120,7 @@ function filter() {
         // Check whether the person's data matches any of the selected categories if none selected add all of said category
         if ((selGend.length == 0 || selGend.includes(convertToInteger(jsonData[i], "gender"))) &&
             (selLang.length == 0 || selLang.includes(convertToInteger(jsonData[i], "language"))) &&
-            (selEdu.length == 0 || selEdu.includes(convertToInteger(jsonData[i], "schooltype"))) &&
+            (selEdu.length == 0 || selEdu.includes(convertToInteger(jsonData[i], "school-requirements"))) &&
             (selEco.length == 0 || selEco.includes(convertToInteger(jsonData[i], "status"))) &&
             (selEduPar.length == 0 || selEduPar.includes(convertToInteger(jsonData[i], "parents"))))
         {
@@ -201,32 +178,32 @@ function getCheckedBoxes(boxesArray){
                 from[1] = 2;
                 break;
             case 3:
-                to = 2
-                from[1] = 2;
+                to = 3
+                from[1] = 3;
                 break;
             case 4:
-                to = 2
-                from[1] = 2;
+                to = 4
+                from[1] = 4;
                 break;
             case 5:
-                to = 3
-                from[1] = 3;
+                to = 5
+                from[1] = 5;
                 break;
             case 6:
-                to = 3
-                from[1] = 3;
+                to = 6
+                from[1] = 6;
                 break;
             case 7:
-                to = 3
-                from[1] = 3;
+                to = 7
+                from[1] = 7;
                 break;       
             case 8:
-                to = 4;
-                from[1] = 4;
+                to = 8;
+                from[1] = 8;
                 break;
             case 9:
-                to = 4;
-                from[1] = 4;
+                to = 9;
+                from[1] = 9;
                 break;
             default:
                 to = null;
@@ -294,12 +271,12 @@ function getCheckedBoxes(boxesArray){
      *for every survey year we collect the total amount of "movement" to get the weight
      *if more nodes and other years are implemented, then this code needs to be expanded!
      * */
-    const TOT_NUM_NODES = 14    // Total amount of nodes specified in labels.json
-    const NUM_LAST_NODES = 5    // Amount of nodes in the last group including invis node
+    const TOT_NUM_NODES = 29    // Total amount of nodes specified in labels.json
+    const NUM_LAST_NODES = 10    // Amount of nodes in the last group including invis node
     const REM_NUM_NODES = TOT_NUM_NODES - NUM_LAST_NODES  // Remaining number of nodes
 
     const FIRST_YEAR_START = 1
-    const FIRST_AMOUNT= 4
+    const FIRST_AMOUNT= 9
     const FIRS_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
     for (i = FIRST_YEAR_START; i < FIRS_YEAR_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
@@ -308,7 +285,7 @@ function getCheckedBoxes(boxesArray){
     }
 
     const SECOND_YEAR_START = FIRS_YEAR_END
-    const SECOND_AMOUNT= 4
+    const SECOND_AMOUNT= 9
     const SECOND_END = FIRS_YEAR_END + SECOND_AMOUNT
     for (i = SECOND_YEAR_START; i < SECOND_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){

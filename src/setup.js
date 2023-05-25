@@ -35,10 +35,17 @@ let nodesFilter;
 
 //define each color
 let obligatorische_schule = "#666";
-let berufsausbildung = "#6CA";
-let allgemeinbildende_Schule = "#088";
-let zwischenloesung = "#F68";
 let nicht_in_ausbildung = "#F18";
+let praktikum = "#F18";
+let zehntes_schuljahr = "#F18";
+let zwischenloesung = "#F68";
+let berufsausbildung_2jahre = "#F68";
+let berufsausbildung_34jahre = "#6CA";
+let berufsmaturitaet = "#6CA";
+let allgemeinbildende_Schule = "#088";
+let andere_loesung = "#088";
+
+
 let notsure = "#FF0";
 
 //language of the page
@@ -155,45 +162,33 @@ function setLegendColor() {
                 case "Obligatorische Schule":
                     list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
-                case "Nicht in Ausbildung":
+                    case "Nicht in Ausbildung":
                     list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
+                case "Praktikum":
+                    list[0].children[x].firstChild.style.background = praktikum
+                    break;
+                case "10. Schuljahr" :
+                    list[0].children[x].firstChild.style.background = zehntes_schuljahr
                 case "Zwischenlösung":
                     list[0].children[x].firstChild.style.background = zwischenloesung;
                     break;
-                case "Berufsausbildung":
-                    list[0].children[x].firstChild.style.background = berufsausbildung;
+                case "Berufsausbildung: 2 Jahre" :
+                     list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
+                case "Berufsausbildung: 3-4 Jahre":
+                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
                     break;
-                case "allgemeinbildende Schule":
+                case "Berufsmaturität" :
+                    list[0].children[x].firstChild.style.background = berufsmaturitaet
+                case "Allgemeinbildung" :
                     list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
+                case "andere Lösung":
+                    list[0].children[x].firstChild.style.background = andere_loesung;
                     break;
                 default:
                     list[0].children[x].firstChild.style.background = "white";
             }
         }
-        //switch english labels
-        else
-        {
-            switch(list[0].children[x].innerText)
-            {
-                case "9th grade of compulsory school":
-                    list[0].children[x].firstChild.style.background = obligatorische_schule;
-                    break;
-                case "Not in education or training":
-                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
-                    break;
-                case "Intermediate solutions":
-                    list[0].children[x].firstChild.style.background = zwischenloesung;
-                    break;
-                case "Vocational education and training":
-                    list[0].children[x].firstChild.style.background = berufsausbildung;
-                    break;
-                case "General education":
-                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
-                    break;
-                default:
-                    list[0].children[x].firstChild.style.background = "white";
-            }
-        }
+
     }
 }
