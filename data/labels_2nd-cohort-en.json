@@ -11,6 +11,11 @@
     {"name":"Berufsbildung"},
     {"name":"allgemeine Weiterbildung"}, 
 
+    {"name":"Nicht in Ausbildung"},
+    {"name":"Zwischenlösung"},
+    {"name":"Berufsbildung"},
+    {"name":"allgemeine Weiterbildung"}, 
+
     {"name": "Invisible Node"}
     ]
 }

@@ -191,10 +191,30 @@ function getCheckedBoxes(boxesArray){
                 from[1] = 2;
                 break;
             case 3:
-                to = 3;
-                from[1] = 3;
+                to = 2
+                from[1] = 2;
                 break;
             case 4:
+                to = 2
+                from[1] = 2;
+                break;
+            case 5:
+                to = 3
+                from[1] = 3;
+                break;
+            case 6:
+                to = 3
+                from[1] = 3;
+                break;
+            case 7:
+                to = 3
+                from[1] = 3;
+                break;       
+            case 8:
+                to = 4;
+                from[1] = 4;
+                break;
+            case 9:
                 to = 4;
                 from[1] = 4;
                 break;
@@ -214,44 +234,84 @@ function getCheckedBoxes(boxesArray){
         // same as above but this time it begins with index 5 because thats the first node in the second survey
         switch (jsonDataFiltered[index].t2educ_class_1_r) {
             case 1:
-                to = 5;
-                from[0] = 5;
+                to = 1;
+                from[1] = 1;
                 break;
             case 2:
-                to = 6;
-                from[0] = 6;
+                to = 2
+                from[1] = 2;
                 break;
             case 3:
-                to = 7;
-                from[0] = 7;
+                to = 2
+                from[1] = 2;
                 break;
             case 4:
-                to = 8;
-                from[0] = 8;
+                to = 2
+                from[1] = 2;
+                break;
+            case 5:
+                to = 3
+                from[1] = 3;
+                break;
+            case 6:
+                to = 3
+                from[1] = 3;
+                break;
+            case 7:
+                to = 3
+                from[1] = 3;
+                break;       
+            case 8:
+                to = 4;
+                from[1] = 4;
+                break;
+            case 9:
+                to = 4;
+                from[1] = 4;
                 break;
             default:
                 to = null;
-                from[0] = null;
+                from[1] = null;
         }
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (jsonDataFiltered[index].t2wt);
         }
         switch (jsonDataFiltered[index].t3educ_class_1_r) {
             case 1:
-                to = 9;
-                from[1] = 9;
+                to = 1;
+                from[1] = 1;
                 break;
             case 2:
-                to = 10;
-                from[1] = 10;
+                to = 2
+                from[1] = 2;
                 break;
             case 3:
-                to = 11;
-                from[1] = 11;
+                to = 2
+                from[1] = 2;
                 break;
             case 4:
-                to = 12;
-                from[1] = 12;
+                to = 2
+                from[1] = 2;
+                break;
+            case 5:
+                to = 3
+                from[1] = 3;
+                break;
+            case 6:
+                to = 3
+                from[1] = 3;
+                break;
+            case 7:
+                to = 3
+                from[1] = 3;
+                break;       
+            case 8:
+                to = 4;
+                from[1] = 4;
+                break;
+            case 9:
+                to = 4;
+                from[1] = 4;
                 break;
             default:
                 to = null;
