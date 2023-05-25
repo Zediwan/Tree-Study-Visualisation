@@ -328,7 +328,7 @@ function getCheckedBoxes(boxesArray){
      *
      * to remember is that the array linkSize is linkSize[FROM][TO]
      */
-    const GUILLOTINE = 0.2    // Min amount of % that a connection needs to be shown
+    const GUILLOTINE = 0    // Min amount of % that a connection needs to be shown
     const RELEVANT_NODES = TOT_NUM_NODES-1   // All nodes except the invisible one
     for (i = 1; i < RELEVANT_NODES; i++){
         summe = 0;

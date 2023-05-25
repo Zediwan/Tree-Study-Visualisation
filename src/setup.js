@@ -35,15 +35,15 @@ let nodesFilter;
 
 //define each color
 let obligatorische_schule = "#666";
-let nicht_in_ausbildung = "#F18";
-let praktikum = "#F18";
-let zehntes_schuljahr = "#F18";
-let zwischenloesung = "#F68";
-let berufsausbildung_2jahre = "#F68";
-let berufsausbildung_34jahre = "#6CA";
-let berufsmaturitaet = "#6CA";
-let allgemeinbildende_Schule = "#088";
-let andere_loesung = "#088";
+let nicht_in_ausbildung = "#fa6eeb";
+let praktikum = "#b28ff5";
+let zehntes_schuljahr = "#6ab0ff";
+let zwischenloesung = "#6ad8c8";
+let berufsausbildung_2jahre = "#6aff91";
+let berufsausbildung_34jahre = "#b1d8ba";
+let berufsmaturitaet = "#f7ff75";
+let allgemeinbildende_Schule = "#ffd26e";
+let andere_loesung = "#cb5050";
 
 
 let notsure = "#FF0";
