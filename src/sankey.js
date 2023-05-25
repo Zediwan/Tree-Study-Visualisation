@@ -61,7 +61,7 @@ function updateSankey() {
             d3.json("data/labels_2nd-cohort-en.json", helper);
             break;
         default:
-            d3.json("data/labels_2nd-cohort.json", helper);
+            d3.json("data/labels_2nd-cohort-de.json", helper);
     }
 }
 
@@ -300,6 +300,7 @@ function setColor(d) {
                 return notsure;
         }
     }
+}
 
 function appendGradient(id){
     var pathGroup = svg.select('#path' + id);
@@ -422,4 +423,4 @@ function updateSelections(checkbox) {
             allCheckbox.disabled = false;
         }
     }
-}  
+}

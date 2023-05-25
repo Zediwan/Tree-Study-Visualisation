@@ -131,7 +131,7 @@ function appSize() {
 function initLinkSize() {
     //linkSize[i][j] will contain the width of the link from node i to node j
     // it is used for cleaning up the sankey (look at calculateLinks)
-    const NUMBER_OF_NODES = 14
+    const NUMBER_OF_NODES = 29
     linkSize = new Array(NUMBER_OF_NODES);
     var i;
     var j;
