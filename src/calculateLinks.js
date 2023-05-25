@@ -109,7 +109,7 @@ function convertToInteger(jsonData, type) {
  * filter jsonData and fill selected elements into jsonDataFiltered
  */
 function filter() {
-    jsonDataFiltered = [];
+    jsonDataFiltered = jsonData;
     var form = document.getElementById("filterForm");
     var i;
     var length = jsonData.length;   // Amount of Data elements.
@@ -227,6 +227,7 @@ function getCheckedBoxes(boxesArray){
          * should a source or target node be empty (because some people didn't answer that year then it will not be included)
          * */
         if (from[0] != null && to != null) {
+            //console.log(jsonDataFiltered[index].t1wt)
             linkSize[from[0]][to] += (jsonDataFiltered[index].t1wt);
         }
 
@@ -234,84 +235,84 @@ function getCheckedBoxes(boxesArray){
         // same as above but this time it begins with index 5 because thats the first node in the second survey
         switch (jsonDataFiltered[index].t2educ_class_1_r) {
             case 1:
-                to = 1;
-                from[1] = 1;
+                to = 5;
+                from[0] = 5;
                 break;
             case 2:
-                to = 2
-                from[1] = 2;
+                to = 6
+                from[0] = 6;
                 break;
             case 3:
-                to = 2
-                from[1] = 2;
+                to = 6
+                from[0] = 6;
                 break;
             case 4:
-                to = 2
-                from[1] = 2;
+                to = 6
+                from[0] = 6;
                 break;
             case 5:
-                to = 3
-                from[1] = 3;
+                to = 7
+                from[0] = 7;
                 break;
             case 6:
-                to = 3
-                from[1] = 3;
+                to = 7
+                from[0] = 7;
                 break;
             case 7:
-                to = 3
-                from[1] = 3;
+                to = 7
+                from[0] = 7;
                 break;       
             case 8:
-                to = 4;
-                from[1] = 4;
+                to = 8;
+                from[0] = 8;
                 break;
             case 9:
-                to = 4;
-                from[1] = 4;
+                to = 8;
+                from[0] = 8;
                 break;
             default:
                 to = null;
-                from[1] = null;
+                from[0] = null;
         }
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (jsonDataFiltered[index].t2wt);
         }
         switch (jsonDataFiltered[index].t3educ_class_1_r) {
             case 1:
-                to = 1;
-                from[1] = 1;
+                to = 9;
+                from[1] = 9;
                 break;
             case 2:
-                to = 2
-                from[1] = 2;
+                to = 10
+                from[1] = 10;
                 break;
             case 3:
-                to = 2
-                from[1] = 2;
+                to = 10
+                from[1] = 10;
                 break;
             case 4:
-                to = 2
-                from[1] = 2;
+                to = 10
+                from[1] = 10;
                 break;
             case 5:
-                to = 3
-                from[1] = 3;
+                to = 11
+                from[1] = 11;
                 break;
             case 6:
-                to = 3
-                from[1] = 3;
+                to = 11
+                from[1] = 11;
                 break;
             case 7:
-                to = 3
-                from[1] = 3;
+                to = 11
+                from[1] = 11;
                 break;       
             case 8:
-                to = 4;
-                from[1] = 4;
+                to = 12;
+                from[1] = 12;
                 break;
             case 9:
-                to = 4;
-                from[1] = 4;
+                to = 12;
+                from[1] = 12;
                 break;
             default:
                 to = null;
@@ -336,6 +337,7 @@ function getCheckedBoxes(boxesArray){
     const FIRS_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
     for (i = FIRST_YEAR_START; i < FIRS_YEAR_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
+            //console.log(linkSize[j][i])
             t1weigth += linkSize[j][i];
         }
     }
