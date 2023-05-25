@@ -94,6 +94,7 @@ function convertToInteger(jsonData, type) {
 
 /**
  * filter jsonData and fill selected elements into jsonDataFiltered
+ * @todo @zediwan create filter for immigration
  */
 function filter() {
     jsonDataFiltered = [];
@@ -221,40 +222,40 @@ function getCheckedBoxes(boxesArray){
         // same as above but this time it begins with index 5 because thats the first node in the second survey
         switch (jsonDataFiltered[index].t2educ_class_1_r) {
             case 1:
-                to = 5;
-                from[0] = 5;
+                to = 10;
+                from[0] = 10;
                 break;
             case 2:
-                to = 6
-                from[0] = 6;
+                to = 11
+                from[0] = 11;
                 break;
             case 3:
-                to = 6
-                from[0] = 6;
+                to = 12
+                from[0] = 12;
                 break;
             case 4:
-                to = 6
-                from[0] = 6;
+                to = 13
+                from[0] = 13;
                 break;
             case 5:
-                to = 7
-                from[0] = 7;
+                to = 14
+                from[0] = 14;
                 break;
             case 6:
-                to = 7
-                from[0] = 7;
+                to = 15
+                from[0] = 15;
                 break;
             case 7:
-                to = 7
-                from[0] = 7;
+                to = 16
+                from[0] = 16;
                 break;       
             case 8:
-                to = 8;
-                from[0] = 8;
+                to = 17;
+                from[0] = 17;
                 break;
             case 9:
-                to = 8;
-                from[0] = 8;
+                to = 18;
+                from[0] = 18;
                 break;
             default:
                 to = null;
@@ -277,16 +278,16 @@ function getCheckedBoxes(boxesArray){
 
     const FIRST_YEAR_START = 1
     const FIRST_AMOUNT= 9
-    const FIRS_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
-    for (i = FIRST_YEAR_START; i < FIRS_YEAR_END; i++){
+    const FIRST_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
+    for (i = FIRST_YEAR_START; i < FIRST_YEAR_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             t1weigth += linkSize[j][i];
         }
     }
 
-    const SECOND_YEAR_START = FIRS_YEAR_END
+    const SECOND_YEAR_START = FIRST_YEAR_END
     const SECOND_AMOUNT= 9
-    const SECOND_END = FIRS_YEAR_END + SECOND_AMOUNT
+    const SECOND_END = FIRST_YEAR_END + SECOND_AMOUNT
     for (i = SECOND_YEAR_START; i < SECOND_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             t2weigth += linkSize[j][i];
@@ -296,15 +297,13 @@ function getCheckedBoxes(boxesArray){
     
 
     //Break linksize down to %, if more nodes and other years are implemented, then this code needs to be expanded!
-    /**@todo Add constants instead of numbers, see above */
-    for (i=1; i<5; i++){
+    for (i=FIRST_YEAR_START; i<FIRST_YEAR_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             linkSize[j][i] = linkSize[j][i]/t1weigth*100;
         }
     }
 
-    /**@todo Add constants instead of numbers, see above */
-    for (i=5; i<=8; i++){
+    for (SECOND_YEAR_START; i<=SECOND_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             linkSize[j][i] = linkSize[j][i]/t2weigth*100;
         }

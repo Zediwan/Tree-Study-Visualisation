@@ -69,7 +69,7 @@ function updateSankey() {
  * Reset Array for link size calculation, we logically need to do this to calculate the links new
  */
 function flush() {
-    const TOT_NUM_NODES = 14
+    const TOT_NUM_NODES = 29
     // needs to be changed if more nodes are implemented
     customLinks = [];
     for (i = 0; i < TOT_NUM_NODES; i++) {
@@ -278,38 +278,28 @@ function setColor(d) {
                 return ;
             case "Nicht in Ausbildung":
                 return nicht_in_ausbildung;
+             case "Praktikum":
+                return praktikum;
+            case "10. Schuljahr":
+                 return zehntes_schuljahr;
             case "Zwischenlösung":
                 return zwischenloesung;
-            case "Berufsbildung":
-                return berufsausbildung;
+            case "Nicht in Ausbildung":
+                return nicht_in_ausbildung;
+            case "Berufsausbildung: 2 jährig":
+                return berufsausbildung_2jahre;
+            case "Berufsausbildung: 3-4 jährig":
+                 return berufsausbildung_34jahre;
+            case "BBerufsmaturität":
+                return berufsmaturitaet;
             case "allgemeine Weiterbildung":
                 return allgemeinbildende_Schule;
+                case "Bandere Lösungen":
+                    return andere_loesung;
             default:
                 return notsure;
         }
     }
-
-    //set colors for english labels
-    else
-    {
-
-        switch(d.name)
-        {
-            case "compulsory school":
-                return obligatorische_schule;
-            case "Not in education or training":
-                return nicht_in_ausbildung;
-            case "Intermediate solutions":
-                return zwischenloesung;
-            case "Vocational education and training":
-                return berufsausbildung;
-            case "General education":
-                return allgemeinbildende_Schule;
-            default:
-                return notsure;
-        }
-    }
-}
 
 function appendGradient(id){
     var pathGroup = svg.select('#path' + id);
