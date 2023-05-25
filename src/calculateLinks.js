@@ -166,12 +166,6 @@ function getCheckedBoxes(boxesArray){
     t1weigth = 0;
     t2weigth = 0;
     t3weigth = 0;
-    t4weigth = 0;
-    t5weigth = 0;
-    t6weigth = 0;
-    t7weigth = 0;
-    t8weigth = 0;
-    t9weigth = 0;
 
     //Read each person object and manipulate links accordingly
     for (index = 0; index < length; index++) {
@@ -273,6 +267,7 @@ function getCheckedBoxes(boxesArray){
      *for every survey year we collect the total amount of "movement" to get the weight
      *if more nodes and other years are implemented, then this code needs to be expanded!
      * */
+    
      for (i=1; i<5; i++){
         for (j=0; j < 56; j++){
             t1weigth += linkSize[j][i];

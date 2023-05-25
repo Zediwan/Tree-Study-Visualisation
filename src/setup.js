@@ -39,7 +39,7 @@ var berufsausbildung = "#6CA";
 var allgemeinbildende_Schule = "#088";
 var zwischenloesung = "#F68";
 var nicht_in_ausbildung = "#F18";
-
+var notsure = "#FF0";
 
 //language of the page
 var lang;
@@ -123,18 +123,18 @@ function appSize() {
 
 function initLinkSize() {
     //linkSize[i][j] will contain the width of the link from node i to node j
-    // it has normally only 62 nodes (including the 0. node obligatory school), the 63. node is an invisible node
     // it is used for cleaning up the sankey (look at calculateLinks)
-    linkSize = new Array(63);
+    const NUMBER_OF_NODES = 14
+    linkSize = new Array(NUMBER_OF_NODES);
     var i;
     var j;
-    for (i = 0; i < 63; i++) {
-        linkSize[i] = new Array(63);
+    for (i = 0; i < NUMBER_OF_NODES; i++) {
+        linkSize[i] = new Array(NUMBER_OF_NODES);
     }
 
     //set every element of Array to 0
-    for (i = 0; i < 63; i++) {
-        for (j = 0; j < 63; j++) {
+    for (i = 0; i < NUMBER_OF_NODES; i++) {
+        for (j = 0; j < NUMBER_OF_NODES; j++) {
             linkSize[i][j] = 0;
         }
     }

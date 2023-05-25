@@ -287,8 +287,7 @@ function setColor(d) {
             case "allgemeine Weiterbildung":
                 return allgemeinbildende_Schule;
             default:
-                console.log(d.name)
-                return ;
+                return notsure;
         }
     }
 
