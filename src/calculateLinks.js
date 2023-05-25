@@ -267,40 +267,53 @@ function getCheckedBoxes(boxesArray){
      *for every survey year we collect the total amount of "movement" to get the weight
      *if more nodes and other years are implemented, then this code needs to be expanded!
      * */
-    
-     for (i=1; i<5; i++){
-        for (j=0; j < 56; j++){
+    const TOT_NUM_NODES = 14    // Total amount of nodes specified in labels.json
+    const NUM_LAST_NODES = 5    // Amount of nodes in the last group including invis node
+    const REM_NUM_NODES = TOT_NUM_NODES - NUM_LAST_NODES  // Remaining number of nodes
+
+    const FIRST_YEAR_START = 1
+    const FIRST_AMOUNT= 4
+    const FIRS_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
+    for (i = FIRST_YEAR_START; i < FIRS_YEAR_END; i++){
+        for (j=0; j < REM_NUM_NODES; j++){
             t1weigth += linkSize[j][i];
         }
     }
 
-    for (i=5; i<8; i++){
-        for (j=0; j < 56; j++){
+    const SECOND_YEAR_START = FIRS_YEAR_END
+    const SECOND_AMOUNT= 4
+    const SECOND_END = FIRS_YEAR_END + SECOND_AMOUNT
+    for (i = SECOND_YEAR_START; i < SECOND_END; i++){
+        for (j=0; j < REM_NUM_NODES; j++){
             t2weigth += linkSize[j][i];
         }
     }
 
+    /**@todo Add constants instead of numbers, see above */
     for (i=8; i<12; i++){
-        for (j=0; j < 56; j++){
+        for (j=0; j < REM_NUM_NODES; j++){
             t3weigth += linkSize[j][i];
         }
     }
 
     //Break linksize down to %, if more nodes and other years are implemented, then this code needs to be expanded!
+    /**@todo Add constants instead of numbers, see above */
     for (i=1; i<5; i++){
-        for (j=0; j < 56; j++){
+        for (j=0; j < REM_NUM_NODES; j++){
             linkSize[j][i] = linkSize[j][i]/t1weigth*100;
         }
     }
 
+    /**@todo Add constants instead of numbers, see above */
     for (i=5; i<8; i++){
-        for (j=0; j < 56; j++){
+        for (j=0; j < REM_NUM_NODES; j++){
             linkSize[j][i] = linkSize[j][i]/t2weigth*100;
         }
     }
 
+    /**@todo Add constants instead of numbers, see above */
     for (i=8; i<12; i++){
-        for (j=0; j < 56; j++){
+        for (j=0; j < REM_NUM_NODES; j++){
             linkSize[j][i] = linkSize[j][i]/t3weigth*100;
         }
     }
@@ -322,20 +335,22 @@ function getCheckedBoxes(boxesArray){
      *
      * to remember is that the array linkSize is linkSize[FROM][TO]
      */
-    for (i = 1; i < 62; i++){
+    const GUILLOTINE = 2    // Min amount of % that a connection needs to be shown
+    const RELEVANT_NODES = TOT_NUM_NODES-1   // All nodes except the invisible one
+    for (i = 1; i < RELEVANT_NODES; i++){
         summe = 0;
         for (j = 0; j < i; j++){
             summe = summe + linkSize[j][i];
         }
 
         // 4% guillotine
-        if (summe < 4) {
+        if (summe < GUILLOTINE) {
             for (j = 0; j < i; j++) {
                 linkSize[j][i] = 0;
             }
 
-            for (j = 0; j < 62; j++) {
-                linkSize[62][j] = linkSize[i][j];
+            for (j = 0; j < RELEVANT_NODES; j++) {
+                linkSize[RELEVANT_NODES][j] = linkSize[i][j];
                 linkSize[i][j] = 0;
             }
 
@@ -348,8 +363,8 @@ function getCheckedBoxes(boxesArray){
      *
      * if more nodes are implemented 63 needs to be changed!
      */
-    for (i = 0; i < 63; i++) {
-        for (j = 0; j < 63; j++) {
+    for (i = 0; i < TOT_NUM_NODES; i++) {
+        for (j = 0; j < TOT_NUM_NODES; j++) {
             if (linkSize[i][j] > 0) {
                 customLinks.push({ "source": i, "target": j, "value": linkSize[i][j] });
             }
