@@ -58,13 +58,10 @@ function updateSankey() {
             d3.json("data/labels_2nd-cohort-de.json", helper);
             break;
         case "eng":
-            d3.json("data/labels_2nd-cohort-de.json", helper);
+            d3.json("data/labels_2nd-cohort-en.json", helper);
             break;
         default:
-            d3.json("data/labels_2nd-cohort-de.json", helper);
-            /**
-             * Im original haben sie dafür einen eigenes Set (labels.json). Ist das nötig?
-             */
+            d3.json("data/labels_2nd-cohort.json", helper);
     }
 }
 
