@@ -16,7 +16,7 @@ function convertToInteger(jsonData, type) {
 
     if(type == "gender")
     {
-        return data_2nd-cohort.t0sex
+        return jsonData.t0sex
      - 1;
     }
    
@@ -27,7 +27,7 @@ function convertToInteger(jsonData, type) {
       */
     if(type == "language")
     {
-        return data_2nd-cohort.aes_langreg 
+        return jsonData.aes_langreg 
         -1;
     }
     /**
@@ -62,7 +62,7 @@ function convertToInteger(jsonData, type) {
 
     if(type == "schooltype")
     {
-        return data_2nd-cohort.t3educ_class_1_r 
+        return jsonData.t3educ_class_1_r 
         -1;
         /**result of the newest wave */
     }
@@ -73,7 +73,7 @@ function convertToInteger(jsonData, type) {
      */
     if(type == "status")
     {
-        return data_2nd-cohort.t0hisei08_3q 
+        return jsonData.t0hisei08_3q 
         -1;
     }
     /**
@@ -86,7 +86,7 @@ function convertToInteger(jsonData, type) {
      */
     if(type == "parents")
     {
-        return data_2nd-cohort.t0fmedu_comp ;
+        return jsonData.t0fmedu_comp ;
     }
 
     /**
@@ -100,7 +100,7 @@ function convertToInteger(jsonData, type) {
      */
     if(type == "immigration")
     {
-        return data_2nd-cohort.t0immig ;
+        return jsonData.t0immig ;
     }
 }
 
@@ -109,7 +109,7 @@ function convertToInteger(jsonData, type) {
  * filter jsonData and fill selected elements into jsonDataFiltered
  */
 function filter() {
-    jsonDataFiltered = jsonData;
+    jsonDataFiltered = [];
     var form = document.getElementById("filterForm");
     var i;
     var length = jsonData.length;   // Amount of Data elements.
@@ -228,9 +228,8 @@ function getCheckedBoxes(boxesArray){
          * */
         if (from[0] != null && to != null) {
             //console.log(jsonDataFiltered[index].t1wt)
-            linkSize[from[0]][to] += (jsonDataFiltered[index].t1wt);
+            linkSize[from[0]][to] += (parseFloat(jsonDataFiltered[index].t1wt));
         }
-
 
         // same as above but this time it begins with index 5 because thats the first node in the second survey
         switch (jsonDataFiltered[index].t2educ_class_1_r) {
@@ -275,52 +274,9 @@ function getCheckedBoxes(boxesArray){
                 from[0] = null;
         }
         if (from[1] != null && to != null) {
-            linkSize[from[1]][to] += (jsonDataFiltered[index].t2wt);
+            linkSize[from[1]][to] += (parseFloat(jsonDataFiltered[index].t2wt));
         }
-        switch (jsonDataFiltered[index].t3educ_class_1_r) {
-            case 1:
-                to = 9;
-                from[1] = 9;
-                break;
-            case 2:
-                to = 10
-                from[1] = 10;
-                break;
-            case 3:
-                to = 10
-                from[1] = 10;
-                break;
-            case 4:
-                to = 10
-                from[1] = 10;
-                break;
-            case 5:
-                to = 11
-                from[1] = 11;
-                break;
-            case 6:
-                to = 11
-                from[1] = 11;
-                break;
-            case 7:
-                to = 11
-                from[1] = 11;
-                break;       
-            case 8:
-                to = 12;
-                from[1] = 12;
-                break;
-            case 9:
-                to = 12;
-                from[1] = 12;
-                break;
-            default:
-                to = null;
-                from[1] = null;
-        }
-        if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (jsonDataFiltered[index].t3wt);
-        }
+        
     }
 
      /*
@@ -337,7 +293,6 @@ function getCheckedBoxes(boxesArray){
     const FIRS_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
     for (i = FIRST_YEAR_START; i < FIRS_YEAR_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
-            //console.log(linkSize[j][i])
             t1weigth += linkSize[j][i];
         }
     }
@@ -351,12 +306,7 @@ function getCheckedBoxes(boxesArray){
         }
     }
 
-    /**@todo Add constants instead of numbers, see above */
-    for (i=8; i<12; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            t3weigth += linkSize[j][i];
-        }
-    }
+    
 
     //Break linksize down to %, if more nodes and other years are implemented, then this code needs to be expanded!
     /**@todo Add constants instead of numbers, see above */
@@ -367,18 +317,13 @@ function getCheckedBoxes(boxesArray){
     }
 
     /**@todo Add constants instead of numbers, see above */
-    for (i=5; i<8; i++){
+    for (i=5; i<=8; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             linkSize[j][i] = linkSize[j][i]/t2weigth*100;
         }
     }
 
-    /**@todo Add constants instead of numbers, see above */
-    for (i=8; i<12; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            linkSize[j][i] = linkSize[j][i]/t3weigth*100;
-        }
-    }
+
 
     /**
      * Guillotine 4%
@@ -397,7 +342,7 @@ function getCheckedBoxes(boxesArray){
      *
      * to remember is that the array linkSize is linkSize[FROM][TO]
      */
-    const GUILLOTINE = 2    // Min amount of % that a connection needs to be shown
+    const GUILLOTINE = 8    // Min amount of % that a connection needs to be shown
     const RELEVANT_NODES = TOT_NUM_NODES-1   // All nodes except the invisible one
     for (i = 1; i < RELEVANT_NODES; i++){
         summe = 0;

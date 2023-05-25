@@ -3,46 +3,46 @@
  * initialise most of the needed variables
  * */
 
-var linkSize;
-var jsonData = [];
-var jsonDataFiltered = [];
-var customLinks = [];
-var svg;
-var diagram;
-var t;
-var formatNumber;
-var sankey;
-var linkGroup;
-var nodeGroup;
-var titleGroup;
-var columnCoord = [];
+let linkSize;
+let jsonData = [];
+let jsonDataFiltered = [];
+let customLinks = [];
+let svg;
+let diagram;
+let t;
+let formatNumber;
+let sankey;
+let linkGroup;
+let nodeGroup;
+let titleGroup;
+let columnCoord = [];
 
 /* YEARS*/
-var years = ["2016", "2017", "2018"];
+let years = ["2016", "2017", "2018"];
 
-var t1weigth = 0;
-var t2weigth = 0;
-var t3weigth = 0;
+let t1weigth = 0;
+let t2weigth = 0;
+let t3weigth = 0;
 
 
-var marginleft = 20;
-var margintop = 30;
+let marginleft = 20;
+let margintop = 30;
 
 /* boolean to check if the titles are really drawn once!*/
-var titlesDrawn = false;
+let titlesDrawn = false;
 
-var nodesFilter;
+let nodesFilter;
 
 //define each color
-var obligatorische_schule = "#666";
-var berufsausbildung = "#6CA";
-var allgemeinbildende_Schule = "#088";
-var zwischenloesung = "#F68";
-var nicht_in_ausbildung = "#F18";
-var notsure = "#FF0";
+let obligatorische_schule = "#666";
+let berufsausbildung = "#6CA";
+let allgemeinbildende_Schule = "#088";
+let zwischenloesung = "#F68";
+let nicht_in_ausbildung = "#F18";
+let notsure = "#FF0";
 
 //language of the page
-var lang;
+let lang;
 
 /**
  * Will be executed when the page is visited
