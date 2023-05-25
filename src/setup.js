@@ -17,6 +17,10 @@ let nodeGroup;
 let titleGroup;
 let columnCoord = [];
 
+const guillotine = 0.5
+const TOT_NUM_NODES = 29
+
+
 /* YEARS*/
 let years = ["2016", "2017", "2018"];
 

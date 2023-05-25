@@ -119,7 +119,7 @@ function helper(error, labels) {
         .attr("stroke-opacity", 0.15)
         .attr("display", function (d) {
             /* don't display a link if the link is smaller than 4%, else it will be just displayed*/
-            if(d.value < 4.0){return "none";}
+            if(d.value < guillotine){return "none";}
             else{return "inline";}
         })
         .attr("d", d3.sankeyLinkHorizontal())
@@ -144,7 +144,7 @@ function helper(error, labels) {
         .attr("display", function (d) {
             //again if the link is smaller than 4% don't display it, we have to do this method again because of the
             // transition, if another filter is selected
-            if(d.value < 4.0){return "none";}
+            if(d.value < guillotine){return "none";}
             else{return "inline";}
         })
         .attr("d", d3.sankeyLinkHorizontal())
