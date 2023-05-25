@@ -181,7 +181,7 @@ function getCheckedBoxes(boxesArray){
          * we go from node 0 "obligatory school" to one of the 4 nodes of the first survey, so only
          * Nicht in Ausbildung with index 1, Zwischenlösung with index 2 etc.
          * */
-        switch (jsonDataFiltered[index].t1bqvalids) {
+        switch (jsonDataFiltered[index].t1educ_class_1_r) {
             case 1:
                 to = 1;
                 from[1] = 1;
@@ -212,7 +212,7 @@ function getCheckedBoxes(boxesArray){
 
 
         // same as above but this time it begins with index 5 because thats the first node in the second survey
-        switch (jsonDataFiltered[index].t2bqvalids) {
+        switch (jsonDataFiltered[index].t2educ_class_1_r) {
             case 1:
                 to = 5;
                 from[0] = 5;
@@ -236,7 +236,7 @@ function getCheckedBoxes(boxesArray){
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (jsonDataFiltered[index].t2wt);
         }
-        switch (jsonDataFiltered[index].t3bqvalids) {
+        switch (jsonDataFiltered[index].t3educ_class_1_r) {
             case 1:
                 to = 9;
                 from[1] = 9;

@@ -69,10 +69,11 @@ function updateSankey() {
  * Reset Array for link size calculation, we logically need to do this to calculate the links new
  */
 function flush() {
+    const TOT_NUM_NODES = 14
     // needs to be changed if more nodes are implemented
     customLinks = [];
-    for (i = 0; i < 63; i++) {
-        for (j = 0; j < 63; j++) {
+    for (i = 0; i < TOT_NUM_NODES; i++) {
+        for (j = 0; j < TOT_NUM_NODES; j++) {
             linkSize[i][j] = 0;
         }
     }
@@ -316,8 +317,6 @@ function appendGradient(id){
 
     var from = document.getElementById("path" + id).__data__.source;
     var to = document.getElementById("path" + id).__data__.target;
-    console.log(from)
-    console.log(to)
 
 
     var pathGradient = pathGroup.append("defs")
@@ -364,7 +363,7 @@ function appendGradient(id){
 }
 
 function removeGradient(id){
-     pathGroup = svg.select('#path' + id);
+    pathGroup = svg.select('#path' + id);
     var path = pathGroup.select("path");
 
     var pathGradient = pathGroup.select("defs")
