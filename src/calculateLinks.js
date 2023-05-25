@@ -64,6 +64,16 @@ function convertToInteger(jsonData, type) {
     {
         return jsonData.t3educ_class_1_r 
         -1;
+        /**
+         * let st = jsonData.t0st_nprog_req3;
+        if(st == 3){
+            st = 2
+        }
+        else{
+            st = 1
+        }
+        return st
+         */
         /**result of the newest wave */
     }
     /** in dataset: 
