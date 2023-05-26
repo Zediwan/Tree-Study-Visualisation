@@ -42,7 +42,7 @@ let obligatorische_schule = "#666";
 let nicht_in_ausbildung = "#fa6eeb";
 let praktikum = "#b28ff5";
 let zehntes_schuljahr = "#6ab0ff";
-let zwischenloesung = "#6ad8c8";
+let zwischenloesung = "#00B2CA";
 let berufsausbildung_2jahre = "#6aff91";
 let berufsausbildung_34jahre = "#b1d8ba";
 let berufsmaturitaet = "#f7ff75";
@@ -177,14 +177,48 @@ function setLegendColor() {
                 case "Zwischenlösung":
                     list[0].children[x].firstChild.style.background = zwischenloesung;
                     break;
-                case "Berufsausbildung: 2 Jahre" :
+                case "Berufsausbildung: 2 jährig" :
                      list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
-                case "Berufsausbildung: 3-4 Jahre":
+                case "Berufsausbildung: 3-4 jährig":
                     list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
                     break;
                 case "Berufsmaturität" :
                     list[0].children[x].firstChild.style.background = berufsmaturitaet
-                case "Allgemeinbildung" :
+                case "allgemeine Weiterbildung" :
+                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
+                case "andere Lösung":
+                    list[0].children[x].firstChild.style.background = andere_loesung;
+                    break;
+                default:
+                    list[0].children[x].firstChild.style.background = "white";
+            }
+        }
+        else
+        {
+            switch(list[0].children[x].innerText)
+            {
+                case "Obligatorische Schule":
+                    list[0].children[x].firstChild.style.background = obligatorische_schule;
+                    break;
+                    case "Nicht in Ausbildung":
+                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
+                    break;
+                case "Praktikum":
+                    list[0].children[x].firstChild.style.background = praktikum
+                    break;
+                case "10. Schuljahr" :
+                    list[0].children[x].firstChild.style.background = zehntes_schuljahr
+                case "Zwischenlösung":
+                    list[0].children[x].firstChild.style.background = zwischenloesung;
+                    break;
+                case "Berufsausbildung: 2 jährig" :
+                     list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
+                case "Berufsausbildung: 3-4 jährig":
+                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
+                    break;
+                case "Berufsmaturität" :
+                    list[0].children[x].firstChild.style.background = berufsmaturitaet
+                case "allgemeine Weiterbildung" :
                     list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
                 case "andere Lösung":
                     list[0].children[x].firstChild.style.background = andere_loesung;

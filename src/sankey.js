@@ -61,7 +61,7 @@ function updateSankey() {
             d3.json("data/labels_2nd-cohort-en.json", helper);
             break;
         default:
-            d3.json("data/labels_2nd-cohort-de.json", helper);
+            d3.json("data/labels_2nd-cohort.json", helper);
     }
 }
 
@@ -277,7 +277,7 @@ function setColor(d) {
             case "Obligatorische Schule":
                 return ;
             case "Nicht in Ausbildung":
-                return nicht_in_ausbildung;
+                return nicht_in_ausbildung
             case "Praktikum":
                 return praktikum;
             case "10. Schuljahr":
@@ -292,8 +292,37 @@ function setColor(d) {
                 return berufsmaturitaet;
             case "allgemeine Weiterbildung":
                 return allgemeinbildende_Schule;
-            case "andere Lösungen":
+            case "andere Lösung":
                     return andere_loesung;
+            default:
+                return notsure;
+        }
+    }
+    else
+    {
+
+        switch(d.name)
+        {
+            case "compulsory school":
+                return obligatorische_schule;
+            case "Not in education or training":
+                return nicht_in_ausbildung;
+            case "internship":
+                return praktikum;
+            case "Vocational education: 2 years":
+                return coational_education;
+            case "General education":
+                return general_education;
+            case "Tertiary B":
+                return tertiary_b;
+            case "Economically active with upper sec. diploma":
+                return work_dipl;
+            case "Economically active without upper sec. diploma":
+                return work_no_dipl;
+            case "Neither economically active nor in education or training":
+                return no_edu_no_emp;
+            case "Tertiary A":
+                return tertiary_a;
             default:
                 return notsure;
         }
