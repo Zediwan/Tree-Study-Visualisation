@@ -398,8 +398,20 @@ function removeGradient(id){
     var pathGradient = pathGroup.select("defs")
         .remove();
 
-    path.attr("stroke","#000")
-        .attr("stroke-opacity","0.15");
+    path.attr("stroke", function(d) {
+            var targetColor = setColor(d.target);
+            var sourceColor = setColor(d.source);
+           
+            // Set the stroke color based on the target and source nodes
+            if (d.target.index < NUM_FIRST_NODES) {
+                // For the first survey use the color of the target node
+                return targetColor;
+            } else {
+                // Rest of the nodes: Use the color of the source node
+                return sourceColor;
+            }
+        })
+        .attr("stroke-opacity", 0.3)
 
 }
 
