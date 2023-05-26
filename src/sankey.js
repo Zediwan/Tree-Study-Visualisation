@@ -69,7 +69,6 @@ function updateSankey() {
  * Reset Array for link size calculation, we logically need to do this to calculate the links new
  */
 function flush() {
-    const TOT_NUM_NODES = 29
     // needs to be changed if more nodes are implemented
     customLinks = [];
     for (i = 0; i < TOT_NUM_NODES; i++) {
@@ -115,8 +114,20 @@ function helper(error, labels) {
         .attr("from",function (d) { return d.source.name; })
         .attr("to",function (d) { return d.target.name; })
         .append("path")
-        .attr("stroke", "#000")
-        .attr("stroke-opacity", 0.15)
+        .attr("stroke", function(d) {
+            var targetColor = setColor(d.target);
+            var sourceColor = setColor(d.source);
+            
+            // Set the stroke color based on the target and source nodes
+            if (d.target.index < NUM_FIRST_NODES) {
+                // For the first survey use the color of the target node
+                return targetColor;
+            } else {
+                // Rest of the nodes: Use the color of the source node
+                return sourceColor;
+            }
+        })
+        .attr("stroke-opacity", 0.3)
         .attr("display", function (d) {
             /* don't display a link if the link is smaller than 4%, else it will be just displayed*/
             if(d.value < guillotine){return "none";}
@@ -124,7 +135,7 @@ function helper(error, labels) {
         })
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke-width", function (d) {return Math.max(1, d.width); })
-        .attr("onmouseover",function (d,i) { return "appendGradient(" + i + ")" })
+        .attr("onmouseover" ,function (d,i) { return "appendGradient(" + i + ")" })
         .attr("onmouseout",function (d,i) { return "removeGradient(" + i + ")" })
         .append("title")
         .text(function (d) {
@@ -275,9 +286,9 @@ function setColor(d) {
         switch(d.name)
         {
             case "Obligatorische Schule":
-                return ;
+                return obligatorische_schule;
             case "Nicht in Ausbildung":
-                return nicht_in_ausbildung
+                return nicht_in_ausbildung;
             case "Praktikum":
                 return praktikum;
             case "10. Schuljahr":

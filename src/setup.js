@@ -19,6 +19,9 @@ let columnCoord = [];
 
 const guillotine = 0.5
 const TOT_NUM_NODES = 29
+const NUM_LAST_NODES = 10    // Amount of nodes in the last group including invis node
+const NUM_FIRST_NODES = 10 //
+const REM_NUM_NODES = TOT_NUM_NODES - NUM_LAST_NODES
 
 
 /* YEARS*/
@@ -164,28 +167,28 @@ function setLegendColor() {
             switch(list[0].children[x].innerText)
             {
                 case "Obligatorische Schule":
-                    list[0].children[x].firstChild.style.background = obligatorische_schule
+                    list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
                     case "Nicht in Ausbildung":
-                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung
+                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
                 case "Praktikum":
-                    list[0].children[x].firstChild.style.background = praktikum
+                    list[0].children[x].firstChild.style.background = praktikum;
                     break;
                 case "10. Schuljahr" :
-                    list[0].children[x].firstChild.style.background = zehntes_schuljahr
+                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
                 case "Zwischenlösung":
-                    list[0].children[x].firstChild.style.background = zwischenloesung
+                    list[0].children[x].firstChild.style.background = zwischenloesung;
                     break;
                 case "Berufsausbildung: 2 jährig" :
-                     list[0].children[x].firstChild.style.background = berufsausbildung_2jahre
+                     list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
                 case "Berufsausbildung: 3-4 jährig":
-                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre
+                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
                     break;
                 case "Berufsmaturität" :
-                    list[0].children[x].firstChild.style.background = berufsmaturitaet
+                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
                 case "allgemeine Weiterbildung" :
-                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule
+                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
                 case "andere Lösung":
                     list[0].children[x].firstChild.style.background = andere_loesung
                     break;

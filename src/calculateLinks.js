@@ -272,8 +272,7 @@ function getCheckedBoxes(boxesArray){
      *for every survey year we collect the total amount of "movement" to get the weight
      *if more nodes and other years are implemented, then this code needs to be expanded!
      * */
-    const TOT_NUM_NODES = 29    // Total amount of nodes specified in labels.json
-    const NUM_LAST_NODES = 10    // Amount of nodes in the last group including invis node
+    
     const REM_NUM_NODES = TOT_NUM_NODES - NUM_LAST_NODES  // Remaining number of nodes
 
     const FIRST_YEAR_START = 1
