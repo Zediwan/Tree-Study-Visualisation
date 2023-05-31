@@ -138,17 +138,16 @@ function appSize() {
 function initLinkSize() {
     //linkSize[i][j] will contain the width of the link from node i to node j
     // it is used for cleaning up the sankey (look at calculateLinks)
-    const NUMBER_OF_NODES = 29
-    linkSize = new Array(NUMBER_OF_NODES);
+    linkSize = new Array(TOT_NUM_NODES);
     var i;
     var j;
-    for (i = 0; i < NUMBER_OF_NODES; i++) {
-        linkSize[i] = new Array(NUMBER_OF_NODES);
+    for (i = 0; i < TOT_NUM_NODES; i++) {
+        linkSize[i] = new Array(TOT_NUM_NODES);
     }
 
     //set every element of Array to 0
-    for (i = 0; i < NUMBER_OF_NODES; i++) {
-        for (j = 0; j < NUMBER_OF_NODES; j++) {
+    for (i = 0; i < TOT_NUM_NODES; i++) {
+        for (j = 0; j < TOT_NUM_NODES; j++) {
             linkSize[i][j] = 0;
         }
     }
