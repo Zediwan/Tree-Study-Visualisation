@@ -107,12 +107,6 @@ function filter() {
     var i;
     var length = jsonData.length;   // Amount of Data elements.
 
-    // If all is selected just add all elements.
-    if(form.selAll.checked){
-        jsonDataFiltered = jsonData;
-        return;
-    }
-
     var selGend = getCheckedBoxes(form.selGend);
     var selLang = getCheckedBoxes(form.selLang);
     var selEdu = getCheckedBoxes(form.selEdu);

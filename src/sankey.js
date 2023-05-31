@@ -347,7 +347,6 @@ function appendGradient(id){
     var from = document.getElementById("path" + id).__data__.source;
     var to = document.getElementById("path" + id).__data__.target;
 
-
     var pathGradient = pathGroup.append("defs")
         .append("linearGradient")
         .attr("id","grad" + id)
