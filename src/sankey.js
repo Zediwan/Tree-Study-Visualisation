@@ -305,36 +305,36 @@ function setColor(d) {
             case "allgemeine Weiterbildung":
                 return allgemeinbildende_Schule;
             case "andere Lösung":
-                    return andere_loesung;
+                return andere_loesung;
             default:
                 return notsure;
         }
     }
-    else
+//set colors for english labels
+    if (lang == "eng")
     {
-
         switch(d.name)
         {
             case "compulsory school":
                 return obligatorische_schule;
-            case "Not in education or training":
+            case "not in education or training":
                 return nicht_in_ausbildung;
             case "internship":
                 return praktikum;
-            case "Vocational education: 2 years":
-                return coational_education;
-            case "General education":
-                return general_education;
-            case "Tertiary B":
-                return tertiary_b;
-            case "Economically active with upper sec. diploma":
-                return work_dipl;
-            case "Economically active without upper sec. diploma":
-                return work_no_dipl;
-            case "Neither economically active nor in education or training":
-                return no_edu_no_emp;
-            case "Tertiary A":
-                return tertiary_a;
+            case "10th school year":
+                 return zehntes_schuljahr;
+            case "intermediate solution":
+                return zwischenloesung;
+            case "vocational training: 2 years":
+                return berufsausbildung_2jahre;
+            case "vocational training: 3-4 years":
+                 return berufsausbildung_34jahre;
+            case "vocational baccalaureate":
+                return berufsmaturitaet;
+            case "general baccalaureate":
+                return allgemeinbildende_Schule;
+            case "other solutions":
+                return andere_loesung;
             default:
                 return notsure;
         }
@@ -429,8 +429,8 @@ function setGradientColor(bla) {
  * @since 08.05.2023
  */
 function updateSelections(checkbox) {
-    const allCheckbox = document.getElementById('cb13');
-    const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cb13)');
+    const allCheckbox = document.getElementById('cb16');
+    const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cb16)');
 
     let areAllChecked = true;      // Are all checkboxes (exept the all checkbox) checked?
     let areAllUnchecked = true;    // Are all checkboxes (exept the all checkbox) unchecked?

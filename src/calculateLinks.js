@@ -22,24 +22,36 @@ function convertToInteger(jsonData, type) {
    
      /**
       * language region in dataset: 1 = german, 2 = french, 3 = italian
-      * for it to be 0 we have to substract 1 -->
-      * 0 = german, 1 = french, 3 = italian
+      * in Application: 0 = German
+      * 2 and 3 are "Französisch/Italienisch"
       */
     if(type == "language")
     {
-        return jsonData.aes_langreg 
-        -1;
+        let st = jsonData.aes_langreg 
+        switch (st){
+            case 1:
+                st = 0;
+                break;
+            case 2:
+                st = 1;
+                break;
+            case 3:
+                st = 1;
+                break;
+        }
+        return st
     }
     /**
      * in dataset: 
      * 1 = High requirements
      * 2 = Advanced requirements & Alternative/non-assignable study program
      * 3 = Basic/low requirements
+     * in Application: 1 and 2 are "Erweitert"
+     * 3 = basic
       */
 
     if(type == "school-requirements")
     {
-        //return jsonData.t0st_nprog_req3-1;
         let st = jsonData.t0st_nprog_req3;
         switch (st){
             case 1:
@@ -51,12 +63,10 @@ function convertToInteger(jsonData, type) {
             case 3:
                 st = 0;
                 break;
-            default:
-                console.log("Not defined")
         }
 
         return st   
-        /**result of the newest wave */
+        
     }
     /** in dataset: 
      * 1 = low, 2 = medium, 3 = high
@@ -92,7 +102,8 @@ function convertToInteger(jsonData, type) {
      */
     if(type == "immigration")
     {
-        return jsonData.t0immig ;
+        return jsonData.t0immig
+        -1 ;
     }
 }
 
@@ -112,6 +123,7 @@ function filter() {
     var selEdu = getCheckedBoxes(form.selEdu);
     var selEco = getCheckedBoxes(form.selEco);
     var selEduPar = getCheckedBoxes(form.selEduPar);
+    var selImmig = getCheckedBoxes(form.selImmig);
 
     /*
      * Filter the original Data for every person, based on selected filters
@@ -123,7 +135,8 @@ function filter() {
             (selLang.length == 0 || selLang.includes(convertToInteger(jsonData[i], "language"))) &&
             (selEdu.length == 0 || selEdu.includes(convertToInteger(jsonData[i], "school-requirements"))) &&
             (selEco.length == 0 || selEco.includes(convertToInteger(jsonData[i], "status"))) &&
-            (selEduPar.length == 0 || selEduPar.includes(convertToInteger(jsonData[i], "parents"))))
+            (selEduPar.length == 0 || selEduPar.includes(convertToInteger(jsonData[i], "parents")))&&
+            (selImmig.length == 0 || selImmig.includes(convertToInteger(jsonData[i], "immigration"))))
         {
             jsonDataFiltered.push(jsonData[i]);
         }
@@ -165,7 +178,7 @@ function getCheckedBoxes(boxesArray){
         from[0] = 0;
 
         /*
-         * read t1baum, note target of links coming from node 0, note source of links goingt to t2baum
+         * read t1educ_class_1_r, note target of links coming from node 0, note source of links goingt to t2educ_class_1_r
          * we go from node 0 "obligatory school" to one of the 4 nodes of the first survey, so only
          * Nicht in Ausbildung with index 1, Zwischenlösung with index 2 etc.
          * */
@@ -215,7 +228,6 @@ function getCheckedBoxes(boxesArray){
          * should a source or target node be empty (because some people didn't answer that year then it will not be included)
          * */
         if (from[0] != null && to != null) {
-            //console.log(jsonDataFiltered[index].t1wt)
             linkSize[from[0]][to] += (parseFloat(jsonDataFiltered[index].t1wt));
         }
 
@@ -311,20 +323,15 @@ function getCheckedBoxes(boxesArray){
 
 
     /**
-     * Guillotine 4%
-     * if a node is smaller than 4% then its links have to be smaller than 4% too, so we give the 63.
+     * Guillotine
+     * if a node is smaller than Guillotine then its links have to be smaller than 4% too, so we give the 63.
      * "invisible" node the links, and empty the normal links
      */
 
     // for the "value" of a node
     var summe;
 
-    /*
-     *for every node index 0 to 61 we calculate its value and then if it is smaller than 4%, we remove it
-     *
-     * if the node size changes 62 needs to be changed too !
-     * it begins by 1 because 0 should be always 100%
-     *
+    /* 
      * to remember is that the array linkSize is linkSize[FROM][TO]
      */
    
@@ -335,7 +342,7 @@ function getCheckedBoxes(boxesArray){
             summe = summe + linkSize[j][i];
         }
 
-        // 4% guillotine
+        //guillotine
         if (summe < guillotine) {
             for (j = 0; j < i; j++) {
                 linkSize[j][i] = 0;
