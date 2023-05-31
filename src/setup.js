@@ -17,7 +17,7 @@ let nodeGroup;
 let titleGroup;
 let columnCoord = [];
 
-const guillotine = 0.1
+const guillotine = 0.0
 const TOT_NUM_NODES = 29
 const NUM_LAST_NODES = 10    // Amount of nodes in the last group including invis node
 const NUM_FIRST_NODES = 10 //
