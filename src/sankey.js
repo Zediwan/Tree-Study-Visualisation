@@ -105,10 +105,11 @@ function helper(error, labels) {
         throw error;
     labels.links = customLinks;
     sankey(labels);
+
     var links = linkGroup.selectAll('path')
         .data(labels.links);
 
-    //Set attributes for each link separately
+        //Set attributes for each link separately
     links.enter().append("g")
         .attr("id",function (d,i) {return "path"+i;})
         .attr("from",function (d) { return d.source.name; })
