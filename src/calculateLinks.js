@@ -39,18 +39,23 @@ function convertToInteger(jsonData, type) {
 
     if(type == "school-requirements")
     {
-        return jsonData.t3educ_class_1_r 
-        -1;
-        /**
-         * let st = jsonData.t0st_nprog_req3;
-        if(st == 3){
-            st = 2
+        //return jsonData.t0st_nprog_req3-1;
+        let st = jsonData.t0st_nprog_req3;
+        switch (st){
+            case 1:
+                st = 1;
+                break;
+            case 2:
+                st = 1;
+                break;
+            case 3:
+                st = 0;
+                break;
+            default:
+                console.log("Not defined")
         }
-        else{
-            st = 1
-        }
-        return st
-         */
+
+        return st   
         /**result of the newest wave */
     }
     /** in dataset: 
@@ -107,17 +112,18 @@ function filter() {
         jsonDataFiltered = jsonData;
         return;
     }
+
+    var selGend = getCheckedBoxes(form.selGend);
+    var selLang = getCheckedBoxes(form.selLang);
+    var selEdu = getCheckedBoxes(form.selEdu);
+    var selEco = getCheckedBoxes(form.selEco);
+    var selEduPar = getCheckedBoxes(form.selEduPar);
+
     /*
      * Filter the original Data for every person, based on selected filters
      *  */
     for (i = 0; i<length; i++)
     {   
-        var selGend = getCheckedBoxes(form.selGend);
-        var selLang = getCheckedBoxes(form.selLang);
-        var selEdu = getCheckedBoxes(form.selEdu);
-        var selEco = getCheckedBoxes(form.selEco);
-        var selEduPar = getCheckedBoxes(form.selEduPar);
-
         // Check whether the person's data matches any of the selected categories if none selected add all of said category
         if ((selGend.length == 0 || selGend.includes(convertToInteger(jsonData[i], "gender"))) &&
             (selLang.length == 0 || selLang.includes(convertToInteger(jsonData[i], "language"))) &&
