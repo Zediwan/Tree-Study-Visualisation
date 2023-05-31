@@ -198,8 +198,48 @@ function setLegendColor() {
                     break;
                 default:
                     list[0].children[x].firstChild.style.background = "white";
+                
+            }
+        }
+        //switch english labels
+        else
+        {
+            switch(list[0].children[x].innerText)
+            {
+                case "compulsory school":
+                    list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
+                    case "not in education or training":
+                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
+                    break;
+                case "internship":
+                    list[0].children[x].firstChild.style.background = praktikum;
+                    break;
+                case "10th school year" :
+                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
+                    break;
+                case "intermediate solution":
+                    list[0].children[x].firstChild.style.background = zwischenloesung;
+                    break;
+                case "vocational training: 2 years" :
+                     list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
+                     break;
+                case "vocational training: 3-4 years":
+                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
+                    break;
+                case "vocational baccalaureate" :
+                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
+                    break;
+                case "general baccalaureate" :
+                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
+                    break;
+                case "other solutions":
+                    list[0].children[x].firstChild.style.background = andere_loesung;
+                    break;
+                default:
+                    list[0].children[x].firstChild.style.background = "white";
+                
+                }
             }
         }
     }
-}
