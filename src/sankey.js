@@ -127,16 +127,17 @@ function helper(error, labels) {
                 return sourceColor;
             }
         })
-        .attr("stroke-opacity", 0.3)
+        
         .attr("display", function (d) {
             /* don't display a link if the link is smaller than 4%, else it will be just displayed*/
             if(d.value < guillotine){return "none";}
             else{return "inline";}
         })
+        .each(function(d, i) {
+            appendGradient(i);
+        })
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke-width", function (d) {return Math.max(1, d.width); })
-        .attr("onmouseover" ,function (d,i) { return "appendGradient(" + i + ")" })
-        .attr("onmouseout",function (d,i) { return "removeGradient(" + i + ")" })
         .append("title")
         .text(function (d) {
             //tooltip info for the links
@@ -376,7 +377,7 @@ function appendGradient(id){
         });
 
     path.attr("stroke","url(#grad"+id+")")
-        .attr("stroke-opacity","0.95");
+        .attr("stroke-opacity","0.5");
 
 /*
     pathGradient.transition(t).select(".from")
@@ -392,7 +393,7 @@ function appendGradient(id){
 */
 }
 
-function removeGradient(id){
+/*function removeGradient(id){
     pathGroup = svg.select('#path' + id);
     var path = pathGroup.select("path");
 
@@ -419,7 +420,7 @@ function removeGradient(id){
 function setGradientColor(bla) {
 
 }
-
+*/ 
 /**
  * Updates the selection state of checkboxes based on the user's input.
  * If the 'all' checkbox is selected, all other checkboxes will be deselected.
