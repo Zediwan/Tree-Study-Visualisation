@@ -276,7 +276,52 @@ function getCheckedBoxes(boxesArray){
         if (from[1] != null && to != null) {
             linkSize[from[1]][to] += (parseFloat(jsonDataFiltered[index].t2wt));
         }
+
         
+        switch (jsonDataFiltered[index].t3educ_class_1_r) {
+            case 1:
+                to = 19;
+                from[1] = 19;
+                break;
+            case 2:
+                to = 20
+                from[1] = 20;
+                break;
+            case 3:
+                to = 21
+                from[1] = 21;
+                break;
+            case 4:
+                to = 22
+                from[1] = 22;
+                break;
+            case 5:
+                to = 23
+                from[1] = 23;
+                break;
+            case 6:
+                to = 24
+                from[1] = 24;
+                break;
+            case 7:
+                to = 25
+                from[1] = 25;
+                break;       
+            case 8:
+                to = 26;
+                from[1] = 26;
+                break;
+            case 9:
+                to = 27;
+                from[1] = 27;
+                break;
+            default:
+                to = null;
+                from[1] = null;
+        }
+        if (from[0] != null && to != null) {
+            linkSize[from[0]][to] += (parseFloat(jsonDataFiltered[index].t3wt));
+        }   
     }
 
      /*
@@ -284,12 +329,12 @@ function getCheckedBoxes(boxesArray){
      *for every survey year we collect the total amount of "movement" to get the weight
      *if more nodes and other years are implemented, then this code needs to be expanded!
      * */
-    
-    const REM_NUM_NODES = TOT_NUM_NODES - NUM_LAST_NODES  // Remaining number of nodes
 
+    
     const FIRST_YEAR_START = 1
     const FIRST_AMOUNT= 9
     const FIRST_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
+
     for (i = FIRST_YEAR_START; i < FIRST_YEAR_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             t1weigth += linkSize[j][i];
@@ -299,9 +344,20 @@ function getCheckedBoxes(boxesArray){
     const SECOND_YEAR_START = FIRST_YEAR_END
     const SECOND_AMOUNT= 9
     const SECOND_END = FIRST_YEAR_END + SECOND_AMOUNT
+
     for (i = SECOND_YEAR_START; i < SECOND_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             t2weigth += linkSize[j][i];
+        }
+    }
+
+    const THIRD_YEAR_START = SECOND_END
+    const THIRD_AMOUNT= 9
+    const THIRD_YEAR_END = THIRD_AMOUNT + THIRD_YEAR_START
+
+    for (i = THIRD_YEAR_START; i < THIRD_YEAR_END; i++){
+        for (j=0; j < REM_NUM_NODES; j++){
+            t3weigth += linkSize[j][i];
         }
     }
 
@@ -314,9 +370,15 @@ function getCheckedBoxes(boxesArray){
         }
     }
 
-    for (SECOND_YEAR_START; i<=SECOND_END; i++){
+    for (i=SECOND_YEAR_START; i<=SECOND_END; i++){
         for (j=0; j < REM_NUM_NODES; j++){
             linkSize[j][i] = linkSize[j][i]/t2weigth*100;
+        }
+    }
+
+    for (i=THIRD_YEAR_START; i<THIRD_YEAR_END; i++){
+        for (j=0; j < REM_NUM_NODES; j++){
+            linkSize[j][i] = linkSize[j][i]/t3weigth*100;
         }
     }
 

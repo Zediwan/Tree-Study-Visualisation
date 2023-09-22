@@ -17,15 +17,16 @@ let nodeGroup;
 let titleGroup;
 let columnCoord = [];
 
-const guillotine = 0.4
-const TOT_NUM_NODES = 29
-const NUM_LAST_NODES = 10    // Amount of nodes in the last group including invis node
-const NUM_FIRST_NODES = 10 //
-const REM_NUM_NODES = TOT_NUM_NODES - NUM_LAST_NODES
+let guillotine = 0.4
+let TOT_NUM_NODES = 38
+let NUM_THIRD_NODES = 10 // including invis node
+let NUM_FIRST_NODES = 10 // including elementary node
+let REM_NUM_NODES = TOT_NUM_NODES - NUM_THIRD_NODES
+
 
 
 /* YEARS*/
-let years = ["2016", "2017", "2018"];
+let years = ["2016", "2017", "2018", "2019"];
 
 let t1weigth = 0;
 let t2weigth = 0;
@@ -42,15 +43,15 @@ let nodesFilter;
 
 //define each color
 let obligatorische_schule = "#666";
-let nicht_in_ausbildung = "#fa6eeb";
-let praktikum = "#b28ff5";
-let zehntes_schuljahr = "#6ab0ff";
-let zwischenloesung = "#00B2CA";
-let berufsausbildung_2jahre = "#67cc8e";
-let berufsausbildung_34jahre = "#b5e655";
-let berufsmaturitaet = "#f7ff75";
-let allgemeinbildende_Schule = "#ffd26e";
-let andere_loesung = "#cb5050";
+let nicht_in_ausbildung = "#E24c4f";
+let praktikum = "#f1ff57";
+let zehntes_schuljahr = "#ffbe57";
+let zwischenloesung = "#ff9e57";
+let berufsausbildung_2jahre = "#aeff57";
+let berufsausbildung_34jahre = "#5edf00";
+let berufsmaturitaet = "#337800";
+let allgemeinbildende_Schule = "#00a8ff";
+let andere_loesung = "#00ffcc";
 
 
 let notsure = "#FF0";

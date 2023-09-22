@@ -105,7 +105,6 @@ function helper(error, labels) {
         throw error;
     labels.links = customLinks;
     sankey(labels);
-
     var links = linkGroup.selectAll('path')
         .data(labels.links);
 
@@ -235,7 +234,7 @@ function drawTitles() {
         .attr('class', 'title');
 
     /* give the years a specific x position, to expand it just add in setup another year in the variable years like 2019
-     * and write a switch statement for "2019" with the next index which would logically be columnCoord[10]
+     * and write a switch statement for "2019" with the next index which would logically be columnCoord[4]
      *
      * the titles have NO transition because they only need to be drawn once!
      * */
@@ -249,6 +248,8 @@ function drawTitles() {
                     return columnCoord[1];
                 case "2018":
                     return columnCoord[2];
+                case "2019":
+                    return columnCoord[3];
                 default:
                     return 0;
             }
@@ -268,7 +269,7 @@ function drawTitles() {
     svg.selectAll('.title')
         .selectAll('text')
         .filter(function (d, i, q) {
-            return q[0].attributes[0].nodeValue == 10;
+            return q[0].attributes[0].nodeValue == 4;
         })
         .remove();
 }

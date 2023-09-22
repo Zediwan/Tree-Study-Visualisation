@@ -31,6 +31,16 @@
     {"name":"general baccalaureate"},
     {"name":"other solutions"},
 
+    {"name":"not in education or training"},
+    {"name":"internship"},
+    {"name":"10th school year"},
+    {"name":"intermediate solution"},
+    {"name":"vocational training: 2 years"},
+    {"name":"vocational training: 3-4 years"},
+    {"name":"vocational baccalaureate"},
+    {"name":"general baccalaureate"},
+    {"name":"other solutions"},
+
     {"name": "Invisible Node"}
     ]
 }
