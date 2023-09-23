@@ -63,6 +63,9 @@ function updateSankey() {
         case "fr":
             d3.json("data/labels_2nd-cohort-fr.json", helper);
             break;
+            case "it":
+                d3.json("data/labels_2nd-cohort-it.json", helper);
+                break;
         default:
             d3.json("data/labels_2nd-cohort.json", helper);
     }
@@ -315,7 +318,7 @@ function setColor(d) {
                 return notsure;
         }
     }
-//set colors for english labels
+    //set colors for english labels
     else if (lang == "eng")
     {
         switch(d.name)
@@ -324,7 +327,7 @@ function setColor(d) {
                 return obligatorische_schule;
             case "not in education or training":
                 return nicht_in_ausbildung;
-            case "Interim solution: Internship":
+            case "Interim solution: internship":
                 return praktikum;
             case "Interim solution: 10th school year":
                  return zehntes_schuljahr;
@@ -336,7 +339,7 @@ function setColor(d) {
                  return berufsausbildung_34jahre;
             case "VET: 3-4 years VB1":
                 return berufsmaturitaet;
-            case "General education: Baccalaureate schools":
+            case "General education: baccalaureate schools":
                 return allgemeinbildende_Schule;
             case "General education: other":
                 return andere_loesung;
@@ -363,11 +366,40 @@ function setColor(d) {
                 return berufsausbildung_2jahre;
             case "Formation professionelle: 3-4 ans":
                  return berufsausbildung_34jahre;
-            case "Formation professionelle: 3-4 ans (CFEC + MP1)":
+            case "Formation professionelle: 3-4 ans (CFC + MP1)":
                 return berufsmaturitaet;
             case "Formation générale: gymnase":
                 return allgemeinbildende_Schule;
             case "Formation générale: autre":
+                return andere_loesung;
+            default:
+                return notsure;
+        }
+    }
+    //set colors for italian labels
+    else if (lang == "it")
+    {
+        switch(d.name)
+        {
+            case "Scuola obbligatoria":
+                return obligatorische_schule;
+            case "Non in formazione":
+                return nicht_in_ausbildung;
+            case "Soluzione intermedia: tirocinio":
+                return praktikum;
+            case "Soluzione intermedia: 10° anno scolastico":
+                 return zehntes_schuljahr;
+            case "Soluzione intermedia: altri":
+                return zwischenloesung;
+            case "Formazione professionale: 2 anni":
+                return berufsausbildung_2jahre;
+            case "Formazione professionale: 3-4 anni":
+                 return berufsausbildung_34jahre;
+            case "Formazione professionale 3-4 anni (ACF + MP1)":
+                return berufsmaturitaet;
+            case "Istruzione generale: ginnasio":
+                return allgemeinbildende_Schule;
+            case "Istruzione generale: altri":
                 return andere_loesung;
             default:
                 return notsure;

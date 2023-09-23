@@ -2,6 +2,7 @@
 <html>
 
 	<head>
+		Test 
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" href="icon.png">
@@ -16,7 +17,7 @@
         <script type="text/javascript" src="//edit.cms.unibe.ch/++resource++zms_/iframeresizer/iframeResizer.contentWindow.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="src/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="src/style.css">
-		<title>Parcours de formation et d'emploi</title>
+		<title>Percorsi di formazione e carriera</title>
 	</head>
 
 	<body onresize="adaptSize()">
@@ -30,20 +31,20 @@
                                 <div class="row">
                                     <div class="col-sm-2">
                                         <ul>
-                                            <li><a href="https://www.unibe.ch/index_fra.html">Portail de l'Université de Berne</a> </li>
-                                            <li><a href="https://www.tree.unibe.ch/index_fra.html">TREE l'Université de Berne</a> </li>
+                                            <li><a href="https://www.unibe.ch/index_eng.html">Portale Università di Berna</a> </li>
+                                            <li><a href="https://www.tree.unibe.ch/index_ita.html">TREE Università di Berna</a> </li>
                                         </ul>
 									</div>
 									<div class="col-sm-8">
                                         <ul>
-                                            <li><a href="index_ger.html" >DE</a></li>
-                                            <li><a href="index_eng.html" >EN</a></li>
-											<li><a href="index_fra.html" class="active">FR</a></li>
-											<li><a href="index_it.html" >IT</a></li>
+                                            <li><a href="index_ger.html">DE</a></li>
+                                            <li><a href="index_eng.html">EN</a></li>
+											<li><a href="index_fra.html">FR</a></li>
+											<li><a href="index_it.html" class="active">IT</a></li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="https://www.unibe.ch/index_fra.html" title="Page d'accueil de l'Université de Berne" class="imglink">
+                                        <a href="http://www.unibe.ch/index_ger.html" title="Startseite Portal Universität Bern" class="imglink">
                                             <img src="unilogo.jpg">
                                         </a>
                                     </div>
@@ -59,7 +60,7 @@
 				<div class="col-sm-12">
 					<div class="panel panel-default2">
 						<div class="panel-body">
-							<h1 id="headline">Trajectoires éducatives du projet de recherche TREE-2 (Institut de sociologie de l'Université de Berne)</h1>
+							<h1 id="headline">Il percorso formativo del progetto di ricerca TREE-2 (Istituto di Sociologia dell'Università di Berna)</h1>
 						</div>
 					</div>
 				</div>
@@ -75,60 +76,60 @@
 										the codes in calculateLinks, the saneky will be updated if another selection is chosen!-->
 										<form id = "filterForm" onchange="updateSankey()">
 											<div id="checkboxes" >
-												<p class="headline2">sexe:</p>
+												<p class="headline2">sesso:</p>
 												<input type="checkbox" name="selGend" value="female" id="cb1" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb1">femmes</label>
+												<label for="cb1">donne</label>
 												</br>
 												<input type="checkbox" name="selGend" value="male" id="cb2" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb2">hommes</label>
+												<label for="cb2">uomini</label>
 												</br>
-												<p class="headline2">Région linguistique:</p>
+												<p class="headline2">Regione linguistica:</p>
 												<input type="checkbox" name="selLang" value="german" id="cb3" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb3">allemand</label>
+												<label for="cb3">Tedesco </label>
 												</br>
 												<input type="checkbox" name="selLang" value="latin" id="cb4" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb4">français/italien</label>
+												<label for="cb4">Francese/Italiano</label>
 												</br>
-												<p class="headline2">programme d'enseignement secondaire supérieur:</p>
+												<p class="headline2">tipo di programma della scuola secondaria superiore:</p>
 												<input type="checkbox" name="selEdu" value="basic" id="cb5" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb5">basique</label>
+												<label for="cb5">base</label>
 												</br>
 												<input type="checkbox" name="selEdu" value="extended" id="cb6" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb6">étendu</label>
+												<label for="cb6">esteso</label>
 												</br>
-												<p class="headline2">statut socio-économique:</p>
+												<p class="headline2">stato socio-economico:</p>
 												<input type="checkbox" name="selEco" value="low" id="cb7" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb7">faible</label>
+												<label for="cb7">basso</label>
 												</br>
 												<input type="checkbox" name="selEco" value="middle" id="cb8" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb8">moyen</label>
+												<label for="cb8">medio</label>
 												</br>
 												<input type="checkbox" name="selEco" value="high" id="cb9" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb9">élevé</label>
+												<label for="cb9">alto</label>
 												</br>
-												<p class="headline2">niveau d'instruction des parents:</p>
+												<p class="headline2">livello di istruzione dei genitori</p>
 												<input type="checkbox" name="selEduPar" value="lower" id="cb10" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb10">secondaire inférieur</label>
+												<label for="cb10">secondaria inferiore</label>
 												</br>
 												<input type="checkbox" name="selEduPar" value="upper" id="cb11" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb11">secondaire supérieur</label>
+												<label for="cb11">secondaria superiore</label>
 												</br>
 												<input type="checkbox" name="selEduPar" value="tertiary" id="cb12" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb12">tertiaire</label>
+												<label for="cb12">terziario</label>
 												</br>
-												<p class="headline2">immigration:</p>
+												<p class="headline2">immigrazione:</p>
 												<input type="checkbox" name="selImmig" value="nativ" id="cb13" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb13">autochtones</label>
+												<label for="cb13">autoctono</label>
 												</br>
 												<input type="checkbox" name="selImmig" value="2. Generation" id="cb14" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb14">deuxième génération</label>
+												<label for="cb14">seconda generazione</label>
 												</br>
 												<input type="checkbox" name="selImmig" value="1. Generation" id="cb15" class="cb" onclick = updateSelections(this)></input>
-												<label for="cb15">première génération</label>
+												<label for="cb15">prima generazione</label>
 												</br>
 												</br>
 												<input type="checkbox" name="selAll" value="all" id="cb16" class="cb" checked onclick = updateSelections(this) disabled = true></input>
-												<label for="cb16">tous</label>
+												<label for="cb16">tutti</label>
 												</br>
 											</div>
 										</form>
@@ -145,16 +146,16 @@
 										<div class='legend-title'>Legende</div> <!-- class="headline2"-->
 										<div class="legend-scale"> <!--id="legend" -->
 											<ul class="legend-labels">
-												<li><span></span><b>École obligatoire</b></li>
-												<li><span></span><b>Pas en formation</b></li>
-												<li><span></span><b>Solution transitoire: stage</b></li>
-												<li><span></span><b>Solution transitoire: 10ème année scolaire</b></li>
-												<li><span></span><b>Solution transitoire: autre</b></li>
-												<li><span></span><b>Formation professionelle: 2 ans</b></li>
-												<li><span></span><b>Formation professionelle: 3-4 ans</b></li>
-												<li><span></span><b>Formation professionelle: 3-4 ans (CFC + MP1)</b></li>
-												<li><span></span><b>Formation générale: gymnase</b></li>
-												<li><span></span><b>Formation générale: autre</b></li>
+												<li><span></span><b>Scuola obbligatoria</b></li>
+												<li><span></span><b>Non in formazione</b></li>
+												<li><span></span><b>Soluzione intermedia: tirocinio</b></li>
+												<li><span></span><b>Soluzione intermedia: 10° anno scolastico</b></li>
+												<li><span></span><b>Soluzione intermedia: altri</b></li>
+												<li><span></span><b>Formazione professionale: 2 anni</b></li>
+												<li><span></span><b>Formazione professionale: 3-4 anni</b></li>
+												<li><span></span><b>Formazione professionale 3-4 anni (ACF + MP1)</b></li>
+												<li><span></span><b>Istruzione generale: ginnasio</b></li>
+												<li><span></span><b>Istruzione generale: altri</b></li>
 											</ul>
 										</div>
 									</div>
@@ -178,22 +179,21 @@
 					<div class="panel panel-default">
 
 						<h2>
-							Trajectoires éducatives du projet de recherche TREE-2
+							Percorsi formativi del progetto di ricerca TREE della seconda coorte.
 						</h2>
 						<p class="text">
-							L'application visualise les parcours éducatifs d'un échantillon représentatif de jeunes après la fin de la scolarité obligatoire.
-							Les données ont été collectées dans toute la Suisse entre 2016 et 2019.
-							L'application montre quelle proportion de l'échantillon se trouve dans quel statut éducatif à quel moment, comment les transitions sont structurées d'une année à l'autre,
-							et comment la répartition évolue en pourcentage d'une année à l'autre.
+							L'applicazione visualizza i percorsi formativi di un campione rappresentativo di giovani dopo la fine dell'istruzione obbligatoria. 
+							I dati sono stati raccolti in tutto il territorio svizzero tra il 2016 e il 2019. L'applicazione mostra la percentuale del campione che si trova in uno stato di formazione specifico in un dato momento, 
+							come si evolvono le transizioni di anno in anno e come cambia la distribuzione percentuale di anno in anno.
 						</p>
 
 						<h2>
-							Instructions
+							Istruzioni
 						</h2>
 						<p class="text">
-							Avec l'application, vous pouvez afficher les données soit pour l'ensemble de l'échantillon (bouton « <span style="color:#3c3fff;"><b>Tous</b></span> »), soit pour des groupes spécifiques, 
-							tels que par sexe ou région linguistique. Des filtrages multiples (par exemple, les hommes suisses alémaniques) sont possibles, 
-							mais ils devraient être considérés comme des indicateurs approximatifs en raison de la taille de l'échantillon.
+							Con l'app è possibile rappresentare i percorsi sia per l'intero campione („<span style="color:#3c3fff;"><b>Alle</b></span>“-Button)
+							che per specifici gruppi, come il genere o la regione linguistica. 
+							Le filtrazioni multiple (ad esempio, uomini svizzeri di lingua tedesca) sono possibili, ma dovrebbero essere considerate solo come un indicatore a causa delle dimensioni del campione.
 						</p>
 					</div>
 				</div>
@@ -203,16 +203,16 @@
 		<footer class="container-fluid" id="footer">
 			<div class="row">
 				<div class="col-sm-4 box"> <!--box-->
-					<h3>données brutes:</h3>
+					<h3>Dati grezzi:</h3>
 					<ul class="list">
 						<li><a href="source\data_2nd-cohort.json" target="_blank">json</a> </li>
 						<li><a href="source\data_2nd-cohort.csv" target="_blank">csv</a> </li>
-						<li><a href="source\data_2nd-cohort_labels.xlsx" target="_blank">étiquettes</a></li>
+						<li><a href="source\data_2nd-cohort_labels.xlsx" target="_blank">Etichette</a></li>
 					</ul>
 				</div>
 
 				<div class="col-sm-4 box"><!--box-->
-					<h3>Créé par:</h3>
+					<h3>creato da</h3>
 					<dl>
 						<dt>Jeremy Lou Moser</dt>
 						<dd>jeremy.moser@students.unibe.ch</dd>
@@ -223,22 +223,22 @@
 
 				<div class="col-sm-4 box"> <!--box  id="right-->
 					<h3>TREE </h3>
-					<h4>(Transitions de l'éducation et de la formation initiales vers l'emploi)</h4>
+					<h4>(Transizione dalla formazione iniziale alla vita lavorativa)</h4>
 					<dl>
-						<dd>Université de Berne</dd>
-						<dd>Institut de Sociologie</dd>
-						<dd><a href="https://www.tree.unibe.ch/index_fra.html" target="_blank">www.tree.unibe.ch</a></dd>
+						<dd>Università di Berna</dd>
+						<dd>Istituto di Sociologia</dd>
+						<dd><a href="https://www.tree.unibe.ch/index_ita.html" target="_blank">www.tree.unibe.ch</a></dd>
 					</dl>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-4 licence">
-					<h3>"Publié sous la GNU General Public License v3</h3>
+					<h3>Rilasciato sotto la  GNU General Public License v3</h3>
 				</div>
 			</div>
 		</footer>
 		<script>
-			lang = "fr";
+			lang = "it";
             buildPage();
 		</script>
 	</body>

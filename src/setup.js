@@ -169,7 +169,7 @@ function setLegendColor() {
                 case "Obligatorische Schule":
                     list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
-                    case "Nicht in Ausbildung":
+                case "Nicht in Ausbildung":
                     list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
                 case "Zwischenlösung: Praktikum":
@@ -209,10 +209,10 @@ function setLegendColor() {
                 case "compulsory school":
                     list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
-                    case "not in education or training":
+                case "not in education or training":
                     list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
-                case "Interim solution: Internship":
+                case "Interim solution: internship":
                     list[0].children[x].firstChild.style.background = praktikum;
                     break;
                 case "Interim solution: 10th school year" :
@@ -230,7 +230,7 @@ function setLegendColor() {
                 case "VET: 3-4 years VB1" :
                     list[0].children[x].firstChild.style.background = berufsmaturitaet;
                     break;
-                case "General education: Baccalaureate schools" :
+                case "General education: baccalaureate schools" :
                     list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
                     break;
                 case "General education: other":
@@ -241,15 +241,15 @@ function setLegendColor() {
                 
                 }
             }
+        //switch french labels
         else if (lang == "fr")
-            //switch french labels
             {
             switch(list[0].children[x].innerText)
                 {
                 case "École obligatoire":
                     list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
-                    case "Pas en formation":
+                case "Pas en formation":
                     list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
                 case "Solution transitoire: stage":
@@ -267,7 +267,7 @@ function setLegendColor() {
                 case "Formation professionelle: 3-4 ans":
                     list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
                     break;
-                case "Formation professionelle: 3-4 ans (CFEC + MP1)" :
+                case "Formation professionelle: 3-4 ans (CFC + MP1)" :
                     list[0].children[x].firstChild.style.background = berufsmaturitaet;
                     break;
                 case "Formation générale: gymnase" :
@@ -281,5 +281,45 @@ function setLegendColor() {
                     
                 }
             }
+    //switch italian labels
+        else if(lang == "it")
+            {
+            switch(list[0].children[x].innerText)
+                {
+                case "Scuola obbligatoria":
+                    list[0].children[x].firstChild.style.background = obligatorische_schule;
+                    break;
+                case "Non in formazione":
+                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
+                    break;
+                case "Soluzione intermedia: tirocinio":
+                    list[0].children[x].firstChild.style.background = praktikum;
+                    break;
+                case "Soluzione intermedia: 10° anno scolastico" :
+                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
+                    break;
+                case "Soluzione intermedia: altri":
+                    list[0].children[x].firstChild.style.background = zwischenloesung;
+                    break;
+                case "Formazione professionale: 2 anni" :
+                    list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
+                    break;
+                case "Formazione professionale: 3-4 anni":
+                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
+                    break;
+                case "Formazione professionale 3-4 anni (ACF + MP1)" :
+                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
+                    break;
+                case "Istruzione generale: ginnasio" :
+                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
+                    break;
+                case "Istruzione generale: altri":
+                    list[0].children[x].firstChild.style.background = andere_loesung;
+                    break;
+                default:
+                    list[0].children[x].firstChild.style.background = "white";
+            
+            }
         }
     }
+}
