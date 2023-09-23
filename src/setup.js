@@ -172,28 +172,28 @@ function setLegendColor() {
                     case "Nicht in Ausbildung":
                     list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
-                case "Praktikum":
+                case "Zwischenlösung: Praktikum":
                     list[0].children[x].firstChild.style.background = praktikum;
                     break;
-                case "10. Schuljahr" :
+                case "Zwischenlösung: 10. Schuljahr" :
                     list[0].children[x].firstChild.style.background = zehntes_schuljahr;
                     break;
-                case "Zwischenlösung":
+                case "Zwischenlösung: übrige":
                     list[0].children[x].firstChild.style.background = zwischenloesung;
                     break;
-                case "Berufsausbildung: 2 jährig" :
+                case "Berufsbildung: 2 jährig" :
                      list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
                      break;
-                case "Berufsausbildung: 3-4 jährig":
+                case "Berufsbildung: 3-4 jährig (EFZ)":
                     list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
                     break;
-                case "Berufsmaturität" :
+                case "Berufsbildung: 3-4 jährig (EFZ + BMI)" :
                     list[0].children[x].firstChild.style.background = berufsmaturitaet;
                     break;
-                case "allgemeine Weiterbildung" :
+                case "Allgemeinbildung: Gymnasien" :
                     list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
                     break;
-                case "andere Lösung":
+                case "Allgemeinbildung: übrige":
                     list[0].children[x].firstChild.style.background = andere_loesung;
                     break;
                 default:
@@ -202,7 +202,7 @@ function setLegendColor() {
             }
         }
         //switch english labels
-        else
+        else if(lang == "eng")
         {
             switch(list[0].children[x].innerText)
             {
@@ -212,33 +212,73 @@ function setLegendColor() {
                     case "not in education or training":
                     list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
                     break;
-                case "internship":
+                case "Interim solution: Internship":
                     list[0].children[x].firstChild.style.background = praktikum;
                     break;
-                case "10th school year" :
+                case "Interim solution: 10th school year" :
                     list[0].children[x].firstChild.style.background = zehntes_schuljahr;
                     break;
-                case "intermediate solution":
+                case "interim solution: other":
                     list[0].children[x].firstChild.style.background = zwischenloesung;
                     break;
-                case "vocational training: 2 years" :
+                case "VET: 2 years" :
                      list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
                      break;
-                case "vocational training: 3-4 years":
+                case "VET: 3-4 years":
                     list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
                     break;
-                case "vocational baccalaureate" :
+                case "VET: 3-4 years VB1" :
                     list[0].children[x].firstChild.style.background = berufsmaturitaet;
                     break;
-                case "general baccalaureate" :
+                case "General education: Baccalaureate schools" :
                     list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
                     break;
-                case "other solutions":
+                case "General education: other":
                     list[0].children[x].firstChild.style.background = andere_loesung;
                     break;
                 default:
                     list[0].children[x].firstChild.style.background = "white";
                 
+                }
+            }
+        else if (lang == "fr")
+            //switch french labels
+            {
+            switch(list[0].children[x].innerText)
+                {
+                case "École obligatoire":
+                    list[0].children[x].firstChild.style.background = obligatorische_schule;
+                    break;
+                    case "Pas en formation":
+                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
+                    break;
+                case "Solution transitoire: stage":
+                    list[0].children[x].firstChild.style.background = praktikum;
+                    break;
+                case "Solution transitoire: 10ème année scolaire" :
+                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
+                    break;
+                case "Solution transitoire: autre":
+                    list[0].children[x].firstChild.style.background = zwischenloesung;
+                    break;
+                case "Formation professionelle: 2 ans" :
+                    list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
+                    break;
+                case "Formation professionelle: 3-4 ans":
+                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
+                    break;
+                case "Formation professionelle: 3-4 ans (CFEC + MP1)" :
+                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
+                    break;
+                case "Formation générale: gymnase" :
+                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
+                    break;
+                case "Formation générale: autre":
+                    list[0].children[x].firstChild.style.background = andere_loesung;
+                    break;
+                default:
+                    list[0].children[x].firstChild.style.background = "white";
+                    
                 }
             }
         }

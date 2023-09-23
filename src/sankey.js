@@ -60,6 +60,9 @@ function updateSankey() {
         case "eng":
             d3.json("data/labels_2nd-cohort-en.json", helper);
             break;
+        case "fr":
+            d3.json("data/labels_2nd-cohort-fr.json", helper);
+            break;
         default:
             d3.json("data/labels_2nd-cohort.json", helper);
     }
@@ -292,28 +295,28 @@ function setColor(d) {
                 return obligatorische_schule;
             case "Nicht in Ausbildung":
                 return nicht_in_ausbildung;
-            case "Praktikum":
+            case "Zwischenlösung: Praktikum":
                 return praktikum;
-            case "10. Schuljahr":
+            case "Zwischenlösung: 10. Schuljahr":
                  return zehntes_schuljahr;
-            case "Zwischenlösung":
+            case "Zwischenlösung: übrige":
                 return zwischenloesung;
-            case "Berufsausbildung: 2 jährig":
+            case "Berufsbildung: 2 jährig":
                 return berufsausbildung_2jahre;
-            case "Berufsausbildung: 3-4 jährig":
+            case "Berufsbildung: 3-4 jährig (EFZ)":
                  return berufsausbildung_34jahre;
-            case "Berufsmaturität":
+            case "Berufsbildung: 3-4 jährig (EFZ + BMI)":
                 return berufsmaturitaet;
-            case "allgemeine Weiterbildung":
+            case "Allgemeinbildung: Gymnasien":
                 return allgemeinbildende_Schule;
-            case "andere Lösung":
+            case "Allgemeinbildung: übrige":
                 return andere_loesung;
             default:
                 return notsure;
         }
     }
 //set colors for english labels
-    if (lang == "eng")
+    else if (lang == "eng")
     {
         switch(d.name)
         {
@@ -321,21 +324,50 @@ function setColor(d) {
                 return obligatorische_schule;
             case "not in education or training":
                 return nicht_in_ausbildung;
-            case "internship":
+            case "Interim solution: Internship":
                 return praktikum;
-            case "10th school year":
+            case "Interim solution: 10th school year":
                  return zehntes_schuljahr;
-            case "intermediate solution":
+            case "interim solution: other":
                 return zwischenloesung;
-            case "vocational training: 2 years":
+            case "VET: 2 years":
                 return berufsausbildung_2jahre;
-            case "vocational training: 3-4 years":
+            case "VET: 3-4 years":
                  return berufsausbildung_34jahre;
-            case "vocational baccalaureate":
+            case "VET: 3-4 years VB1":
                 return berufsmaturitaet;
-            case "general baccalaureate":
+            case "General education: Baccalaureate schools":
                 return allgemeinbildende_Schule;
-            case "other solutions":
+            case "General education: other":
+                return andere_loesung;
+            default:
+                return notsure;
+        }
+    }
+    //set colors for french labels
+    else if (lang == "fr")
+    {
+        switch(d.name)
+        {
+            case "École obligatoire":
+                return obligatorische_schule;
+            case "Pas en formation":
+                return nicht_in_ausbildung;
+            case "Solution transitoire: stage":
+                return praktikum;
+            case "Solution transitoire: 10ème année scolaire":
+                 return zehntes_schuljahr;
+            case "Solution transitoire: autre":
+                return zwischenloesung;
+            case "Formation professionelle: 2 ans":
+                return berufsausbildung_2jahre;
+            case "Formation professionelle: 3-4 ans":
+                 return berufsausbildung_34jahre;
+            case "Formation professionelle: 3-4 ans (CFEC + MP1)":
+                return berufsmaturitaet;
+            case "Formation générale: gymnase":
+                return allgemeinbildende_Schule;
+            case "Formation générale: autre":
                 return andere_loesung;
             default:
                 return notsure;

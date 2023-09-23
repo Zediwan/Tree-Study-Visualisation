@@ -1,0 +1,46 @@
+{"nodes":[
+    {"name":"École obligatoire"},
+   
+    {"name":"Pas en formation"},
+    {"name":"Solution transitoire: stage"},
+    {"name":"Solution transitoire: 10ème année scolaire"},
+    {"name":"Solution transitoire: autre"},
+    {"name":"Formation professionelle: 2 ans"},
+    {"name":"Formation professionelle: 3-4 ans"},
+    {"name":"Formation professionelle: 3-4 ans (CFEC + MP1)"},
+    {"name":"Formation générale: gymnase"},
+    {"name":"Formation générale: autre"},
+
+    {"name":"Pas en formation"},
+    {"name":"Solution transitoire: stage"},
+    {"name":"Solution transitoire: 10ème année scolaire"},
+    {"name":"Solution transitoire: autre"},
+    {"name":"Formation professionelle: 2 ans"},
+    {"name":"Formation professionelle: 3-4 ans"},
+    {"name":"Formation professionelle: 3-4 ans (CFEC + MP1)"},
+    {"name":"Formation générale: gymnase"},
+    {"name":"Formation générale: autre"},
+
+    {"name":"Pas en formation"},
+    {"name":"Solution transitoire: stage"},
+    {"name":"Solution transitoire: 10ème année scolaire"},
+    {"name":"Solution transitoire: autre"},
+    {"name":"Formation professionelle: 2 ans"},
+    {"name":"Formation professionelle: 3-4 ans"},
+    {"name":"Formation professionelle: 3-4 ans (CFEC + MP1)"},
+    {"name":"Formation générale: gymnase"},
+    {"name":"Formation générale: autre"},
+
+    {"name":"Pas en formation"},
+    {"name":"Solution transitoire: stage"},
+    {"name":"Solution transitoire: 10ème année scolaire"},
+    {"name":"Solution transitoire: autre"},
+    {"name":"Formation professionelle: 2 ans"},
+    {"name":"Formation professionelle: 3-4 ans"},
+    {"name":"Formation professionelle: 3-4 ans (CFEC + MP1)"},
+    {"name":"Formation générale: gymnase"},
+    {"name":"Formation générale: autre"},
+
+    {"name": "Invisible Node"}
+    ]
+}
