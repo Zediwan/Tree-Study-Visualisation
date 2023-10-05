@@ -99,7 +99,7 @@ h4 {
 }
 
 path:hover{
-	stroke-opacity: .5;
+	stroke-opacity: 1;
 }
 
 rect:hover{
