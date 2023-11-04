@@ -85,16 +85,24 @@ function filter() {
     }
 }
 
-function getCheckedBoxes(boxesArray){
-    var boxesChecked = []; // Array of checked boxes
-    // Go through all the boxes
-    for (var k = 0; k < boxesArray.length; k++) {
-        if (boxesArray[k].checked) {
-            boxesChecked.push(k);   // If the Box is checked add it to the return list
+/**
+ * Returns an array of indices (zero-based) of checked checkboxes in the given array.
+ *
+ * @param {HTMLInputElement[]} boxesArray - An array of checkbox elements to check.
+ * @returns {number[]} An array of indices representing the positions of checked checkboxes.
+ */
+function getCheckedBoxes(boxesArray) {
+    var checkedIndices = [];
+
+    boxesArray.forEach(function(checkbox, index) {
+        if (checkbox.checked) {
+            checkedIndices.push(index);
         }
-    }
-    return boxesChecked;
+    });
+    
+    return checkedIndices;
 }
+
 
 /**
  Read each Person and convert information into links
