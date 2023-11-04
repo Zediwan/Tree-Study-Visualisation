@@ -1,112 +1,39 @@
 /**
- * converts the gender or language value in the person objects to an integer used from @link filterForm
- * for the according property
+ * Converts the gender or language value in the person objects to an integer
+ * used for filtering based on the specified property in the filterForm.
+ *
+ * @param {Object} jsonData - The person object containing data to be converted.
+ * @param {string} type - The property type (e.g., 'gender' or 'language') for which the conversion is needed.
+ * @returns {number} An integer value representing the converted property.
  */
 function convertToInteger(jsonData, type) {
-    /* starting with index 0 the details of a person is converted to an integer
-     * is connected to the radio buttons !
-     *
-     * */
-    
-        /**
-     * gender in dataset: 1 = female, 2 = male
-     * for it to be 0 we have to substract 1 -->
-     * 0 = female, male 1 = male
-     */
+    // Create a conversion table using an object literal.
+    const conversionTable = {
+        // For the "gender" type, subtract 1 from the "t0sex" field.
+        gender: jsonData.t0sex - 1,
 
-    if(type == "gender")
-    {
-        return jsonData.t0sex
-     - 1;
-    }
-   
-     /**
-      * language region in dataset: 1 = german, 2 = french, 3 = italian
-      * in Application: 0 = German
-      * 2 and 3 are "Französisch/Italienisch"
-      */
-    if(type == "language")
-    {
-        let st = jsonData.aes_langreg 
-        switch (st){
-            case 1:
-                st = 0;
-                break;
-            case 2:
-                st = 1;
-                break;
-            case 3:
-                st = 1;
-                break;
-        }
-        return st
-    }
-    /**
-     * in dataset: 
-     * 1 = High requirements
-     * 2 = Advanced requirements & Alternative/non-assignable study program
-     * 3 = Basic/low requirements
-     * in Application: 1 and 2 are "Erweitert"
-     * 3 = basic
-      */
+        // For the "language" type, map values from "aes_langreg" to the desired result.
+        // For example, if "aes_langreg" is 1, map it to 0; if 2 or 3, map to 1.
+        language: {
+            1: 0, // 1 maps to 0
+            2: 1, // 2 maps to 1
+            3: 1, // 3 maps to 1
+        }[jsonData.aes_langreg],
 
-    if(type == "school-requirements")
-    {
-        let st = jsonData.t0st_nprog_req3;
-        switch (st){
-            case 1:
-                st = 1;
-                break;
-            case 2:
-                st = 1;
-                break;
-            case 3:
-                st = 0;
-                break;
-        }
+        // Similar mapping is applied for other types like "school-requirements," "status," etc.
+        'school-requirements': {
+            1: 1,
+            2: 1,
+            3: 0,
+        }[jsonData.t0st_nprog_req3],
+        status: jsonData.t0hisei08_3q - 1,
+        parents: jsonData.t0fmedu_comp,
+        immigration: jsonData.t0immig - 1,
+    };
 
-        return st   
-        
-    }
-    /** in dataset: 
-     * 1 = low, 2 = medium, 3 = high
-     * for it to be 0 we substract 1 -->
-     * 0 = low, 1 = medium, 2 = high
-     */
-    if(type == "status")
-    {
-        return jsonData.t0hisei08_3q 
-        -1;
-    }
-    /**
-     * Education of parents in dataset:
-     * 0 = compulsary schooling only
-     * 1 = upper secondary education
-     * 2 = tertiary education
-     * 
-     * no adujstments needed
-     */
-    if(type == "parents")
-    {
-        return jsonData.t0fmedu_comp ;
-    }
-
-    /**
-     * New category: Immigration. Needs to be integrated!
-     * in dataset:
-     * 1 = native (at least 1 parent born in Switzerland)
-     * 2 = 2nd generation (respondent born in Switzerland, no parent born in Switzerland)
-     * 2 = first generation (respondent and parents born abroad)
-     * for it to be 0 we substract 1 -->
-     * 0 = native, 1 = 2nd generation, 2 = first generation 
-     */
-    if(type == "immigration")
-    {
-        return jsonData.t0immig
-        -1 ;
-    }
+    // Return the result based on the specified type.
+    return conversionTable[type];
 }
-
 
 /**
  * filter jsonData and fill selected elements into jsonDataFiltered
