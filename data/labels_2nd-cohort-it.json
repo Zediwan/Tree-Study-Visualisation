@@ -1,0 +1,46 @@
+{"nodes":[
+    {"name":"Scuola obbligatoria"},
+   
+    {"name":"Non in formazione"},
+    {"name":"Soluzione intermedia: tirocinio"},
+    {"name":"Soluzione intermedia: 10° anno scolastico"},
+    {"name":"Soluzione intermedia: altri"},
+    {"name":"Formazione professionale: 2 anni"},
+    {"name":"Formazione professionale: 3-4 anni"},
+    {"name":"Formazione professionale 3-4 anni (ACF + MP1)"},
+    {"name":"Istruzione generale: ginnasio"},
+    {"name":"Istruzione generale: altri"},
+
+    {"name":"Non in formazione"},
+    {"name":"Soluzione intermedia: tirocinio"},
+    {"name":"Soluzione intermedia: 10° anno scolastico"},
+    {"name":"Soluzione intermedia: altri"},
+    {"name":"Formazione professionale: 2 anni"},
+    {"name":"Formazione professionale: 3-4 anni"},
+    {"name":"Formazione professionale 3-4 anni (ACF + MP1)"},
+    {"name":"Istruzione generale: ginnasio"},
+    {"name":"Istruzione generale: altri"},
+    
+    {"name":"Non in formazione"},
+    {"name":"Soluzione intermedia: tirocinio"},
+    {"name":"Soluzione intermedia: 10° anno scolastico"},
+    {"name":"Soluzione intermedia: altri"},
+    {"name":"Formazione professionale: 2 anni"},
+    {"name":"Formazione professionale: 3-4 anni"},
+    {"name":"Formazione professionale 3-4 anni (ACF + MP1)"},
+    {"name":"Istruzione generale: ginnasio"},
+    {"name":"Istruzione generale: altri"},
+
+    {"name":"Non in formazione"},
+    {"name":"Soluzione intermedia: tirocinio"},
+    {"name":"Soluzione intermedia: 10° anno scolastico"},
+    {"name":"Soluzione intermedia: altri"},
+    {"name":"Formazione professionale: 2 anni"},
+    {"name":"Formazione professionale: 3-4 anni"},
+    {"name":"Formazione professionale 3-4 anni (ACF + MP1)"},
+    {"name":"Istruzione generale: ginnasio"},
+    {"name":"Istruzione generale: altri"},
+
+    {"name": "Invisible Node"}
+    ]
+}
