@@ -36,36 +36,51 @@ function convertToInteger(jsonData, type) {
 }
 
 /**
- * filter jsonData and fill selected elements into jsonDataFiltered
- * @todo @zediwan create filter for immigration
+ * Filters the `jsonData` array based on selected categories in the filter form and populates
+ * the `jsonDataFiltered` array with matching elements.
+ *
+ * @function
+ * @name filter
+ *
+ * @description This function is responsible for filtering the `jsonData` array of person objects
+ * based on selected categories in the filter form. It iterates through the data and checks whether
+ * each person's data matches the selected categories. If no categories are selected for a particular
+ * property, all data for that property is included. The filtered data is stored in the `jsonDataFiltered` array.
+ *
+ * @global
+ *
+ * @returns {void} This function does not return a value directly, but it populates the global `jsonDataFiltered`
+ * array with the filtered data.
  */
 function filter() {
     jsonDataFiltered = [];
     var form = document.getElementById("filterForm");
-    var i;
-    var length = jsonData.length;   // Amount of Data elements.
+    var length = jsonData.length;
 
-    var selGend = getCheckedBoxes(form.selGend);
-    var selLang = getCheckedBoxes(form.selLang);
-    var selEdu = getCheckedBoxes(form.selEdu);
-    var selEco = getCheckedBoxes(form.selEco);
-    var selEduPar = getCheckedBoxes(form.selEduPar);
-    var selImmig = getCheckedBoxes(form.selImmig);
+    var selectedCategories = {
+        gender: getCheckedBoxes(form.selGend),
+        language: getCheckedBoxes(form.selLang),
+        'school-requirements': getCheckedBoxes(form.selEdu),
+        status: getCheckedBoxes(form.selEco),
+        parents: getCheckedBoxes(form.selEduPar),
+        immigration: getCheckedBoxes(form.selImmig),
+    };
 
     /*
      * Filter the original Data for every person, based on selected filters
      *  */
-    for (i = 0; i<length; i++)
-    {   
-        // Check whether the person's data matches any of the selected categories if none selected add all of said category
-        if ((selGend.length == 0 || selGend.includes(convertToInteger(jsonData[i], "gender"))) &&
-            (selLang.length == 0 || selLang.includes(convertToInteger(jsonData[i], "language"))) &&
-            (selEdu.length == 0 || selEdu.includes(convertToInteger(jsonData[i], "school-requirements"))) &&
-            (selEco.length == 0 || selEco.includes(convertToInteger(jsonData[i], "status"))) &&
-            (selEduPar.length == 0 || selEduPar.includes(convertToInteger(jsonData[i], "parents")))&&
-            (selImmig.length == 0 || selImmig.includes(convertToInteger(jsonData[i], "immigration"))))
-        {
-            jsonDataFiltered.push(jsonData[i]);
+    for (var i = 0; i < length; i++) {
+        var personData = jsonData[i];
+
+        // Check whether the person's data matches any of the selected categories.
+        // If no categories are selected, include all data.
+        var includePerson = Object.keys(selectedCategories).every(function(category) {
+            return selectedCategories[category].length === 0 ||
+                selectedCategories[category].includes(convertToInteger(personData, category));
+        });
+
+        if (includePerson) {
+            jsonDataFiltered.push(personData);
         }
     }
 }
