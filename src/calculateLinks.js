@@ -107,16 +107,26 @@ function getCheckedBoxes(boxesArray) {
 /**
  Read each Person and convert information into links
  */
- function calculateLinks() {
+function calculateLinks() {
+    /* for the calculation of the weigths for that we can break the links down in percentage*/
+    t1weigth = 0;
+    t2weigth = 0;
+    t3weigth = 0;   
+
+    const FIRST_YEAR_START = 1
+    const FIRST_AMOUNT= 9
+    const FIRST_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
+    const SECOND_YEAR_START = FIRST_YEAR_END
+    const SECOND_AMOUNT= 9
+    const SECOND_END = FIRST_YEAR_END + SECOND_AMOUNT
+    const THIRD_YEAR_START = SECOND_END
+    const THIRD_AMOUNT= 9
+    const THIRD_YEAR_END = THIRD_AMOUNT + THIRD_YEAR_START
+
     var length = jsonDataFiltered.length;
     var index;
     var from = new Array(2);
     var to;
-
-    /* for the calculation of the weigths for that we can break the links down in percentage*/
-    t1weigth = 0;
-    t2weigth = 0;
-    t3weigth = 0;
 
     //Read each person object and manipulate links accordingly
     for (index = 0; index < length; index++) {
@@ -227,7 +237,6 @@ function getCheckedBoxes(boxesArray) {
             linkSize[from[1]][to] += (parseFloat(jsonDataFiltered[index].t2wt));
         }
 
-        
         switch (jsonDataFiltered[index].t3educ_class_1_r) {
             case 1:
                 to = 19;
@@ -274,99 +283,16 @@ function getCheckedBoxes(boxesArray) {
         }   
     }
 
-     /*
-     *calculate weight of links
-     *for every survey year we collect the total amount of "movement" to get the weight
-     *if more nodes and other years are implemented, then this code needs to be expanded!
-     * */
 
+    t1weigth = calculateTotalWeight(linkSize, FIRST_YEAR_START, FIRST_YEAR_END);
+    t2weigth = calculateTotalWeight(linkSize, SECOND_YEAR_START, SECOND_END);
+    t3weigth = calculateTotalWeight(linkSize, THIRD_YEAR_START, THIRD_YEAR_END);
     
-    const FIRST_YEAR_START = 1
-    const FIRST_AMOUNT= 9
-    const FIRST_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
-
-    for (i = FIRST_YEAR_START; i < FIRST_YEAR_END; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            t1weigth += linkSize[j][i];
-        }
-    }
-
-    const SECOND_YEAR_START = FIRST_YEAR_END
-    const SECOND_AMOUNT= 9
-    const SECOND_END = FIRST_YEAR_END + SECOND_AMOUNT
-
-    for (i = SECOND_YEAR_START; i < SECOND_END; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            t2weigth += linkSize[j][i];
-        }
-    }
-
-    const THIRD_YEAR_START = SECOND_END
-    const THIRD_AMOUNT= 9
-    const THIRD_YEAR_END = THIRD_AMOUNT + THIRD_YEAR_START
-
-    for (i = THIRD_YEAR_START; i < THIRD_YEAR_END; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            t3weigth += linkSize[j][i];
-        }
-    }
-
+    convertToPercentagesForYear(linkSize, FIRST_YEAR_START, FIRST_AMOUNT, t1weigth)
+    convertToPercentagesForYear(linkSize, SECOND_YEAR_START, SECOND_AMOUNT, t2weigth)
+    convertToPercentagesForYear(linkSize, THIRD_YEAR_START, THIRD_AMOUNT, t3weigth)
     
-
-    //Break linksize down to %, if more nodes and other years are implemented, then this code needs to be expanded!
-    for (i=FIRST_YEAR_START; i<FIRST_YEAR_END; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            linkSize[j][i] = linkSize[j][i]/t1weigth*100;
-        }
-    }
-
-    for (i=SECOND_YEAR_START; i<=SECOND_END; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            linkSize[j][i] = linkSize[j][i]/t2weigth*100;
-        }
-    }
-
-    for (i=THIRD_YEAR_START; i<THIRD_YEAR_END; i++){
-        for (j=0; j < REM_NUM_NODES; j++){
-            linkSize[j][i] = linkSize[j][i]/t3weigth*100;
-        }
-    }
-
-
-
-    /**
-     * Guillotine
-     * if a node is smaller than Guillotine then its links have to be smaller than 4% too, so we give the 63.
-     * "invisible" node the links, and empty the normal links
-     */
-
-    // for the "value" of a node
-    var summe;
-
-    /* 
-     * to remember is that the array linkSize is linkSize[FROM][TO]
-     */
-   
-    const RELEVANT_NODES = TOT_NUM_NODES-1   // All nodes except the invisible one
-    for (i = 1; i < RELEVANT_NODES; i++){
-        summe = 0;
-        for (j = 0; j < i; j++){
-            summe = summe + linkSize[j][i];
-        }
-
-        //guillotine
-        if (summe < guillotine) {
-            for (j = 0; j < i; j++) {
-                linkSize[j][i] = 0;
-            }
-
-            for (j = 0; j < RELEVANT_NODES; j++) {
-                linkSize[RELEVANT_NODES][j] = linkSize[i][j];
-                linkSize[i][j] = 0;
-            }
-
-        }
-    }
+    applyGuillotine(linkSize);
 
     /*
      * now after everything is filtered we can send the links in the right format to customLinks
@@ -378,6 +304,73 @@ function getCheckedBoxes(boxesArray) {
         for (j = 0; j < TOT_NUM_NODES; j++) {
             if (linkSize[i][j] > 0) {
                 customLinks.push({ "source": i, "target": j, "value": linkSize[i][j] });
+            }
+        }
+    }
+}
+
+/**
+ * Calculate the total weight for a specific year range.
+ * @param {number[][]} linkSize - The 2D array for link weights.
+ * @param {number} startYear - The starting year of the range.
+ * @param {number} endYear - The ending year of the range.
+ * @returns {number} The total weight for the specified year range.
+ */
+function calculateTotalWeight(linkSize, startYear, endYear) {
+    let totalWeight = 0;
+    for (let i = startYear; i < endYear; i++) {
+        for (let j = 0; j < REM_NUM_NODES; j++) {
+            totalWeight += linkSize[j][i];
+        }
+    }
+    return totalWeight;
+}
+
+
+/**
+ * Convert linkSize values to percentages for a specific year and number of categories.
+ * @param {number[][]} linkSize - The 2D array for link weights.
+ * @param {number} yearStart - The starting year of the survey data.
+ * @param {number} numCategories - The number of categories for the year.
+ * @param {number} yearTotalWeight - The total weight for the year.
+ */
+function convertToPercentagesForYear(linkSize, yearStart, numCategories, yearTotalWeight) {
+    for (let j = yearStart; j < yearStart + numCategories; j++) {
+        for (let k = 0; k < linkSize.length; k++) {
+            if (yearTotalWeight !== 0) {
+                linkSize[k][j] = (linkSize[k][j] / yearTotalWeight) * 100;
+            } else {
+                linkSize[k][j] = 0;
+            }
+        }
+    }
+}
+
+
+
+/**
+ * Apply a guillotine filter to remove links with a total weight below the specified threshold.
+ *
+ * @param {number[][]} linkSize - 2D array representing link weights between nodes.
+ * @param {number} guillotine - The threshold for link removal in % (default: 4%).
+ */
+function applyGuillotine(linkSize, guillotine = .04) {
+    const RELEVANT_NODES = TOT_NUM_NODES - NUM_THIRD_NODES; // All nodes except the invisible one
+
+    // Iterate through source nodes and apply guillotine.
+    for (let i = 1; i < RELEVANT_NODES; i++) {
+        let sum = 0;
+
+        // Calculate the total weight of incoming links.
+        for (let j = 0; j < RELEVANT_NODES; j++) {
+            sum += linkSize[j][i];
+        }
+
+        if (sum < guillotine) {
+            // If the total weight is below the guillotine threshold, clear links.
+            for (let j = 0; j <= i; j++) {
+                linkSize[j][i] = 0;
+                linkSize[i][j] = 0;
             }
         }
     }
