@@ -123,171 +123,25 @@ function calculateLinks() {
     const THIRD_AMOUNT= 9
     const THIRD_YEAR_END = THIRD_AMOUNT + THIRD_YEAR_START
 
-    var from = new Array(4);
-    var to;
-
     //Read each person object and manipulate links accordingly
     //todo: update this method
     //todo automise this method so that it works for n amount of years
     jsonDataFiltered.forEach(person => {
-        /*
-         * for the obligatory school node (look at the labels.json , all "nodes" are indexed according to the json
-         * so for example "Nicht in Ausbildung" exists more than once because it appears in diffrent years, so every of them has
-         * a diffrent index), if more nodes and other years are implemented, then this code needs to be expanded!
-         * */
-        from[0] = 0;
+        educationInYear = new Array(4)
+        educationInYear[0] = 0
+        educationInYear[1] = person.t1educ_class_1_r
+        educationInYear[2] = person.t2educ_class_1_r + 9
+        educationInYear[3] = person.t3educ_class_1_r + 18
 
-        /*
-         * read t1educ_class_1_r, note target of links coming from node 0, note source of links goingt to t2educ_class_1_r
-         * we go from node 0 "obligatory school" to one of the 4 nodes of the first survey, so only
-         * Nicht in Ausbildung with index 1, Zwischenlösung with index 2 etc.
-         * */
-        switch (person.t1educ_class_1_r) {
-            case 1:
-                to = 1;
-                from[1] = 1;
-                break;
-            case 2:
-                to = 2
-                from[1] = 2;
-                break;
-            case 3:
-                to = 3
-                from[1] = 3;
-                break;
-            case 4:
-                to = 4
-                from[1] = 4;
-                break;
-            case 5:
-                to = 5
-                from[1] = 5;
-                break;
-            case 6:
-                to = 6
-                from[1] = 6;
-                break;
-            case 7:
-                to = 7
-                from[1] = 7;
-                break;       
-            case 8:
-                to = 8;
-                from[1] = 8;
-                break;
-            case 9:
-                to = 9;
-                from[1] = 9;
-                break;
-            default:
-                to = null;
-                from[1] = null;
+        if(educationInYear[0] != null && educationInYear[1] != null){
+            linkSize[educationInYear[0]][educationInYear[1]] += (parseFloat(person.t1wt));
         }
-        //from[1] = person.t1educ_class_1_r
-        //to = from[1]
-        /*
-         * sum all links together of the first year
-         * should a source or target node be empty (because some people didn't answer that year then it will not be included)
-         * */
-        if (to != null) {
-            linkSize[from[0]][to] += (parseFloat(person.t1wt));
+        if(educationInYear[1] != null && educationInYear[2] != null){
+            linkSize[educationInYear[1]][educationInYear[2]] += (parseFloat(person.t2wt));
         }
-
-        // same as above but this time it begins with index 5 because thats the first node in the second survey
-        switch (person.t2educ_class_1_r) {
-            case 1:
-                to = 10;
-                from[2] = 10;
-                break;
-            case 2:
-                to = 11
-                from[2] = 11;
-                break;
-            case 3:
-                to = 12
-                from[2] = 12;
-                break;
-            case 4:
-                to = 13
-                from[2] = 13;
-                break;
-            case 5:
-                to = 14
-                from[2] = 14;
-                break;
-            case 6:
-                to = 15
-                from[2] = 15;
-                break;
-            case 7:
-                to = 16
-                from[2] = 16;
-                break;       
-            case 8:
-                to = 17;
-                from[2] = 17;
-                break;
-            case 9:
-                to = 18;
-                from[2] = 18;
-                break;
-            default:
-                to = null;
-                from[2] = null;
-        }
-        //from[2] = jsonDataFiltered[index].t2educ_class_1_r + FIRST_AMOUNT
-        //to = from[2]
-        
-        if (from[1] != null && to != null) {
-            linkSize[from[1]][to] += (parseFloat(person.t2wt));
-        }
-
-        switch (person.t3educ_class_1_r) {
-            case 1:
-                to = 19;
-                from[3] = 19;
-                break;
-            case 2:
-                to = 20
-                from[3] = 20;
-                break;
-            case 3:
-                to = 21
-                from[3] = 21;
-                break;
-            case 4:
-                to = 22
-                from[3] = 22;
-                break;
-            case 5:
-                to = 23
-                from[3] = 23;
-                break;
-            case 6:
-                to = 24
-                from[3] = 24;
-                break;
-            case 7:
-                to = 25
-                from[3] = 25;
-                break;       
-            case 8:
-                to = 26;
-                from[3] = 26;
-                break;
-            case 9:
-                to = 27;
-                from[3] = 27;
-                break;
-            default:
-                to = null;
-                from[3] = null;
-        }
-        //from[3] = jsonDataFiltered[index].t3educ_class_1_r + FIRST_AMOUNT + SECOND_AMOUNT
-        //to = from[3]
-        if (from[2] != null && to != null) {
-            linkSize[from[2]][to] += parseFloat(person.t3wt);
-        }   
+        if(educationInYear[2] != null && educationInYear[3] != null){
+            linkSize[educationInYear[2]][educationInYear[3]] += (parseFloat(person.t3wt));
+        }  
     })
 
     t1weigth = calculateTotalWeight(linkSize, FIRST_YEAR_START, FIRST_YEAR_END);
