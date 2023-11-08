@@ -123,13 +123,13 @@ function calculateLinks() {
     const THIRD_AMOUNT= 9
     const THIRD_YEAR_END = THIRD_AMOUNT + THIRD_YEAR_START
 
-    var length = jsonDataFiltered.length;
-    var index;
-    var from = new Array(2);
+    var from = new Array(4);
     var to;
 
     //Read each person object and manipulate links accordingly
-    for (index = 0; index < length; index++) {
+    //todo: update this method
+    //todo automise this method so that it works for n amount of years
+    jsonDataFiltered.forEach(person => {
         /*
          * for the obligatory school node (look at the labels.json , all "nodes" are indexed according to the json
          * so for example "Nicht in Ausbildung" exists more than once because it appears in diffrent years, so every of them has
@@ -142,7 +142,7 @@ function calculateLinks() {
          * we go from node 0 "obligatory school" to one of the 4 nodes of the first survey, so only
          * Nicht in Ausbildung with index 1, Zwischenlösung with index 2 etc.
          * */
-        switch (jsonDataFiltered[index].t1educ_class_1_r) {
+        switch (person.t1educ_class_1_r) {
             case 1:
                 to = 1;
                 from[1] = 1;
@@ -183,126 +183,133 @@ function calculateLinks() {
                 to = null;
                 from[1] = null;
         }
+        //from[1] = person.t1educ_class_1_r
+        //to = from[1]
         /*
          * sum all links together of the first year
          * should a source or target node be empty (because some people didn't answer that year then it will not be included)
          * */
-        if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (parseFloat(jsonDataFiltered[index].t1wt));
+        if (to != null) {
+            linkSize[from[0]][to] += (parseFloat(person.t1wt));
         }
 
         // same as above but this time it begins with index 5 because thats the first node in the second survey
-        switch (jsonDataFiltered[index].t2educ_class_1_r) {
+        switch (person.t2educ_class_1_r) {
             case 1:
                 to = 10;
-                from[0] = 10;
+                from[2] = 10;
                 break;
             case 2:
                 to = 11
-                from[0] = 11;
+                from[2] = 11;
                 break;
             case 3:
                 to = 12
-                from[0] = 12;
+                from[2] = 12;
                 break;
             case 4:
                 to = 13
-                from[0] = 13;
+                from[2] = 13;
                 break;
             case 5:
                 to = 14
-                from[0] = 14;
+                from[2] = 14;
                 break;
             case 6:
                 to = 15
-                from[0] = 15;
+                from[2] = 15;
                 break;
             case 7:
                 to = 16
-                from[0] = 16;
+                from[2] = 16;
                 break;       
             case 8:
                 to = 17;
-                from[0] = 17;
+                from[2] = 17;
                 break;
             case 9:
                 to = 18;
-                from[0] = 18;
+                from[2] = 18;
                 break;
             default:
                 to = null;
-                from[0] = null;
+                from[2] = null;
         }
+        //from[2] = jsonDataFiltered[index].t2educ_class_1_r + FIRST_AMOUNT
+        //to = from[2]
+        
         if (from[1] != null && to != null) {
-            linkSize[from[1]][to] += (parseFloat(jsonDataFiltered[index].t2wt));
+            linkSize[from[1]][to] += (parseFloat(person.t2wt));
         }
 
-        switch (jsonDataFiltered[index].t3educ_class_1_r) {
+        switch (person.t3educ_class_1_r) {
             case 1:
                 to = 19;
-                from[1] = 19;
+                from[3] = 19;
                 break;
             case 2:
                 to = 20
-                from[1] = 20;
+                from[3] = 20;
                 break;
             case 3:
                 to = 21
-                from[1] = 21;
+                from[3] = 21;
                 break;
             case 4:
                 to = 22
-                from[1] = 22;
+                from[3] = 22;
                 break;
             case 5:
                 to = 23
-                from[1] = 23;
+                from[3] = 23;
                 break;
             case 6:
                 to = 24
-                from[1] = 24;
+                from[3] = 24;
                 break;
             case 7:
                 to = 25
-                from[1] = 25;
+                from[3] = 25;
                 break;       
             case 8:
                 to = 26;
-                from[1] = 26;
+                from[3] = 26;
                 break;
             case 9:
                 to = 27;
-                from[1] = 27;
+                from[3] = 27;
                 break;
             default:
                 to = null;
-                from[1] = null;
+                from[3] = null;
         }
-        if (from[0] != null && to != null) {
-            linkSize[from[0]][to] += (parseFloat(jsonDataFiltered[index].t3wt));
+        //from[3] = jsonDataFiltered[index].t3educ_class_1_r + FIRST_AMOUNT + SECOND_AMOUNT
+        //to = from[3]
+        if (from[2] != null && to != null) {
+            linkSize[from[2]][to] += parseFloat(person.t3wt);
         }   
-    }
-
+    })
 
     t1weigth = calculateTotalWeight(linkSize, FIRST_YEAR_START, FIRST_YEAR_END);
     t2weigth = calculateTotalWeight(linkSize, SECOND_YEAR_START, SECOND_END);
     t3weigth = calculateTotalWeight(linkSize, THIRD_YEAR_START, THIRD_YEAR_END);
+
+    applyGuillotineTotalValue(linkSize)
     
     convertToPercentagesForYear(linkSize, FIRST_YEAR_START, FIRST_AMOUNT, t1weigth)
     convertToPercentagesForYear(linkSize, SECOND_YEAR_START, SECOND_AMOUNT, t2weigth)
     convertToPercentagesForYear(linkSize, THIRD_YEAR_START, THIRD_AMOUNT, t3weigth)
     
-    applyGuillotine(linkSize);
+    applyGuillotinePercentage(linkSize);
 
     /*
      * now after everything is filtered we can send the links in the right format to customLinks
      * which the helper function in sankey.js uses
-     *
-     * if more nodes are implemented 63 needs to be changed!
      */
     for (i = 0; i < TOT_NUM_NODES; i++) {
         for (j = 0; j < TOT_NUM_NODES; j++) {
             if (linkSize[i][j] > 0) {
+                //todo add total observations for each link
                 customLinks.push({ "source": i, "target": j, "value": linkSize[i][j] });
             }
         }
@@ -316,6 +323,7 @@ function calculateLinks() {
  * @param {number} endYear - The ending year of the range.
  * @returns {number} The total weight for the specified year range.
  */
+// todo refactor as it should return an array with the total weights per year
 function calculateTotalWeight(linkSize, startYear, endYear) {
     let totalWeight = 0;
     for (let i = startYear; i < endYear; i++) {
@@ -326,7 +334,6 @@ function calculateTotalWeight(linkSize, startYear, endYear) {
     return totalWeight;
 }
 
-
 /**
  * Convert linkSize values to percentages for a specific year and number of categories.
  * @param {number[][]} linkSize - The 2D array for link weights.
@@ -334,6 +341,7 @@ function calculateTotalWeight(linkSize, startYear, endYear) {
  * @param {number} numCategories - The number of categories for the year.
  * @param {number} yearTotalWeight - The total weight for the year.
  */
+// todo turn this into a method that just returns a new converted matrix instead of replacing actual values of the original
 function convertToPercentagesForYear(linkSize, yearStart, numCategories, yearTotalWeight) {
     for (let j = yearStart; j < yearStart + numCategories; j++) {
         for (let k = 0; k < linkSize.length; k++) {
@@ -346,31 +354,39 @@ function convertToPercentagesForYear(linkSize, yearStart, numCategories, yearTot
     }
 }
 
-
-
 /**
- * Apply a guillotine filter to remove links with a total weight below the specified threshold.
+ * Apply a guillotine percentage filter to remove links with a percentage below the specified threshold.
  *
  * @param {number[][]} linkSize - 2D array representing link weights between nodes.
- * @param {number} guillotine - The threshold for link removal in % (default: 4%).
+ * @param {number} guillotinePercentage - The threshold for link removal in % (default: 1%).
  */
-function applyGuillotine(linkSize, guillotine = .04) {
-    const RELEVANT_NODES = TOT_NUM_NODES - NUM_THIRD_NODES; // All nodes except the invisible one
-
-    // Iterate through source nodes and apply guillotine.
-    for (let i = 1; i < RELEVANT_NODES; i++) {
-        let sum = 0;
-
+function applyGuillotinePercentage(linkSize, guillotinePercentage = 1) {
+    // Iterate through all nodes and apply guillotine.
+    for (let i = 0; i < TOT_NUM_NODES; i++) {
         // Calculate the total weight of incoming links.
-        for (let j = 0; j < RELEVANT_NODES; j++) {
-            sum += linkSize[j][i];
-        }
-
-        if (sum < guillotine) {
-            // If the total weight is below the guillotine threshold, clear links.
-            for (let j = 0; j <= i; j++) {
+        for (let j = 0; j < TOT_NUM_NODES; j++) {
+            if (linkSize[j][i] < guillotinePercentage) {
+                // If the total weight is below the guillotine threshold, clear links.
                 linkSize[j][i] = 0;
-                linkSize[i][j] = 0;
+            }
+        }
+    }
+}
+
+/**
+ * Apply a guillotine total value filter to remove links with a total weight below the specified threshold.
+ *
+ * @param {number[][]} linkSize - 2D array representing link weights between nodes.
+ * @param {number} guillotineTotalValue - The threshold for link removal in total observations (default: 30).
+ */
+function applyGuillotineTotalValue(linkSize, guillotineTotalValue = 30) {
+    // Iterate through all nodes and apply guillotine.
+    for (let i = 0; i < TOT_NUM_NODES; i++) {
+        // Calculate the total weight of incoming links.
+        for (let j = 0; j < TOT_NUM_NODES; j++) {
+            if (linkSize[j][i] < guillotineTotalValue) {
+                // If the total weight is below the guillotine threshold, clear links.
+                linkSize[j][i] = 0;
             }
         }
     }
