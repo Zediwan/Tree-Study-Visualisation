@@ -17,7 +17,7 @@ let nodeGroup;
 let titleGroup;
 let columnCoord = [];
 
-let guillotine = 0.4
+let guillotine = 1
 let TOT_NUM_NODES = 38
 let NUM_THIRD_NODES = 10 // including invis node
 let NUM_FIRST_NODES = 10 // including elementary node
