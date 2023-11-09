@@ -1,37 +1,20 @@
 /**
- * Converts the gender or language value in the person objects to an integer
+ * Converts the specified property value in the person objects to an integer
  * used for filtering based on the specified property in the filterForm.
  *
- * @param {Object} jsonData - The person object containing data to be converted.
+ * @param {Object} person - The person object containing data to be converted.
  * @param {string} type - The property type (e.g., 'gender' or 'language') for which the conversion is needed.
  * @returns {number} An integer value representing the converted property.
  */
-function convertToInteger(jsonData, type) {
-    // Create a conversion table using an object literal.
+function convertToInteger(person, type) {
     const conversionTable = {
-        // For the "gender" type, subtract 1 from the "t0sex" field.
-        gender: jsonData.t0sex - 1,
-
-        // For the "language" type, map values from "aes_langreg" to the desired result.
-        // For example, if "aes_langreg" is 1, map it to 0; if 2 or 3, map to 1.
-        language: {
-            1: 0, // 1 maps to 0
-            2: 1, // 2 maps to 1
-            3: 1, // 3 maps to 1
-        }[jsonData.aes_langreg],
-
-        // Similar mapping is applied for other types like "school-requirements," "status," etc.
-        'school-requirements': {
-            1: 1,
-            2: 1,
-            3: 0,
-        }[jsonData.t0st_nprog_req3],
-        status: jsonData.t0hisei08_3q - 1,
-        parents: jsonData.t0fmedu_comp,
-        immigration: jsonData.t0immig - 1,
+        gender: person.t0sex - 1,
+        language: { 1: 0, 2: 1, 3: 1 }[person.aes_langreg],
+        'school-requirements': { 1: 1, 2: 1, 3: 0 }[person.t0st_nprog_req3],
+        status: person.t0hisei08_3q - 1,
+        parents: person.t0fmedu_comp,
+        immigration: person.t0immig - 1,
     };
-
-    // Return the result based on the specified type.
     return conversionTable[type];
 }
 
@@ -39,25 +22,16 @@ function convertToInteger(jsonData, type) {
  * Filters the `jsonData` array based on selected categories in the filter form and populates
  * the `jsonDataFiltered` array with matching elements.
  *
- * @function
- * @name filter
- *
- * @description This function is responsible for filtering the `jsonData` array of person objects
- * based on selected categories in the filter form. It iterates through the data and checks whether
+ * This function iterates through the data and checks whether
  * each person's data matches the selected categories. If no categories are selected for a particular
  * property, all data for that property is included. The filtered data is stored in the `jsonDataFiltered` array.
- *
- * @global
- *
- * @returns {void} This function does not return a value directly, but it populates the global `jsonDataFiltered`
- * array with the filtered data.
  */
 function filter() {
     jsonDataFiltered = [];
-    var form = document.getElementById("filterForm");
-    var length = jsonData.length;
+    const form = document.getElementById("filterForm");
+    const length = jsonData.length;
 
-    var selectedCategories = {
+    const selectedCategories = {
         gender: getCheckedBoxes(form.selGend),
         language: getCheckedBoxes(form.selLang),
         'school-requirements': getCheckedBoxes(form.selEdu),
@@ -66,18 +40,12 @@ function filter() {
         immigration: getCheckedBoxes(form.selImmig),
     };
 
-    /*
-     * Filter the original Data for every person, based on selected filters
-     *  */
-    for (var i = 0; i < length; i++) {
-        var personData = jsonData[i];
-
-        // Check whether the person's data matches any of the selected categories.
-        // If no categories are selected, include all data.
-        var includePerson = Object.keys(selectedCategories).every(function(category) {
-            return selectedCategories[category].length === 0 ||
-                selectedCategories[category].includes(convertToInteger(personData, category));
-        });
+    for (let i = 0; i < length; i++) {
+        const personData = jsonData[i];
+        const includePerson = Object.keys(selectedCategories).every(category =>
+            selectedCategories[category].length === 0 ||
+            selectedCategories[category].includes(convertToInteger(personData, category))
+        );
 
         if (includePerson) {
             jsonDataFiltered.push(personData);
@@ -103,144 +71,101 @@ function getCheckedBoxes(boxesArray) {
     return checkedIndices;
 }
 
-
 /**
- Read each Person and convert information into links
+ * Reads each person's education information and converts it into links for three survey years.
+ * @function
  */
 function calculateLinks() {
-    /* for the calculation of the weigths for that we can break the links down in percentage*/
-    t1weigth = 0;
-    t2weigth = 0;
-    t3weigth = 0;   
-
-    const FIRST_YEAR_START = 1
-    const FIRST_AMOUNT= 9
-    const FIRST_YEAR_END = FIRST_YEAR_START + FIRST_AMOUNT
-    const SECOND_YEAR_START = FIRST_YEAR_END
-    const SECOND_AMOUNT= 9
-    const SECOND_END = FIRST_YEAR_END + SECOND_AMOUNT
-    const THIRD_YEAR_START = SECOND_END
-    const THIRD_AMOUNT= 9
-    const THIRD_YEAR_END = THIRD_AMOUNT + THIRD_YEAR_START
-
-    //Read each person object and manipulate links accordingly
-    //todo: update this method
-    //todo automise this method so that it works for n amount of years
+    resetArrays()
+    
+    // Loop through each person in the filtered data
     jsonDataFiltered.forEach(person => {
-        educationInYear = new Array(4)
-        educationInYear[0] = 0
-        educationInYear[1] = person.t1educ_class_1_r
-        educationInYear[2] = person.t2educ_class_1_r + 9
-        educationInYear[3] = person.t3educ_class_1_r + 18
+        processPerson(person)
+    });
 
-        if(educationInYear[0] != null && educationInYear[1] != null){
-            linkSize[educationInYear[0]][educationInYear[1]] += (parseFloat(person.t1wt));
+    processYears()
+}
+
+/**
+ * Resets the arrays used for calculations.
+ * @function
+ */
+function resetArrays(){
+    TOTAL_WEIGHTS_YEARS.fill(0);
+
+    for (let i = 0; i < NUM_YEARS; i++) {
+        CONNECTIONS_YEARS[i] = Array.from({ length: NUM_OCCUPATION_CATEGORIES_YEARS[i] }, () =>
+            Array(AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR).fill(0)
+        );
+    }
+}
+
+/**
+ * Processes a person's education information for each survey year.
+ * @function
+ * @param {Object} person - The person's data.
+ */
+function processPerson(person){
+    const OCCUPATION_IN_YEAR = Array.from({ length: NUM_YEARS }).fill(null);
+
+    OCCUPATION_IN_YEAR[0] = 0       // As we assume everyone was in obligatory school at the start
+    TOTAL_WEIGHTS_YEARS[0] += 1     // As no weights were given for the first year
+
+    for (let year = 1; year < NUM_YEARS; year++) {
+        // @see data_2nd-cohort.json
+        const OCCUPATION_PROPERTY_NAME = `t${year}educ_class_1_r`;
+        const WEIGHT_PROPERTY_NAME = `t${year}wt`;
+
+        OCCUPATION_IN_YEAR[year] = person[OCCUPATION_PROPERTY_NAME];
+
+        // Needs to be done as categories are from 1 to AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR and our matrices are indexed from 0 to AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR-1
+        if(OCCUPATION_IN_YEAR[year] !== null) {
+            OCCUPATION_IN_YEAR[year] = OCCUPATION_IN_YEAR[year] -1
         }
-        if(educationInYear[1] != null && educationInYear[2] != null){
-            linkSize[educationInYear[1]][educationInYear[2]] += (parseFloat(person.t2wt));
-        }
-        if(educationInYear[2] != null && educationInYear[3] != null){
-            linkSize[educationInYear[2]][educationInYear[3]] += (parseFloat(person.t3wt));
-        }  
-    })
 
-    t1weigth = calculateTotalWeight(linkSize, FIRST_YEAR_START, FIRST_YEAR_END);
-    t2weigth = calculateTotalWeight(linkSize, SECOND_YEAR_START, SECOND_END);
-    t3weigth = calculateTotalWeight(linkSize, THIRD_YEAR_START, THIRD_YEAR_END);
-
-    applyGuillotineTotalValue(linkSize)
-    
-    convertToPercentagesForYear(linkSize, FIRST_YEAR_START, FIRST_AMOUNT, t1weigth)
-    convertToPercentagesForYear(linkSize, SECOND_YEAR_START, SECOND_AMOUNT, t2weigth)
-    convertToPercentagesForYear(linkSize, THIRD_YEAR_START, THIRD_AMOUNT, t3weigth)
-    
-    applyGuillotinePercentage(linkSize);
-
-    /*
-     * now after everything is filtered we can send the links in the right format to customLinks
-     * which the helper function in sankey.js uses
-     */
-    for (i = 0; i < TOT_NUM_NODES; i++) {
-        for (j = 0; j < TOT_NUM_NODES; j++) {
-            if (linkSize[i][j] > 0) {
-                //todo add total observations for each link
-                customLinks.push({ "source": i, "target": j, "value": linkSize[i][j] });
-            }
+        if (OCCUPATION_IN_YEAR[year - 1] !== null && OCCUPATION_IN_YEAR[year] !== null) {
+            const WEIGHT = parseFloat(person[WEIGHT_PROPERTY_NAME]) || 0;
+            CONNECTIONS_YEARS[year-1][OCCUPATION_IN_YEAR[year - 1]][OCCUPATION_IN_YEAR[year]] += WEIGHT;
+            TOTAL_WEIGHTS_YEARS[year-1] += WEIGHT;
         }
     }
 }
 
 /**
- * Calculate the total weight for a specific year range.
- * @param {number[][]} linkSize - The 2D array for link weights.
- * @param {number} startYear - The starting year of the range.
- * @param {number} endYear - The ending year of the range.
- * @returns {number} The total weight for the specified year range.
+ * Processes the survey years and applies thresholds.
+ * @function
  */
-// todo refactor as it should return an array with the total weights per year
-function calculateTotalWeight(linkSize, startYear, endYear) {
-    let totalWeight = 0;
-    for (let i = startYear; i < endYear; i++) {
-        for (let j = 0; j < REM_NUM_NODES; j++) {
-            totalWeight += linkSize[j][i];
-        }
-    }
-    return totalWeight;
-}
+function processYears(){
+    let startOffset = 0
+    let endOffset = 0
 
-/**
- * Convert linkSize values to percentages for a specific year and number of categories.
- * @param {number[][]} linkSize - The 2D array for link weights.
- * @param {number} yearStart - The starting year of the survey data.
- * @param {number} numCategories - The number of categories for the year.
- * @param {number} yearTotalWeight - The total weight for the year.
- */
-// todo turn this into a method that just returns a new converted matrix instead of replacing actual values of the original
-function convertToPercentagesForYear(linkSize, yearStart, numCategories, yearTotalWeight) {
-    for (let j = yearStart; j < yearStart + numCategories; j++) {
-        for (let k = 0; k < linkSize.length; k++) {
-            if (yearTotalWeight !== 0) {
-                linkSize[k][j] = (linkSize[k][j] / yearTotalWeight) * 100;
-            } else {
-                linkSize[k][j] = 0;
-            }
+    for (let year = 0; year < NUM_YEARS; year++) {
+        if (year > 0){
+            endOffset += NUM_OCCUPATION_CATEGORIES_YEARS[year+1]
         }
-    }
-}
+        if (year > 1){
+            startOffset += NUM_OCCUPATION_CATEGORIES_YEARS[year]
+        } 
 
-/**
- * Apply a guillotine percentage filter to remove links with a percentage below the specified threshold.
- *
- * @param {number[][]} linkSize - 2D array representing link weights between nodes.
- * @param {number} guillotinePercentage - The threshold for link removal in % (default: 1%).
- */
-function applyGuillotinePercentage(linkSize, guillotinePercentage = 1) {
-    // Iterate through all nodes and apply guillotine.
-    for (let i = 0; i < TOT_NUM_NODES; i++) {
-        // Calculate the total weight of incoming links.
-        for (let j = 0; j < TOT_NUM_NODES; j++) {
-            if (linkSize[j][i] < guillotinePercentage) {
-                // If the total weight is below the guillotine threshold, clear links.
-                linkSize[j][i] = 0;
-            }
-        }
-    }
-}
+        for (let occupationStart = 0; occupationStart < CONNECTIONS_YEARS[year].length; occupationStart++){
+            for (let occupationEnd = 0; occupationEnd < CONNECTIONS_YEARS[year][occupationStart].length; occupationEnd++){
+                const SOURCE_OFFSET = year === 0 ? 0 : startOffset + 1;
+                const TARGET_OFFSET = endOffset + 1;
 
-/**
- * Apply a guillotine total value filter to remove links with a total weight below the specified threshold.
- *
- * @param {number[][]} linkSize - 2D array representing link weights between nodes.
- * @param {number} guillotineTotalValue - The threshold for link removal in total observations (default: 30).
- */
-function applyGuillotineTotalValue(linkSize, guillotineTotalValue = 30) {
-    // Iterate through all nodes and apply guillotine.
-    for (let i = 0; i < TOT_NUM_NODES; i++) {
-        // Calculate the total weight of incoming links.
-        for (let j = 0; j < TOT_NUM_NODES; j++) {
-            if (linkSize[j][i] < guillotineTotalValue) {
-                // If the total weight is below the guillotine threshold, clear links.
-                linkSize[j][i] = 0;
+                CONNECTIONS_YEARS[year][occupationStart][occupationEnd] /= TOTAL_WEIGHTS_YEARS[year] || 0;
+                CONNECTIONS_YEARS[year][occupationStart][occupationEnd] *= 100 || 0;
+
+                if (CONNECTIONS_YEARS[year][occupationStart][occupationEnd] < MIN_PERCENTAGE_TO_SHOW_LINK) {
+                    CONNECTIONS_YEARS[year][occupationStart][occupationEnd] = 0;
+                }
+
+                if (CONNECTIONS_YEARS[year][occupationStart][occupationEnd] > 0) {
+                    customLinks.push({
+                        source: occupationStart + SOURCE_OFFSET,
+                        target: occupationEnd + TARGET_OFFSET,
+                        value: CONNECTIONS_YEARS[year][occupationStart][occupationEnd],
+                    });
+                }
             }
         }
     }
