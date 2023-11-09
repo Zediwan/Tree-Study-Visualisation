@@ -135,8 +135,8 @@ function helper(error, labels) {
         })
         
         .attr("display", function (d) {
-            /* don't display a link if the link is smaller than 4%, else it will be just displayed*/
-            if(d.value < guillotine){return "none";}
+            /* don't display a link if the link is small, else it will be just displayed*/
+            if(d.value < MIN_PERCENTAGE_TO_SHOW_LINK){return "none";}
             else{return "inline";}
         })
         .each(function(d, i) {
@@ -160,9 +160,9 @@ function helper(error, labels) {
         //.attr("onmouseover",function (d,i) { return "appendGradient(" + i + ")" })
         //.attr("onmouseout",function (d,i) { return "removeGradient(" + i + ")" })
         .attr("display", function (d) {
-            //again if the link is smaller than 4% don't display it, we have to do this method again because of the
+            //again if the link is small don't display it, we have to do this method again because of the
             // transition, if another filter is selected
-            if(d.value < guillotine){return "none";}
+            if(d.value < MIN_PERCENTAGE_TO_SHOW_LINK){return "none";}
             else{return "inline";}
         })
         .attr("d", d3.sankeyLinkHorizontal())

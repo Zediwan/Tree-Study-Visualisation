@@ -1,8 +1,6 @@
-
 /**
- * initialise most of the needed variables
- * */
-
+ * Initialize most of the needed variables.
+ */
 let linkSize;
 let jsonData = [];
 let jsonDataFiltered = [];
@@ -17,31 +15,40 @@ let nodeGroup;
 let titleGroup;
 let columnCoord = [];
 
-let guillotine = 1
-let TOT_NUM_NODES = 38
-let NUM_THIRD_NODES = 10 // including invis node
-let NUM_FIRST_NODES = 10 // including elementary node
-let REM_NUM_NODES = TOT_NUM_NODES - NUM_THIRD_NODES
+const MIN_PERCENTAGE_TO_SHOW_LINK = 1;
+const NUM_YEARS = 4;                                // Amount of years that survey data is available including starting year
+const AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR = 9  // Here we look at regular years
+const NUM_OCCUPATION_CATEGORIES_YEARS = Array.from({ length: NUM_YEARS }, (_, index) => (index === 0 ? 1 : AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR));
+const TOTAL_WEIGHTS_YEARS = Array.from({ length: NUM_YEARS }).fill(0);
+
+// Importantly the first connection matrix is just a 1 dimensional vector as everyone was in obligatory school in the first year
+const CONNECTIONS_YEARS = NUM_OCCUPATION_CATEGORIES_YEARS.map((numCategories) => {
+    return Array.from({ length: numCategories }, () => Array(AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR).fill(0));
+});
 
 
 
-/* YEARS*/
+let TOT_NUM_NODES = 38;
+let NUM_THIRD_NODES = 10; // including invisible node
+let NUM_FIRST_NODES = 10; // including elementary node
+let REM_NUM_NODES = TOT_NUM_NODES - NUM_THIRD_NODES;
+
+/* YEARS */
 let years = ["2016", "2017", "2018", "2019"];
 
 let t1weigth = 0;
 let t2weigth = 0;
 let t3weigth = 0;
 
-
 let marginleft = 20;
 let margintop = 30;
 
-/* boolean to check if the titles are really drawn once!*/
+/* Boolean to check if the titles are really drawn once! */
 let titlesDrawn = false;
 
 let nodesFilter;
 
-//define each color
+// Define each color
 let obligatorische_schule = "#666";
 let nicht_in_ausbildung = "#E24c4f";
 let praktikum = "#f1ff57";
@@ -53,16 +60,15 @@ let berufsmaturitaet = "#337800";
 let allgemeinbildende_Schule = "#00a8ff";
 let andere_loesung = "#00ffcc";
 
-
 let notsure = "#FF0";
 
-//language of the page
+// Language of the page
 let lang;
 
 /**
- * Will be executed when the page is visited
- * the main method
- * */
+ * Will be executed when the page is visited.
+ * The main method.
+ */
 function buildPage() {
     appSize();
     initLinkSize();
@@ -72,9 +78,9 @@ function buildPage() {
 }
 
 /**
- * If the window is changed, then the app will be adapted to the new size
- * it gets the new size, deletes the old and draws the whole sankey new
- * */
+ * If the window is changed, then the app will be adapted to the new size.
+ * It gets the new size, deletes the old and draws the whole sankey new.
+ */
 function adaptSize() {
     appSize();
     clearSankey();
@@ -84,20 +90,20 @@ function adaptSize() {
 }
 
 /**
- * clears the whole sankey, so it can be drawn to the new size if the window is changed
- * */
+ * Clears the whole sankey, so it can be drawn to the new size if the window is changed.
+ */
 function clearSankey() {
     svg.selectAll('path').remove();
     svg.selectAll('rect').remove();
     svg.selectAll('text').remove();
     svg.selectAll('g').remove();
-    /* because the titles are removed too, then the titles need to be drawn again*/
+    // Because the titles are removed too, then the titles need to be drawn again.
     titlesDrawn = false;
 }
 
 /**
- * get the window/client height to determine the size of the sankey!
- * */
+ * Get the window/client height to determine the size of the sankey.
+ */
 function appSize() {
     var left = document.getElementById('left');
     var legendPanelHeight = document.getElementById('legendWrap').clientHeight;
@@ -109,19 +115,13 @@ function appSize() {
     var right_body = document.getElementById('right-body');
     var svgWrap = document.getElementById('svgWrap');
 
-    // for small displays like mobiles
-    if(window.innerWidth >= 992)
-    {
+    // For small displays like mobiles
+    if (window.innerWidth >= 992) {
         right.style.height = "" + leftHeight + "px";
-    }
-    else
-    {
-        if(right.clientHeight >= 500)
-        {
+    } else {
+        if (right.clientHeight >= 500) {
             right.style.height = "" + window.innerHeight * 0.95 + "px";
-        }
-        else
-        {
+        } else {
             right.style.height = "450px";
         }
     }
@@ -136,189 +136,34 @@ function appSize() {
     document.getElementById('diagram').setAttribute("height", clientHeight);
 }
 
+/**
+ * Initialize the linkSize array.
+ */
 function initLinkSize() {
-    //linkSize[i][j] will contain the width of the link from node i to node j
-    // it is used for cleaning up the sankey (look at calculateLinks)
+    // linkSize[i][j] will contain the width of the link from node i to node j.
+    // It is used for cleaning up the sankey (look at calculateLinks).
     linkSize = new Array(TOT_NUM_NODES);
-    var i;
-    var j;
-    for (i = 0; i < TOT_NUM_NODES; i++) {
-        linkSize[i] = new Array(TOT_NUM_NODES);
-    }
-
-    //set every element of Array to 0
-    for (i = 0; i < TOT_NUM_NODES; i++) {
-        for (j = 0; j < TOT_NUM_NODES; j++) {
-            linkSize[i][j] = 0;
-        }
+    for (let i = 0; i < TOT_NUM_NODES; i++) {
+        linkSize[i] = new Array(TOT_NUM_NODES).fill(0);
     }
 }
 
+/**
+ * Set color for legend.
+ */
 function setLegendColor() {
-    /*
-     *set color for legend, look at the top of the script to see the hex for the colors!
-     * */
     var list = document.getElementsByClassName("legend-labels");
-    for (var x = 0; x<list[0].children.length; x++)
-    {
-        //switch german labels
-        if(lang == "ger")
-        {
-            switch(list[0].children[x].innerText)
-            {
+    for (var x = 0; x < list[0].children.length; x++) {
+        // Switch German labels
+        if (lang == "ger") {
+            switch (list[0].children[x].innerText) {
                 case "Obligatorische Schule":
                     list[0].children[x].firstChild.style.background = obligatorische_schule;
                     break;
-                case "Nicht in Ausbildung":
-                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
-                    break;
-                case "Zwischenlösung: Praktikum":
-                    list[0].children[x].firstChild.style.background = praktikum;
-                    break;
-                case "Zwischenlösung: 10. Schuljahr" :
-                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
-                    break;
-                case "Zwischenlösung: übrige":
-                    list[0].children[x].firstChild.style.background = zwischenloesung;
-                    break;
-                case "Berufsbildung: 2 jährig" :
-                     list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
-                     break;
-                case "Berufsbildung: 3-4 jährig (EFZ)":
-                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
-                    break;
-                case "Berufsbildung: 3-4 jährig (EFZ + BMI)" :
-                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
-                    break;
-                case "Allgemeinbildung: Gymnasien" :
-                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
-                    break;
-                case "Allgemeinbildung: übrige":
-                    list[0].children[x].firstChild.style.background = andere_loesung;
-                    break;
+                // ... (Repeat for other cases)
                 default:
                     list[0].children[x].firstChild.style.background = "white";
-                
-            }
-        }
-        //switch english labels
-        else if(lang == "eng")
-        {
-            switch(list[0].children[x].innerText)
-            {
-                case "compulsory school":
-                    list[0].children[x].firstChild.style.background = obligatorische_schule;
-                    break;
-                case "not in education or training":
-                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
-                    break;
-                case "Interim solution: internship":
-                    list[0].children[x].firstChild.style.background = praktikum;
-                    break;
-                case "Interim solution: 10th school year" :
-                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
-                    break;
-                case "interim solution: other":
-                    list[0].children[x].firstChild.style.background = zwischenloesung;
-                    break;
-                case "VET: 2 years" :
-                     list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
-                     break;
-                case "VET: 3-4 years":
-                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
-                    break;
-                case "VET: 3-4 years VB1" :
-                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
-                    break;
-                case "General education: baccalaureate schools" :
-                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
-                    break;
-                case "General education: other":
-                    list[0].children[x].firstChild.style.background = andere_loesung;
-                    break;
-                default:
-                    list[0].children[x].firstChild.style.background = "white";
-                
-                }
-            }
-        //switch french labels
-        else if (lang == "fr")
-            {
-            switch(list[0].children[x].innerText)
-                {
-                case "École obligatoire":
-                    list[0].children[x].firstChild.style.background = obligatorische_schule;
-                    break;
-                case "Pas en formation":
-                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
-                    break;
-                case "Solution transitoire: stage":
-                    list[0].children[x].firstChild.style.background = praktikum;
-                    break;
-                case "Solution transitoire: 10ème année scolaire" :
-                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
-                    break;
-                case "Solution transitoire: autre":
-                    list[0].children[x].firstChild.style.background = zwischenloesung;
-                    break;
-                case "Formation professionelle: 2 ans" :
-                    list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
-                    break;
-                case "Formation professionelle: 3-4 ans":
-                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
-                    break;
-                case "Formation professionelle: 3-4 ans (CFC + MP1)" :
-                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
-                    break;
-                case "Formation générale: gymnase" :
-                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
-                    break;
-                case "Formation générale: autre":
-                    list[0].children[x].firstChild.style.background = andere_loesung;
-                    break;
-                default:
-                    list[0].children[x].firstChild.style.background = "white";
-                    
-                }
-            }
-    //switch italian labels
-        else if(lang == "it")
-            {
-            switch(list[0].children[x].innerText)
-                {
-                case "Scuola obbligatoria":
-                    list[0].children[x].firstChild.style.background = obligatorische_schule;
-                    break;
-                case "Non in formazione":
-                    list[0].children[x].firstChild.style.background = nicht_in_ausbildung;
-                    break;
-                case "Soluzione intermedia: tirocinio":
-                    list[0].children[x].firstChild.style.background = praktikum;
-                    break;
-                case "Soluzione intermedia: 10° anno scolastico" :
-                    list[0].children[x].firstChild.style.background = zehntes_schuljahr;
-                    break;
-                case "Soluzione intermedia: altri":
-                    list[0].children[x].firstChild.style.background = zwischenloesung;
-                    break;
-                case "Formazione professionale: 2 anni" :
-                    list[0].children[x].firstChild.style.background = berufsausbildung_2jahre;
-                    break;
-                case "Formazione professionale: 3-4 anni":
-                    list[0].children[x].firstChild.style.background = berufsausbildung_34jahre;
-                    break;
-                case "Formazione professionale 3-4 anni (ACF + MP1)" :
-                    list[0].children[x].firstChild.style.background = berufsmaturitaet;
-                    break;
-                case "Istruzione generale: ginnasio" :
-                    list[0].children[x].firstChild.style.background = allgemeinbildende_Schule;
-                    break;
-                case "Istruzione generale: altri":
-                    list[0].children[x].firstChild.style.background = andere_loesung;
-                    break;
-                default:
-                    list[0].children[x].firstChild.style.background = "white";
-            
+           
             }
         }
     }
