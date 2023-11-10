@@ -26,8 +26,6 @@ const CONNECTIONS_YEARS = NUM_OCCUPATION_CATEGORIES_YEARS.map((numCategories) =>
     return Array.from({ length: numCategories }, () => Array(AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR).fill(0));
 });
 
-
-
 let TOT_NUM_NODES = 38;
 let NUM_THIRD_NODES = 10; // including invisible node
 let NUM_FIRST_NODES = 10; // including elementary node
@@ -62,6 +60,69 @@ let andere_loesung = "#00ffcc";
 
 let notsure = "#FF0";
 
+
+// Node Labels
+const LANGUAGES = ['en', 'de', 'fr', 'it'];
+const START_NODE_LABELS = {
+    en: "compulsory school",
+    de: "Obligatorische Schule",
+    fr: "École obligatoire",
+    it: "Scuola obbligatoria"
+};
+const REGULAR_NODE_LABELS = {
+    en: [
+        "not in education or training",
+        "Interim solution: internship",
+        "Interim solution: 10th school year",
+        "interim solution: other",
+        "VET: 2 years",
+        "VET: 3-4 years",
+        "VET: 3-4 years VB1",
+        "General education: baccalaureate schools",
+        "General education: other"
+    ],
+    de: [
+        "Nicht in Ausbildung",
+        "Zwischenlösung: Praktikum",
+        "Zwischenlösung: 10. Schuljahr",
+        "Zwischenlösung: übrige",
+        "Berufsbildung: 2 jährig",
+        "Berufsbildung: 3-4 jährig (EFZ)",
+        "Berufsbildung: 3-4 jährig (EFZ + BMI)",
+        "Allgemeinbildung: Gymnasien",
+        "Allgemeinbildung: übrige"
+    ],
+    fr: [
+        "Pas en formation",
+        "Solution transitoire: stage",
+        "Solution transitoire: 10ème année scolaire",
+        "Solution transitoire: autre",
+        "Formation professionelle: 2 ans",
+        "Formation professionelle: 3-4 ans",
+        "Formation professionelle: 3-4 ans (CFC + MP1)",
+        "Formation générale: gymnase",
+        "Formation générale: autre"
+    ],
+    it: [
+        "Non in formazione",
+        "Soluzione intermedia: tirocinio",
+        "Soluzione intermedia: 10° anno scolastico",
+        "Soluzione intermedia: altri",
+        "Formazione professionale: 2 anni",
+        "Formazione professionale: 3-4 anni",
+        "Formazione professionale: 3-4 anni (ACF + MP1)",
+        "Istruzione generale: ginnasio",
+        "Istruzione generale: altri"
+    ]
+};
+const INVISIBLE_NODE_LABELS = {
+    en: "Invisible Node",
+    de: "Unsichtbarer Knoten",
+    fr: "Nœud invisible",
+    it: "Nodo invisibile"
+};
+const LABELS = {}; // Dictionary to store labels for each language
+
 // Language of the page
 let lang;
 
@@ -70,11 +131,46 @@ let lang;
  * The main method.
  */
 function buildPage() {
+    generateLabels()
+
     appSize();
     initLinkSize();
     setLegendColor();
     initSankey();
     readData(updateSankey);
+}
+
+/**
+ * Generates node label data for multiple languages and stores them in a dictionary.
+ * Each language has an array of label objects representing nodes.
+ * @function generateLabels
+ * @returns {void}
+ * @throws {Error} If there is an issue with label generation.
+ */
+function generateLabels() {
+    try {
+        // Iterate over each language and generate node label data
+        LANGUAGES.forEach(language => {
+            // Create an array of label objects for the current language
+            const jsonData = [
+                { name: START_NODE_LABELS[language] },
+                ...Array.from({ length: NUM_YEARS }, () =>
+                    REGULAR_NODE_LABELS[language].map(name => ({ name }))
+                ).flat(),
+                { name: INVISIBLE_NODE_LABELS[language] }
+            ];
+
+            // Store the labels in the dictionary
+            LABELS[language] = jsonData;
+
+            console.log(`Generated labels for ${language}`);
+        });
+
+        // Display the generated labels dictionary
+        console.log(LABELS);
+    } catch (error) {
+        throw new Error(`Error generating labels: ${error.message}`);
+    }
 }
 
 /**
