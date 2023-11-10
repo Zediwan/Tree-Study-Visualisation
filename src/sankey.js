@@ -50,7 +50,7 @@ function initSankey() {
  * */
 function updateSankey() {
     flush();
-    filter();
+    filterPersons();
     calculateLinks();
     switch (lang)
     {

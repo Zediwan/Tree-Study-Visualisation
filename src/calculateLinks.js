@@ -26,7 +26,7 @@ function convertToInteger(person, type) {
  * each person's data matches the selected categories. If no categories are selected for a particular
  * property, all data for that property is included. The filtered data is stored in the `jsonDataFiltered` array.
  */
-function filter() {
+function filterPersons() {
     jsonDataFiltered = [];
     const form = document.getElementById("filterForm");
 
