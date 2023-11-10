@@ -31,12 +31,12 @@ function filterPersons() {
     const form = document.getElementById("filterForm");
 
     const selectedCategories = {
-        gender: getCheckedBoxes(form.selGend),
-        language: getCheckedBoxes(form.selLang),
-        'school-requirements': getCheckedBoxes(form.selEdu),
-        status: getCheckedBoxes(form.selEco),
-        parents: getCheckedBoxes(form.selEduPar),
-        immigration: getCheckedBoxes(form.selImmig),
+        gender: getCheckedBoxesIndices(form.selGend),
+        language: getCheckedBoxesIndices(form.selLang),
+        'school-requirements': getCheckedBoxesIndices(form.selEdu),
+        status: getCheckedBoxesIndices(form.selEco),
+        parents: getCheckedBoxesIndices(form.selEduPar),
+        immigration: getCheckedBoxesIndices(form.selImmig),
     };
 
     jsonData.forEach(person => {
@@ -55,7 +55,7 @@ function filterPersons() {
  * @param {HTMLInputElement[]} boxesArray - An array of checkbox elements to check.
  * @returns {number[]} An array of indices representing the positions of checked checkboxes.
  */
-function getCheckedBoxes(boxesArray) {
+function getCheckedBoxesIndices(boxesArray) {
     var checkedIndices = [];
 
     boxesArray.forEach(function(checkbox, index) {
