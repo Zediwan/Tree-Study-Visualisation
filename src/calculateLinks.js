@@ -72,7 +72,7 @@ function getCheckedBoxesIndices(boxesArray) {
  * @function
  */
 function calculateLinks() {
-    resetArrays()
+    //resetArrays()
     
     // Loop through each person in the filtered data
     jsonDataFiltered.forEach(person => {

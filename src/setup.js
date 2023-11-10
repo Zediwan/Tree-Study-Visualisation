@@ -4,7 +4,6 @@
 let linkSize;
 let jsonData = [];
 let jsonDataFiltered = [];
-let customLinks = [];
 let svg;
 let diagram;
 let t;
@@ -13,7 +12,6 @@ let sankey;
 let linkGroup;
 let nodeGroup;
 let titleGroup;
-let columnCoord = [];
 
 const MIN_PERCENTAGE_TO_SHOW_LINK = 1;
 const NUM_YEARS = 4;                                // Amount of years that survey data is available including starting year
@@ -37,9 +35,6 @@ let years = ["2016", "2017", "2018", "2019"];
 let t1weigth = 0;
 let t2weigth = 0;
 let t3weigth = 0;
-
-let marginleft = 20;
-let margintop = 30;
 
 /* Boolean to check if the titles are really drawn once! */
 let titlesDrawn = false;

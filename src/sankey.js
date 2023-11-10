@@ -1,3 +1,9 @@
+const MARGIN_LEFT = 20;
+const MARGIN_TOP = 30;
+const FONT_SIZE = "150%"
+let columnCoord = [];
+let customLinks = [];
+
 /**
  * Initialize Sankey
  */
@@ -5,8 +11,8 @@ function initSankey() {
     /*simple initialisation of the sankey, should explain itself*/
 
     svg = d3.select("svg"),
-        width = +svg.attr("width") - 2*marginleft,
-        height = +svg.attr("height") - margintop;
+        width = +svg.attr("width") - 2 * MARGIN_LEFT,
+        height = +svg.attr("height") - MARGIN_TOP;
 
     formatNumber = d3.format(",.0f"),
         format = function (d) { return formatNumber(d) + " %"; },
@@ -26,17 +32,15 @@ function initSankey() {
     titleGroup = svg.append("g")
         .attr("class", "titles")
         .attr("font-family", "sans-serif")
-        .attr("font-size", "150%");
+        .attr("font-size", FONT_SIZE);
 
     diagram= svg.append("g")
         .attr("class", "sankey")
-        .attr("transform", "translate(" + marginleft + "," + margintop + ")");
+        .attr("transform", "translate(" + MARGIN_LEFT + "," + MARGIN_TOP + ")");
 
     linkGroup = diagram.append("g")
         .attr("class", "links")
         .attr("fill", "none");
-        //.attr("stroke", "#000")
-        //.attr("stroke-opacity", 0.2);
 
     //set attributes for all nodes
     nodeGroup = diagram.append("g")
@@ -75,12 +79,14 @@ function updateSankey() {
  * Reset Array for link size calculation, we logically need to do this to calculate the links new
  */
 function flush() {
-    // needs to be changed if more nodes are implemented
     customLinks = [];
-    for (i = 0; i < TOT_NUM_NODES; i++) {
-        for (j = 0; j < TOT_NUM_NODES; j++) {
-            linkSize[i][j] = 0;
-        }
+
+    TOTAL_WEIGHTS_YEARS.fill(0);
+
+    for (let i = 0; i < NUM_YEARS; i++) {
+        CONNECTIONS_YEARS[i] = Array.from({ length: NUM_OCCUPATION_CATEGORIES_YEARS[i] }, () =>
+            Array(AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR).fill(0)
+        );
     }
 
     columnCoord = [];
@@ -98,7 +104,7 @@ function filterArray(array) {
 
     for (var i = 0; i<filtered.length; i++)
     {
-        filtered[i] += marginleft;
+        filtered[i] += MARGIN_LEFT;
     }
     return filtered;
 }
