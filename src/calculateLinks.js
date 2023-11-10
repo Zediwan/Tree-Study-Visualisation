@@ -148,13 +148,16 @@ function processYears(){
                 const SOURCE_OFFSET = year === 0 ? 0 : startOffset + 1;
                 const TARGET_OFFSET = endOffset + 1;
 
+                // Convert to percentage
                 CONNECTIONS_YEARS[year][occupationStart][occupationEnd] /= TOTAL_WEIGHTS_YEARS[year] || 0;
                 CONNECTIONS_YEARS[year][occupationStart][occupationEnd] *= 100 || 0;
 
+                // Percentage guillotine
                 if (CONNECTIONS_YEARS[year][occupationStart][occupationEnd] < MIN_PERCENTAGE_TO_SHOW_LINK) {
                     CONNECTIONS_YEARS[year][occupationStart][occupationEnd] = 0;
                 }
 
+                // Add connection
                 if (CONNECTIONS_YEARS[year][occupationStart][occupationEnd] > 0) {
                     customLinks.push({
                         source: occupationStart + SOURCE_OFFSET,
