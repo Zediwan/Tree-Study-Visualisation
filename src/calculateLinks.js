@@ -29,7 +29,6 @@ function convertToInteger(person, type) {
 function filter() {
     jsonDataFiltered = [];
     const form = document.getElementById("filterForm");
-    const length = jsonData.length;
 
     const selectedCategories = {
         gender: getCheckedBoxes(form.selGend),
@@ -40,17 +39,14 @@ function filter() {
         immigration: getCheckedBoxes(form.selImmig),
     };
 
-    for (let i = 0; i < length; i++) {
-        const personData = jsonData[i];
-        const includePerson = Object.keys(selectedCategories).every(category =>
+    jsonData.forEach(person => {
+        if(Object.keys(selectedCategories).every(category =>
             selectedCategories[category].length === 0 ||
-            selectedCategories[category].includes(convertToInteger(personData, category))
-        );
-
-        if (includePerson) {
-            jsonDataFiltered.push(personData);
+            selectedCategories[category].includes(convertToInteger(person, category))
+        )){
+            jsonDataFiltered.push(person);
         }
-    }
+    })
 }
 
 /**
