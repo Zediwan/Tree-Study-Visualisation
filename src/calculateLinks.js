@@ -1,3 +1,5 @@
+num_of_observations = 0
+
 /**
  * Converts the specified property value in the person objects to an integer
  * used for filtering based on the specified property in the filterForm.
@@ -68,11 +70,11 @@ function getCheckedBoxesIndices(boxesArray) {
 }
 
 /**
- * Reads each person's education information and converts it into links for three survey years.
+ * Reads each person's education information and converts it into links.
  * @function
  */
 function calculateLinks() {
-    //resetArrays()
+    resetArrays()
     
     // Loop through each person in the filtered data
     jsonDataFiltered.forEach(person => {
@@ -87,6 +89,7 @@ function calculateLinks() {
  * @function
  */
 function resetArrays(){
+    num_of_observations = 0
     TOTAL_WEIGHTS_YEARS.fill(0);
 
     for (let i = 0; i < NUM_YEARS; i++) {
@@ -122,7 +125,7 @@ function processPerson(person){
         if (OCCUPATION_IN_YEAR[year - 1] !== null && OCCUPATION_IN_YEAR[year] !== null) {
             const WEIGHT = parseFloat(person[WEIGHT_PROPERTY_NAME]) || 0;
             CONNECTIONS_YEARS[year-1][OCCUPATION_IN_YEAR[year - 1]][OCCUPATION_IN_YEAR[year]] += WEIGHT;
-            TOTAL_WEIGHTS_YEARS[year-1] += WEIGHT;
+            TOTAL_WEIGHTS_YEARS[year] += WEIGHT;
         }
     }
 }
@@ -134,6 +137,14 @@ function processPerson(person){
 function processYears(){
     let startOffset = 0
     let endOffset = 0
+    console.log("Amount of observations: " + TOTAL_WEIGHTS_YEARS[0])
+
+    if(TOTAL_WEIGHTS_YEARS[0] < MIN_NUMBER_OF_OBSERVATIONS_TO_DISPLAY){
+        alert("Not enough observations to display. The selection has been reset. (Current amount: " + TOTAL_WEIGHTS_YEARS[0] + ")");
+        //resetSelections()
+        //updateSankey()
+        return
+    }
 
     for (let year = 0; year < NUM_YEARS; year++) {
         if (year > 0){
@@ -149,7 +160,16 @@ function processYears(){
                 const TARGET_OFFSET = endOffset + 1;
 
                 // Convert to percentage
-                CONNECTIONS_YEARS[year][occupationStart][occupationEnd] /= TOTAL_WEIGHTS_YEARS[year] || 0;
+                if(CONNECTIONS_YEARS[year][occupationStart][occupationEnd] / TOTAL_WEIGHTS_YEARS[year] > 1){
+                    console.log(year)
+                    console.log(occupationStart)
+                    console.log(occupationEnd)
+                    console.log(CONNECTIONS_YEARS[year][occupationStart][occupationEnd])
+                    console.log(TOTAL_WEIGHTS_YEARS[year])
+                    console.log(CONNECTIONS_YEARS[year][occupationStart][occupationEnd] / TOTAL_WEIGHTS_YEARS[year] || 0)
+                    console.log("")
+                }
+                CONNECTIONS_YEARS[year][occupationStart][occupationEnd] /= TOTAL_WEIGHTS_YEARS[year+1] || 0;
                 CONNECTIONS_YEARS[year][occupationStart][occupationEnd] *= 100 || 0;
 
                 // Percentage guillotine

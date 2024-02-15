@@ -80,15 +80,6 @@ function updateSankey() {
  */
 function flush() {
     customLinks = [];
-
-    TOTAL_WEIGHTS_YEARS.fill(0);
-
-    for (let i = 0; i < NUM_YEARS; i++) {
-        CONNECTIONS_YEARS[i] = Array.from({ length: NUM_OCCUPATION_CATEGORIES_YEARS[i] }, () =>
-            Array(AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR).fill(0)
-        );
-    }
-
     columnCoord = [];
 }
 
@@ -463,34 +454,6 @@ function appendGradient(id){
 */
 }
 
-/*function removeGradient(id){
-    pathGroup = svg.select('#path' + id);
-    var path = pathGroup.select("path");
-
-    var pathGradient = pathGroup.select("defs")
-        .remove();
-
-    path.attr("stroke", function(d) {
-            var targetColor = setColor(d.target);
-            var sourceColor = setColor(d.source);
-           
-            // Set the stroke color based on the target and source nodes
-            if (d.target.index < NUM_FIRST_NODES) {
-                // For the first survey use the color of the target node
-                return targetColor;
-            } else {
-                // Rest of the nodes: Use the color of the source node
-                return sourceColor;
-            }
-        })
-        .attr("stroke-opacity", 0.3)
-
-}
-
-function setGradientColor(bla) {
-
-}
-*/ 
 /**
  * Updates the selection state of checkboxes based on the user's input.
  * If the 'all' checkbox is selected, all other checkboxes will be deselected.
@@ -504,45 +467,37 @@ function updateSelections(checkbox) {
     const allCheckbox = document.getElementById('cb16');
     const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cb16)');
 
-    let areAllChecked = true;      // Are all checkboxes (exept the all checkbox) checked?
-    let areAllUnchecked = true;    // Are all checkboxes (exept the all checkbox) unchecked?
-
     if(checkbox === allCheckbox){
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = false;
-        });
-        allCheckbox.disabled = true;
+        resetSelections()
     }
     else{
-        // Check if all are either checked or unchecked
-        checkboxes.forEach((checkbox) => {
-            if(checkbox.checked){
-                areAllUnchecked = false;
-            }
-            else{
-                areAllChecked = false;
-            }
-        });
-        
-        // If all checkboxes are checked just check the all checkbox and uncheck the others
-        /**
-        if(areAllChecked){
-            allCheckbox.checked = true;
-            // Uncheck all the boxes
-            checkboxes.forEach((checkbox) => {
-                checkbox.checked = false;
-            });
-        }else 
-         */
-        // If all checkboxes are unchecked just check the all checkbox
+        const checkedStatus = Array.from(checkboxes).map(cb => cb.checked);
+        const areAllUnchecked = checkedStatus.every(status => !status);
+
         if(areAllUnchecked){
             allCheckbox.checked = true;
             allCheckbox.disabled = true;
         }
-        // Uncheck 'all' checkbox if another checkbox is selected
         else {
             allCheckbox.checked = false;
             allCheckbox.disabled = false;
         }
     }
+}
+
+/**
+ * Resets the selections of checkboxes.
+ *
+ * @example
+ * resetSelections();
+ *
+ * @returns {void}
+ */
+function resetSelections(){
+    const allCheckbox = document.getElementById('cb16');
+    const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cb16)');
+    checkboxes.forEach((cb) => cb.checked = false);
+
+    allCheckbox.checked = true;
+    allCheckbox.disabled = true;
 }

@@ -14,6 +14,7 @@ let nodeGroup;
 let titleGroup;
 
 const MIN_PERCENTAGE_TO_SHOW_LINK = 1;
+const MIN_NUMBER_OF_OBSERVATIONS_TO_DISPLAY = 50
 const NUM_YEARS = 4;                                // Amount of years that survey data is available including starting year
 const AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR = 9  // Here we look at regular years
 const NUM_OCCUPATION_CATEGORIES_YEARS = Array.from({ length: NUM_YEARS }, (_, index) => (index === 0 ? 1 : AMOUNT_OF_OCCUPATION_CATEGORIES_PER_YEAR));
@@ -158,11 +159,11 @@ function generateLabels() {
             // Store the labels in the dictionary
             LABELS[language] = jsonData;
 
-            console.log(`Generated labels for ${language}`);
+            //console.log(`Generated labels for ${language}`);
         });
 
         // Display the generated labels dictionary
-        console.log(LABELS);
+        //console.log(LABELS);
     } catch (error) {
         throw new Error(`Error generating labels: ${error.message}`);
     }
