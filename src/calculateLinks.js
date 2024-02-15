@@ -7,7 +7,7 @@
 function convertToInteger(jsonData, type) {
   switch (type) {
     case "gender":
-      return jsonData.t0sex;
+      return jsonData.t0sex-1;
     case "language":
       let languageValue = jsonData.aes_langreg;
       if (languageValue === 1) {
