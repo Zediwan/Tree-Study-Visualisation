@@ -51,6 +51,7 @@ function initSankey() {
 function updateSankey() {
     flush();
     filter();
+    console.log(jsonDataFiltered.length)
     //displayCurrentNumOfObservations()
     if(jsonDataFiltered.length >= 50){
         calculateLinks();
@@ -157,7 +158,7 @@ function helper(error, labels) {
     var links = linkGroup.selectAll('path')
         .data(labels.links);
 
-    //Set attributes for each link separately
+        //Set attributes for each link separately
     links.enter().append("g")
         .attr("id",function (d,i) {return "path"+i;})
         .attr("from",function (d) { return d.source.name; })
@@ -224,8 +225,9 @@ function helper(error, labels) {
             //same argumentation as above, we need the method again for the transition
             return d.source.name + " → " + d.target.name + "\n" + format(d.value); 
         });
-
+    
     //remove the unneeded links
+    
     links.exit().remove();
 
     var nodes = nodeGroup.selectAll('.node')
@@ -465,7 +467,7 @@ function appendGradient(id){
     var from = document.getElementById("path" + id).__data__.source;
     var to = document.getElementById("path" + id).__data__.target;
 
-    var pathGradient = pathGroup.append("defs")
+        var pathGradient = pathGroup.append("defs")
         .append("linearGradient")
         .attr("id","grad" + id)
         .attr("gradientUnit","userSpaceOnUse")
@@ -489,7 +491,7 @@ function appendGradient(id){
         .attr("style",function () {
             var color = setColor(to);
             return "stop-color:" + color + ";stop-opacity:1";
-        });
+        });    
 
     path.attr("stroke","url(#grad"+id+")")
         .attr("stroke-opacity","0.5");
