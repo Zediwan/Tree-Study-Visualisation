@@ -51,7 +51,7 @@ function initSankey() {
 function updateSankey() {
     flush();
     filter();
-    console.log(jsonDataFiltered.length)
+    //displayCurrentNumOfObservations()
     if(jsonDataFiltered.length >= 50){
         calculateLinks();
         switch (lang)
@@ -90,13 +90,28 @@ function updateSankey() {
             default:
                 message = "There are not enough observations for these set of filters.";
         }
+        flush()
         alert(message)
-        //Reset checkboxes and reload
-        allCheckbox = document.getElementById('cb16')
-        allCheckbox.checked = true
-        updateSelections(allCheckbox)
-        adaptSize()
+        resetDiagram()
     }
+}
+
+/**
+ * Displays current number of observations below diagram
+ */
+function displayCurrentNumOfObservations(){
+    // Show current amount of observations with said elements
+    document.getElementById("NumObservations").innerHTML = "<p>" + "Observations: " + jsonDataFiltered.length + "</p>";
+}
+
+/**
+ * Resests the Diagramm to original stat with all observations
+ */
+function resetDiagram(){
+    allCheckbox = document.getElementById('cb16')
+    allCheckbox.checked = true
+    updateSelections(allCheckbox)
+    adaptSize()
 }
 
 /**
