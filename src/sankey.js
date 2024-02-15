@@ -157,7 +157,7 @@ function helper(error, labels) {
     var links = linkGroup.selectAll('path')
         .data(labels.links);
 
-        //Set attributes for each link separately
+    //Set attributes for each link separately
     links.enter().append("g")
         .attr("id",function (d,i) {return "path"+i;})
         .attr("from",function (d) { return d.source.name; })
@@ -175,8 +175,7 @@ function helper(error, labels) {
                 // Rest of the nodes: Use the color of the source node
                 return sourceColor;
             }
-        })
-        
+        })       
         .attr("display", function (d) {
             /* don't display a link if the link is smaller than 4%, else it will be just displayed*/
             if(d.value < guillotine){return "none";}
@@ -190,7 +189,8 @@ function helper(error, labels) {
         .append("title")
         .text(function (d) {
             //tooltip info for the links
-            return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+            return d.source.name + " → " + d.target.name + "\n" + format(d.value); 
+        });
 
     linkGroup.selectAll("g").transition(t)
         .attr("id",function (d,i) {return "path"+i;})
@@ -198,22 +198,32 @@ function helper(error, labels) {
         .attr("to",function (d) { return d.target.name; });
 
     links.transition(t)
-        //.attr("from",function (d) { return d.source.name; })
-        //.attr("to",function (d) { return d.target.name; })
-        //.attr("onmouseover",function (d,i) { return "appendGradient(" + i + ")" })
-        //.attr("onmouseout",function (d,i) { return "removeGradient(" + i + ")" })
         .attr("display", function (d) {
             //again if the link is smaller than 4% don't display it, we have to do this method again because of the
             // transition, if another filter is selected
             if(d.value < guillotine){return "none";}
             else{return "inline";}
         })
+        .attr("stroke", function(d) {
+            var targetColor = setColor(d.target);
+            var sourceColor = setColor(d.source);
+           
+            // Set the stroke color based on the target and source nodes
+            if (d.target.index < NUM_FIRST_NODES) {
+                // For the first survey use the color of the target node
+                return targetColor;
+            } else {
+                // Rest of the nodes: Use the color of the source node
+                return sourceColor;
+            }
+        })
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke-width", function (d) { return Math.max(1, d.width); })
         .select('title')
         .text(function (d) {
             //same argumentation as above, we need the method again for the transition
-            return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+            return d.source.name + " → " + d.target.name + "\n" + format(d.value); 
+        });
 
     //remove the unneeded links
     links.exit().remove();
@@ -324,13 +334,11 @@ function drawTitles() {
         .remove();
 }
 
-
 /**
  * Set the color of each node
  * @param d the node
  */
 function setColor(d) {
-
     /* the colors are specified in the setup!*/
     //set colors for german labels
     if(lang == "ger")
@@ -485,47 +493,8 @@ function appendGradient(id){
 
     path.attr("stroke","url(#grad"+id+")")
         .attr("stroke-opacity","0.5");
-
-/*
-    pathGradient.transition(t).select(".from")
-        .attr("style", function (d) {
-            var color = setColor(d.source);
-            return "stop-color:" + color + ";stop-opacity:1";
-        });
-    pathGradient.transition(t).select(".to")
-        .attr("style",function (d) {
-            var color = setColor(d.target);
-            return "stop-color:" + color + ";stop-opacity:1";
-        });
-*/
 }
 
-/*function removeGradient(id){
-    pathGroup = svg.select('#path' + id);
-    var path = pathGroup.select("path");
-
-    var pathGradient = pathGroup.select("defs")
-        .remove();
-
-    path.attr("stroke", function(d) {
-            var targetColor = setColor(d.target);
-            var sourceColor = setColor(d.source);
-           
-            // Set the stroke color based on the target and source nodes
-            if (d.target.index < NUM_FIRST_NODES) {
-                // For the first survey use the color of the target node
-                return targetColor;
-            } else {
-                // Rest of the nodes: Use the color of the source node
-                return sourceColor;
-            }
-        })
-        .attr("stroke-opacity", 0.3)
-
-}
-
-
-*/ 
 /**
  * Updates the selection state of checkboxes based on the user's input.
  * If the 'all' checkbox is selected, all other checkboxes will be deselected.
