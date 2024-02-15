@@ -51,23 +51,51 @@ function initSankey() {
 function updateSankey() {
     flush();
     filter();
-    calculateLinks();
-    switch (lang)
-    {
-        case "ger":
-            d3.json("data/labels_2nd-cohort-de.json", helper);
-            break;
-        case "eng":
-            d3.json("data/labels_2nd-cohort-en.json", helper);
-            break;
-        case "fr":
-            d3.json("data/labels_2nd-cohort-fr.json", helper);
-            break;
-            case "it":
-                d3.json("data/labels_2nd-cohort-it.json", helper);
+    console.log(jsonDataFiltered.length)
+    if(jsonDataFiltered.length >= 50){
+        calculateLinks();
+        switch (lang)
+        {
+            case "ger":
+                d3.json("data/labels_2nd-cohort-de.json", helper);
                 break;
-        default:
-            d3.json("data/labels_2nd-cohort.json", helper);
+            case "eng":
+                d3.json("data/labels_2nd-cohort-en.json", helper);
+                break;
+            case "fr":
+                d3.json("data/labels_2nd-cohort-fr.json", helper);
+                break;
+                case "it":
+                    d3.json("data/labels_2nd-cohort-it.json", helper);
+                    break;
+            default:
+                d3.json("data/labels_2nd-cohort.json", helper);
+        }
+    }
+    else{
+        message = ""
+        switch (lang) {
+            case "ger":
+                message = "Leider gibt es nicht genügend Beobachtungen für diese Filterkombinationen.";
+                break;
+            case "eng":
+                message = "There are not enough observations for these set of filters.";
+                break;
+            case "fr":
+                message = "Il n'y a pas assez d'observations pour cet ensemble de filtres.";
+                break;
+            case "it":
+                message = "Non ci sono abbastanza osservazioni per questo insieme di filtri.";
+                break;
+            default:
+                message = "There are not enough observations for these set of filters.";
+        }
+        alert(message)
+        //Reset checkboxes and reload
+        allCheckbox = document.getElementById('cb16')
+        allCheckbox.checked = true
+        updateSelections(allCheckbox)
+        adaptSize()
     }
 }
 
