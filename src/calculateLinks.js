@@ -1,112 +1,37 @@
 /**
- * converts the gender or language value in the person objects to an integer used from @link filterForm
- * for the according property
+ * Converts the gender or language value in the person objects to an integer used for filtering.
+ * @param {Object} jsonData - The JSON object containing the data to be converted.
+ * @param {string} type - The type of value to be converted. Possible values are "gender", "language", "school-requirements", "status", "parents", and "immigration".
+ * @returns {number} - The converted integer value based on the provided type.
  */
 function convertToInteger(jsonData, type) {
-    /* starting with index 0 the details of a person is converted to an integer
-     * is connected to the radio buttons !
-     *
-     * */
-    
-        /**
-     * gender in dataset: 1 = female, 2 = male
-     * for it to be 0 we have to substract 1 -->
-     * 0 = female, male 1 = male
-     */
-
-    if(type == "gender")
-    {
-        return jsonData.t0sex
-     - 1;
-    }
-   
-     /**
-      * language region in dataset: 1 = german, 2 = french, 3 = italian
-      * in Application: 0 = German
-      * 2 and 3 are "Französisch/Italienisch"
-      */
-    if(type == "language")
-    {
-        let st = jsonData.aes_langreg 
-        switch (st){
-            case 1:
-                st = 0;
-                break;
-            case 2:
-                st = 1;
-                break;
-            case 3:
-                st = 1;
-                break;
-        }
-        return st
-    }
-    /**
-     * in dataset: 
-     * 1 = High requirements
-     * 2 = Advanced requirements & Alternative/non-assignable study program
-     * 3 = Basic/low requirements
-     * in Application: 1 and 2 are "Erweitert"
-     * 3 = basic
-      */
-
-    if(type == "school-requirements")
-    {
-        let st = jsonData.t0st_nprog_req3;
-        switch (st){
-            case 1:
-                st = 1;
-                break;
-            case 2:
-                st = 1;
-                break;
-            case 3:
-                st = 0;
-                break;
-        }
-
-        return st   
-        
-    }
-    /** in dataset: 
-     * 1 = low, 2 = medium, 3 = high
-     * for it to be 0 we substract 1 -->
-     * 0 = low, 1 = medium, 2 = high
-     */
-    if(type == "status")
-    {
-        return jsonData.t0hisei08_3q 
-        -1;
-    }
-    /**
-     * Education of parents in dataset:
-     * 0 = compulsary schooling only
-     * 1 = upper secondary education
-     * 2 = tertiary education
-     * 
-     * no adujstments needed
-     */
-    if(type == "parents")
-    {
-        return jsonData.t0fmedu_comp ;
-    }
-
-    /**
-     * New category: Immigration. Needs to be integrated!
-     * in dataset:
-     * 1 = native (at least 1 parent born in Switzerland)
-     * 2 = 2nd generation (respondent born in Switzerland, no parent born in Switzerland)
-     * 2 = first generation (respondent and parents born abroad)
-     * for it to be 0 we substract 1 -->
-     * 0 = native, 1 = 2nd generation, 2 = first generation 
-     */
-    if(type == "immigration")
-    {
-        return jsonData.t0immig
-        -1 ;
-    }
+  switch (type) {
+    case "gender":
+      return jsonData.t0sex;
+    case "language":
+      let languageValue = jsonData.aes_langreg;
+      if (languageValue === 1) {
+        return 0;
+      } else if (languageValue === 2 || languageValue === 3) {
+        return 1;
+      }
+      break;
+    case "school-requirements":
+      let schoolRequirements = jsonData.t0st_nprog_req3;
+      if (schoolRequirements === 1 || schoolRequirements === 2) {
+        return 1;
+      } else if (schoolRequirements === 3) {
+        return 0;
+      }
+      break;
+    case "status":
+      return jsonData.t0hisei08_3q;
+    case "parents":
+      return jsonData.t0fmedu_comp;
+    case "immigration":
+      return jsonData.t0immig;
+  }
 }
-
 
 /**
  * filter jsonData and fill selected elements into jsonDataFiltered
