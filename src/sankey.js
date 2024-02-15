@@ -111,7 +111,7 @@ function resetDiagram(){
     allCheckbox = document.getElementById('cb16')
     allCheckbox.checked = true
     updateSelections(allCheckbox)
-    adaptSize()
+    updateSankey()
 }
 
 /**
@@ -524,9 +524,7 @@ function appendGradient(id){
 
 }
 
-function setGradientColor(bla) {
 
-}
 */ 
 /**
  * Updates the selection state of checkboxes based on the user's input.
