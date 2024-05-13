@@ -77,19 +77,19 @@ function updateSankey() {
         message = ""
         switch (lang) {
             case "ger":
-                message = "Leider gibt es nicht genügend Beobachtungen für diese Filterkombinationen.";
+                message = "Für diese Auswahl stehen zu wenig beobachtete Fälle zur Verfügung";
                 break;
             case "eng":
-                message = "There are not enough observations for these set of filters.";
+                message = "The number of observations for this selection is too small";
                 break;
             case "fr":
-                message = "Il n'y a pas assez d'observations pour cet ensemble de filtres.";
+                message = "Le nombre d’observations pour cette sélection n’est pas suffisante";
                 break;
             case "it":
-                message = "Non ci sono abbastanza osservazioni per questo insieme di filtri.";
+                message = "Il numero d’osservazioni per questa selezione è insufficiente";
                 break;
             default:
-                message = "There are not enough observations for these set of filters.";
+                message = "The number of observations for this selection is too small";
         }
         alert(message)
         if (last_checkbox_clicked) last_checkbox_clicked.checked = false
