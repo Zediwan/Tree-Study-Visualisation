@@ -53,7 +53,7 @@ function updateSankey() {
     filter();
     console.log(jsonDataFiltered.length)
     //displayCurrentNumOfObservations()
-    if(jsonDataFiltered.length >= 50){
+    if(jsonDataFiltered.length >= 100){
         calculateLinks();
         switch (lang)
         {
@@ -91,9 +91,8 @@ function updateSankey() {
             default:
                 message = "There are not enough observations for these set of filters.";
         }
-        flush()
         alert(message)
-        resetDiagram()
+        if (last_checkbox_clicked) last_checkbox_clicked.checked = false
     }
 }
 
@@ -182,9 +181,10 @@ function helper(error, labels) {
             if(d.value < guillotine){return "none";}
             else{return "inline";}
         })
-        .each(function(d, i) {
-            appendGradient(i);
-        })
+        .attr("stroke-opacity", 0.5)
+        // .each(function(d, i) {
+        //     appendGradient(i);
+        // })
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke-width", function (d) {return Math.max(1, d.width); })
         .append("title")
@@ -507,6 +507,7 @@ function appendGradient(id){
  * @since 08.05.2023
  */
 function updateSelections(checkbox) {
+    last_checkbox_clicked = checkbox
     const allCheckbox = document.getElementById('cb16');
     const checkboxes = document.querySelectorAll('input[type=checkbox][class=cb]:not(#cb16)');
 

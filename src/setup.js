@@ -17,11 +17,13 @@ let nodeGroup;
 let titleGroup;
 let columnCoord = [];
 
-let guillotine = 0.4
+let guillotine = 0.2
 let TOT_NUM_NODES = 38
 let NUM_THIRD_NODES = 10 // including invis node
 let NUM_FIRST_NODES = 10 // including elementary node
 let REM_NUM_NODES = TOT_NUM_NODES - NUM_THIRD_NODES
+
+let last_checkbox_clicked = null
 
 
 
